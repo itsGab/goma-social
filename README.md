@@ -2,8 +2,6 @@
 
 > Disclaimer: Este documento foi produzido com o auxílio de LLMs e revisado e alterado por um humano.
 
-**Data:** 21 de Janeiro de 2026
-
 **Status:** Fase de Planejamento/Roadmap
 
 **Infraestrutura:** A Forja (`aforja.cloud`)
