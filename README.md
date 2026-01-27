@@ -4,8 +4,7 @@
 
 - **Status:** Fase de Planejamento/Roadmap
 - **Natureza:** Projeto hobby e de estudo (possível expansão futura)
-- **Infraestrutura:** A Forja (`aforja.cloud`)
-- **Conceito Chave:** *Slow-social-media* para o ecossistema gamer.
+- **Conceito Chave:** *Slow social media* para o ecossistema gamer.
 
 ---
 
@@ -21,7 +20,7 @@ Goma é uma plataforma social com grande inspiração no Orkut, que visa desacel
 
 ### Por que?
 
-Goma nasce do meu descontentamento com essa constante pressão das redes sociais: notificações sem fim, a ansiedade gerada e o famoso FOMO (fear of missing out - medo de ficar de fora).
+Goma nasce do meu descontentamento com essa constante pressão das redes sociais: notificações sem fim, a ansiedade gerada e o famoso FOMO (fear of missing out — medo de ficar de fora).
 
 ### Objetivo
 
@@ -29,11 +28,11 @@ Goma busca ser uma plataforma social de consumo lento (slow social media), esfor
 
 ### O nome
 
-Goma é uma referência direta à substância pegajosa, como na bala de goma, que dá liga às comunidades - o grude. Também é um acrônimo para *Gamers On Meeting Area*, ou seja, **jogadores em área de encontro**.
+Goma é uma referência direta à substância pegajosa, como na bala de goma, que dá liga às comunidades — o grude. Também é um acrônimo para *Gamers On Meeting Area*, ou seja, **jogadores em área de encontro**.
 
 ### Pontos-chave
 
-Estes são alguns dos pontos importantes - não definitivos e ainda aberto a modificações:
+Estes são alguns dos pontos importantes - não definitivos e ainda abertos a modificações:
 
 - Ser uma plataforma aberta
 - Criar comunidades e conexão
@@ -47,6 +46,7 @@ Estes são alguns dos pontos importantes - não definitivos e ainda aberto a mod
 - **Orkut:** rede social brasileira popular nos anos 2000, focada em comunidades e perfis personalizados
 - **FOMO:** sigla para *Fear of Missing Out* (medo de ficar de fora)
 - **Slow social media:** movimento que propõe um consumo mais consciente e lento das redes sociais
+- **Gamers:** #TODO: completar!!!
 
 ---
 # ======= RESCRITO ATÉ AQUI =======
