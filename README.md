@@ -1,4 +1,4 @@
-> Disclaimer: Foi usado o auxilio de LLMs (gemini e claude) no desenvolvimento desse documento.
+> **Disclaimer**: Foi utilizado o auxílio de LLMs (Gemini e Claude) no desenvolvimento deste documento.
 
 # PROJETO: GOMA (Gamers On Meeting Area)
 
@@ -41,50 +41,38 @@ Estes são alguns dos pontos importantes - não definitivos e ainda abertos a mo
 - Ambiente saudável (tentar reduzir a ansiedade forçada por algoritmos)
 - Para todos (com bom senso, respeito e que queiram contribuir)
 
-### Glossário #TODO: colocar no final!
+### Público alvo
+
+- Jogadores de **PC e Consoles** (PlayStation, Xbox, Nintendo)
+- Jogadores que valorizam comunidades duradouras sobre interações efêmeras
+- Pessoas que sentem falta de um espaço social permanente para sua vida gamer
+
+**Idioma:** Desenvolvimento inicial em **Português (BR)**.
+
+### Pilares
+
+A plataforma fundamenta-se em três eixos principais, denominados internamente como:
+
+- **Comunidade (Grude):** Fóruns estruturados para acúmulo de conhecimento e discussão centralizada.
+- **Identidade (Base):** Perfis ricos que exibem a trajetória e reputação do jogador.
+- **Conectividade (Junção)** Fe:rramentas para encontrar jogadores com afinidades reais através de APIs e algoritmos sociais.
+
+### Glossário #TODO: colocar no final
 
 - **Orkut:** rede social brasileira popular nos anos 2000, focada em comunidades e perfis personalizados
 - **FOMO:** sigla para *Fear of Missing Out* (medo de ficar de fora)
 - **Slow social media:** movimento que propõe um consumo mais consciente e lento das redes sociais
 - **Gamers:** #TODO: completar!!!
 
----
-# ======= RESCRITO ATÉ AQUI =======
 
-## 2. ANÁLISE DO CENÁRIO (O Problema)
 
-A proposta identifica três dores principais no mercado atual de jogos:
 
-* **Fragmentação:** Jogadores dispersos sem um espaço de "convivência permanente".
-* **Toxicidade:** Redes que priorizam conflitos e consumo passivo em vez de auxílio mútuo.
-* **Solidão Gamer:** Falta de um "elo" social para compartilhar experiências, apesar da posse de hardware e jogos.
-
-### 2.1. PÚBLICO-ALVO
-
-**Perfil Principal:**
-
-* Jogadores de **PC e Consoles** (PlayStation, Xbox, Nintendo)
-* Sem restrição de faixa etária ou região geográfica
-* Jogadores que valorizam comunidades duradouras sobre interações efêmeras
-* Pessoas que sentem falta de um espaço social permanente para sua vida gamer
-
-**Idioma:** Desenvolvimento inicial em **Português (BR)**, com foco natural no público brasileiro, mas aberto a falantes de português globalmente.
 
 ---
 
-## 3. PILARES ESTRATÉGICOS (A Solução)
+## 2. Funcionalidades
 
-A plataforma fundamenta-se em três eixos principais, denominados internamente como:
-
-* **Comunidade (Grude):** Fóruns estruturados para acúmulo de conhecimento e discussão centralizada.
-* **Identidade (Base):** Perfis ricos que exibem a trajetória e reputação do jogador.
-* **Conectividade (Junção):** Ferramentas para encontrar jogadores com afinidades reais através de APIs e algoritmos sociais.
-
----
-
-## 4. ESTRUTURA DE FUNCIONALIDADES (O "Novo Orkut" Gamer)
-
-### 4.1. Inspiradas no Orkut
+### Inspiradas no Orkut
 
 O GOMA adapta ferramentas clássicas para uma dinâmica de jogo moderna:
 
@@ -100,7 +88,7 @@ O GOMA adapta ferramentas clássicas para uma dinâmica de jogo moderna:
 | **Jogos** | **Mini-games de Tabuleiro** | Jogos clássicos de fórum (Xadrez, Damas, Stop) funcionam bem para criar laços enquanto se espera o download de um jogo pesado acabar. |
 | **Customização** | **Temas e Skins** | Permitir mudar cores e fontes (estilo MySpace/Orkut antigo). Isso gera um senso de "posse" sobre o perfil. |
 
-### 4.2. Proposta de Novidades
+### Novidades Propostas
 
 Além das ferramentas clássicas, o projeto propõe recursos exclusivos para o público gamer:
 
@@ -115,60 +103,64 @@ Além das ferramentas clássicas, o projeto propõe recursos exclusivos para o p
 
 ---
 
-## 5. STACK TECNOLÓGICA (A Arquitetura)
+## 3. Stack de Tecnologias
 
-Para garantir escalabilidade, rapidez e uma experiência de usuário fluida, a arquitetura do GOMA será baseada em tecnologias modernas de alto desempenho:
+- **Backend:** FastAPI (Python) *sei um pouco*
+- **Frontend:** Nuxt.js (Vue.js) *comecei a estudar*
+- **Banco de Dados:** PostgreSQL *sei um pouco*
+- **Autenticação:** Supabase Auth *não sei*
+- **Storage:** Supabase Storage (imagens e arquivos) *não sei*
+- **ORM:** SQLAlchemy *sei um pouco*
+- **API Externas**: (Estudar possibilidades, e.g.:) *não sei*
+  - **IGDB/RAWG API**
+  - **Steam Web API**
 
-### 5.1. Tecnologias Core
+### Justificativa
 
-* **Front-end:** **Nuxt 3 (Vue.js)**. Escolhido pela capacidade de renderização híbrida (SSR/Static), garantindo que perfis e fóruns sejam indexáveis por buscadores (SEO) e rápidos no carregamento.
-* **Back-end:** **FastAPI (Python)**. Framework de alta performance para processamento de lógica de negócio, algoritmos de "Sintonia" entre jogadores e integração de dados.
-* **Banco de Dados & Auth:** **Supabase (PostgreSQL)**. Utilizado para gestão de usuários, autenticação social e armazenamento relacional de comunidades e posts.
-* **Storage (Imagens/Assets):** **Supabase Storage**. Armazenamento de avatares, banners de comunidades e capturas de tela (screenshots) dos usuários.
-* **Integrações Externas: (Não confirmados.)**
-  * **IGDB/RAWG API:** Para catálogo de jogos.
-  * **Steam Web API:** Para sincronização de conquistas e bibliotecas.
+Foi escolhido **FastAPI** como backend principal pela familiaridade com Python e pela flexibilidade no desenvolvimento da lógica de negócio. **Supabase** foi integrado para gerenciar autenticação de usuários e armazenamento de arquivos, aproveitando sua infraestrutura pronta e segura. Para o frontend, **Nuxt.js** foi selecionado pela estrutura bem definida que facilita o aprendizado e pelas otimizações de performance nativas do framework.
 
-### 5.2. Infraestrutura e Deployment
+### Como funciona na prática
 
-**Hospedagem Inicial:**
+``` code
+Fluxo de Autenticação
 
-* **VPS Simples:** FastAPI + Nuxt
-* **DB & Auth:** Supabase
+1. Usuário faz login → Supabase Auth
+2. Supabase retorna JWT token
+3. Nuxt envia token para FastAPI em cada requisição
+4. FastAPI valida o token e processa a requisição
+```
 
-**Considerações Futuras:**
+``` code
+ Fluxo de Upload de Imagem
 
-* **Migrações**
-* **CDN**
-* **Monitoramento**
-* **Analytics**
+1. Usuário seleciona foto de perfil no Nuxt
+2. Nuxt faz upload direto para Supabase Storage
+3. Supabase retorna URL da imagem
+4. Nuxt envia URL para FastAPI salvar no PostgreSQL
+```
 
-**Nota:** A arquitetura será adaptada conforme necessidade e crescimento orgânico do projeto.
+### Hospedagem Inicial
 
-### 5.3. Segurança Básica
+- **VPS Simples:** FastAPI + Nuxt
+- **DB & Auth:** Supabase
 
-* **Rate Limiting:** Proteção contra abuso de APIs (100 req/min por IP)
-* **Sanitização:** Inputs sanitizados para prevenir XSS e SQL Injection
-* **HTTPS:** Obrigatório via Let's Encrypt
-* **Auth:** OAuth2 via Supabase (login social com Steam/Discord)
-
----
+# ======= RESCRITO ATÉ AQUI =======
 
 ## 6. DIRETRIZES DE DESIGN E FILOSOFIA
 
 ### 6.1. Princípios de UX
 
-* **Ausência de DM inicial:** Para evitar a urgência, o foco inicial são os Recados (Scraps). O Discord serve como complemento para chat de voz.
-* **Customização:** Skins e temas de perfil para gerar senso de posse (estilo MySpace/Orkut).
-* **Gamificação não-viciante:** Sistema de badges e conquistas que recompensam participação genuína, não tempo de tela.
+- **Ausência de DM inicial:** Para evitar a urgência, o foco inicial são os Recados (Scraps). O Discord serve como complemento para chat de voz.
+- **Customização:** Skins e temas de perfil para gerar senso de posse (estilo MySpace/Orkut).
+- **Gamificação não-viciante:** Sistema de badges e conquistas que recompensam participação genuína, não tempo de tela.
 
 ### 6.2. Anti-Padrões (O que NÃO faremos)
 
-* ❌ **Notificações Push excessivas** - Evitar ansiedade e FOMO
-* ❌ **Feeds algorítmicos** - Cronologia simples e transparente
-* ❌ **Métricas de vaidade** - Sem contadores públicos de seguidores
-* ❌ **Mecanismos de vício** - Sem streaks obrigatórias ou timers de urgência
-* ❌ **Segregação por pagamento** - Funcionalidades core sempre gratuitas
+- ❌ **Notificações Push excessivas** - Evitar ansiedade e FOMO
+- ❌ **Feeds algorítmicos** - Cronologia simples e transparente
+- ❌ **Métricas de vaidade** - Sem contadores públicos de seguidores
+- ❌ **Mecanismos de vício** - Sem streaks obrigatórias ou timers de urgência
+- ❌ **Segregação por pagamento** - Funcionalidades core sempre gratuitas
 
 ---
 
@@ -178,9 +170,9 @@ Para garantir escalabilidade, rapidez e uma experiência de usuário fluida, a a
 
 **Custos cobertos pessoalmente:**
 
-* Servidor VPS
-* Domínio
-* Eventuais custos de APIs
+- Servidor VPS
+- Domínio
+- Eventuais custos de APIs
 
 **Sem monetização ativa no curto prazo.**
 
@@ -188,23 +180,23 @@ Para garantir escalabilidade, rapidez e uma experiência de usuário fluida, a a
 
 **Subscription Opcional de Apoio:**
 
-* **"Apoiador GOMA"** (~R$ 5-10/mês)
-* Benefícios simbólicos: badge especial, temas exclusivos, prioridade em filas
-* **Importante:** Nenhuma funcionalidade core será bloqueada para não-apoiadores
+- **"Apoiador GOMA"** (~R$ 5-10/mês)
+- Benefícios simbólicos: badge especial, temas exclusivos, prioridade em filas
+- **Importante:** Nenhuma funcionalidade core será bloqueada para não-apoiadores
 
 **Marketplace Comunitário (Longo Prazo):**
 
-* Usuários criam e vendem temas/avatares customizados
-* Taxa de transação (ex: 20%) para manutenção da plataforma
-* 80% do valor vai para o criador
-* **Requer análise cuidadosa antes de implementação**
+- Usuários criam e vendem temas/avatares customizados
+- Taxa de transação (ex: 20%) para manutenção da plataforma
+- 80% do valor vai para o criador
+- **Requer análise cuidadosa antes de implementação**
 
 ### 7.3. Monetização Proibida
 
-* ❌ Venda de dados de usuários
-* ❌ Anúncios intrusivos ou rastreamento
-* ❌ Pay-to-win em sistemas de reputação
-* ❌ Itens que segreguem jogadores por poder aquisitivo
+- ❌ Venda de dados de usuários
+- ❌ Anúncios intrusivos ou rastreamento
+- ❌ Pay-to-win em sistemas de reputação
+- ❌ Itens que segreguem jogadores por poder aquisitivo
 
 ---
 
@@ -214,24 +206,24 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 ### 8.1. Indicadores Primários
 
-* **Taxa de Retorno Semanal:** Usuários que voltam pelo menos 1x por semana
-* **NPS (Net Promoter Score):** "Você recomendaria o GOMA para um amigo gamer?"
-* **Tempo Médio de Permanência:** Qualidade > quantidade (sessões significativas)
-* **Taxa de Perfis Completos:** % de usuários que preenchem 70%+ do perfil
+- **Taxa de Retorno Semanal:** Usuários que voltam pelo menos 1x por semana
+- **NPS (Net Promoter Score):** "Você recomendaria o GOMA para um amigo gamer?"
+- **Tempo Médio de Permanência:** Qualidade > quantidade (sessões significativas)
+- **Taxa de Perfis Completos:** % de usuários que preenchem 70%+ do perfil
 
 ### 8.2. Indicadores Secundários
 
-* **Comunidades Ativas:** Com pelo menos 5 posts nos últimos 30 dias
-* **Testemunhos Escritos:** Indicador de conexões genuínas
-* **Taxa de Moderação:** Baixos reports indicam comunidade saudável
+- **Comunidades Ativas:** Com pelo menos 5 posts nos últimos 30 dias
+- **Testemunhos Escritos:** Indicador de conexões genuínas
+- **Taxa de Moderação:** Baixos reports indicam comunidade saudável
 
 ### 8.3. Anti-Métricas
 
 **O que NÃO usaremos como sucesso:**
 
-* Número bruto de usuários cadastrados (vanity metric)
-* Tempo total gasto na plataforma (queremos qualidade, não vício)
-* Daily Active Users inflados por notificações forçadas
+- Número bruto de usuários cadastrados (vanity metric)
+- Tempo total gasto na plataforma (queremos qualidade, não vício)
+- Daily Active Users inflados por notificações forçadas
 
 ---
 
@@ -247,12 +239,12 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 **Tarefas:**
 
-* [ ] Setup infraestrutura (VPS + Supabase)
-* [ ] Sistema de autenticação (OAuth com Steam/Discord)
-* [ ] CRUD de Perfis (Nome, bio, 3 jogos favoritos)
-* [ ] Sistema de Comunidades (Criar, entrar, listar)
-* [ ] Fórum simples (Posts e respostas em comunidades)
-* [ ] Deploy básico em `goma.aforja.cloud`
+- [ ] Setup infraestrutura (VPS + Supabase)
+- [ ] Sistema de autenticação (OAuth com Steam/Discord)
+- [ ] CRUD de Perfis (Nome, bio, 3 jogos favoritos)
+- [ ] Sistema de Comunidades (Criar, entrar, listar)
+- [ ] Fórum simples (Posts e respostas em comunidades)
+- [ ] Deploy básico em `goma.aforja.cloud`
 
 **Entregável:** Usuários conseguem criar perfil, entrar em comunidades e postar.
 
@@ -266,11 +258,11 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 **Tarefas:**
 
-* [ ] Mural de Recados (Scraps) sem notificações
-* [ ] Sistema de Testemunhos (Depoimentos)
-* [ ] Check-in de Perfil ("Deixar um GG")
-* [ ] Sistema básico de Badges (Mentor, Tanker, etc.)
-* [ ] Página de "Favoritos" expandida (vitrine de jogos)
+- [ ] Mural de Recados (Scraps) sem notificações
+- [ ] Sistema de Testemunhos (Depoimentos)
+- [ ] Check-in de Perfil ("Deixar um GG")
+- [ ] Sistema básico de Badges (Mentor, Tanker, etc.)
+- [ ] Página de "Favoritos" expandida (vitrine de jogos)
 
 **Entregável:** Usuários conseguem interagir em perfis alheios de forma assíncrona.
 
@@ -284,10 +276,10 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 **Tarefas:**
 
-* [ ] Integração Steam API (conquistas e biblioteca)
-* [ ] "Cofre de Conquistas" (top 3 conquistas destacadas)
-* [ ] Widget de status (o que está jogando agora)
-* [ ] Daily Buff (frase motivacional diária)
+- [ ] Integração Steam API (conquistas e biblioteca)
+- [ ] "Cofre de Conquistas" (top 3 conquistas destacadas)
+- [ ] Widget de status (o que está jogando agora)
+- [ ] Daily Buff (frase motivacional diária)
 
 **Entregável:** Perfil reflete a jornada real do jogador.
 
@@ -301,11 +293,11 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 **Tarefas:**
 
-* [ ] Sistema LFG (Looking for Group) básico
-* [ ] Cápsula do Tempo (mensagens futuras)
-* [ ] Desafios Amigáveis entre usuários
-* [ ] Mini-games de tabuleiro (Xadrez/Damas)
-* [ ] Sistema de customização de perfil (temas)
+- [ ] Sistema LFG (Looking for Group) básico
+- [ ] Cápsula do Tempo (mensagens futuras)
+- [ ] Desafios Amigáveis entre usuários
+- [ ] Mini-games de tabuleiro (Xadrez/Damas)
+- [ ] Sistema de customização de perfil (temas)
 
 **Entregável:** GOMA se diferencia completamente de outras redes.
 
@@ -319,11 +311,11 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 **Tarefas:**
 
-* [ ] Polimento geral de UX/UI
-* [ ] Documentação de uso (FAQ + tutoriais)
-* [ ] Sistema de moderação comunitária
-* [ ] Testes de carga e otimizações
-* [ ] Onboarding guiado para novos usuários
+- [ ] Polimento geral de UX/UI
+- [ ] Documentação de uso (FAQ + tutoriais)
+- [ ] Sistema de moderação comunitária
+- [ ] Testes de carga e otimizações
+- [ ] Onboarding guiado para novos usuários
 
 **Entregável:** Plataforma pronta para crescimento orgânico.
 
@@ -352,11 +344,11 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 **Como garantir que o GOMA seja saudável:**
 
-* **Notificações Conscientes:** Somente para mensagens diretas importantes (se implementado), nunca para "puxar" o usuário
-* **Sem Gamificação Coercitiva:** Badges celebram participação, não punhem ausência
-* **Transparência:** Usuário vê claramente por que algo aparece no feed (sem algoritmos ocultos)
-* **Controle Total:** Usuário pode desativar qualquer tipo de notificação
-* **Respeito ao Tempo:** Features que funcionam de forma assíncrona (não exigem presença constante)
+- **Notificações Conscientes:** Somente para mensagens diretas importantes (se implementado), nunca para "puxar" o usuário
+- **Sem Gamificação Coercitiva:** Badges celebram participação, não punhem ausência
+- **Transparência:** Usuário vê claramente por que algo aparece no feed (sem algoritmos ocultos)
+- **Controle Total:** Usuário pode desativar qualquer tipo de notificação
+- **Respeito ao Tempo:** Features que funcionam de forma assíncrona (não exigem presença constante)
 
 ---
 
@@ -366,27 +358,27 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 **Compromissos:**
 
-* **Consentimento Explícito:** Usuário sabe exatamente quais dados coletamos
-* **Minimização:** Coletamos apenas o necessário (perfil público + email)
-* **Portabilidade:** Usuário pode exportar todos os seus dados em JSON
-* **Direito ao Esquecimento:** Deletar conta remove permanentemente dados pessoais (mantém posts anonimizados)
-* **Sem Venda de Dados:** Dados nunca serão compartilhados com terceiros
+- **Consentimento Explícito:** Usuário sabe exatamente quais dados coletamos
+- **Minimização:** Coletamos apenas o necessário (perfil público + email)
+- **Portabilidade:** Usuário pode exportar todos os seus dados em JSON
+- **Direito ao Esquecimento:** Deletar conta remove permanentemente dados pessoais (mantém posts anonimizados)
+- **Sem Venda de Dados:** Dados nunca serão compartilhados com terceiros
 
 **Dados Coletados:**
 
-* Email (para login)
-* Nome público e bio (visível para outros)
-* Estatísticas de jogo (se usuário optar por integração)
-* Posts e interações públicas em comunidades
+- Email (para login)
+- Nome público e bio (visível para outros)
+- Estatísticas de jogo (se usuário optar por integração)
+- Posts e interações públicas em comunidades
 
 ### 11.2. Moderação Comunitária
 
 **Estrutura:**
 
-* **Auto-Moderação:** Criadores de comunidades são moderadores padrão
-* **Sistema de Reports:** Usuários podem reportar posts/perfis (categorias: spam, assédio, ilegal)
-* **Processo de Análise:** Reports são analisados manualmente (sem ban automático)
-* **Escalação:** Casos graves são encaminhados ao administrador principal
+- **Auto-Moderação:** Criadores de comunidades são moderadores padrão
+- **Sistema de Reports:** Usuários podem reportar posts/perfis (categorias: spam, assédio, ilegal)
+- **Processo de Análise:** Reports são analisados manualmente (sem ban automático)
+- **Escalação:** Casos graves são encaminhados ao administrador principal
 
 **Código de Conduta (Básico):**
 
@@ -396,18 +388,18 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 ### 11.3. Segurança da Conta
 
-* **Autenticação Social:** Login via Steam/Discord (Supabase OAuth)
-* **Sem Senhas Armazenadas:** Delegamos auth para provedores confiáveis
-* **2FA Opcional:** Pode ser implementado via Supabase no futuro
-* **Sessões Seguras:** Tokens JWT com expiração
+- **Autenticação Social:** Login via Steam/Discord (Supabase OAuth)
+- **Sem Senhas Armazenadas:** Delegamos auth para provedores confiáveis
+- **2FA Opcional:** Pode ser implementado via Supabase no futuro
+- **Sessões Seguras:** Tokens JWT com expiração
 
 ### 11.4. Propriedade Intelectual
 
 **Posicionamento:**
 
-* **Logos de Jogos:** Uso sob Fair Use para fins informativos (catálogo de jogos)
-* **Avatares/Skins Customizados:** Usuário mantém copyright, plataforma tem licença de exibição
-* **Posts/Conteúdo:** Usuário é dono, mas concede licença para exibição na plataforma
+- **Logos de Jogos:** Uso sob Fair Use para fins informativos (catálogo de jogos)
+- **Avatares/Skins Customizados:** Usuário mantém copyright, plataforma tem licença de exibição
+- **Posts/Conteúdo:** Usuário é dono, mas concede licença para exibição na plataforma
 
 ---
 
@@ -425,21 +417,21 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 O **GOMA** não nasce com a pretensão de ser a próxima grande rede social. É um experimento honesto para entender:
 
-* Como criar comunidades saudáveis na era moderna?
-* É possível fazer uma rede social slow em um mundo fast?
-* O que os gamers realmente querem além de matchmaking?
+- Como criar comunidades saudáveis na era moderna?
+- É possível fazer uma rede social slow em um mundo fast?
+- O que os gamers realmente querem além de matchmaking?
 
 **Sucesso neste projeto significa:**
 
-* Aprender profundamente sobre desenvolvimento full-stack
-* Criar uma comunidade pequena mas engajada
-* Validar que slow-social-media tem espaço no mercado gamer
-* (Bônus) Ter uma plataforma pessoal que eu mesmo quero usar
+- Aprender profundamente sobre desenvolvimento full-stack
+- Criar uma comunidade pequena mas engajada
+- Validar que slow-social-media tem espaço no mercado gamer
+- (Bônus) Ter uma plataforma pessoal que eu mesmo quero usar
 
 **Falha aceitável seria:**
 
-* Descobrir que o conceito não ressoa após teste honesto
-* Aprender que a manutenção é insustentável sozinho
-* Perceber que Discord/outras ferramentas já resolvem o problema
+- Descobrir que o conceito não ressoa após teste honesto
+- Aprender que a manutenção é insustentável sozinho
+- Perceber que Discord/outras ferramentas já resolvem o problema
 
 O importante é documentar a jornada, aprender com os erros, e se divertir no processo. Se o GOMA crescer organicamente e demonstrar valor, ótimo. Se não, foi um laboratório valioso de aprendizado.
