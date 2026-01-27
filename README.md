@@ -1,24 +1,55 @@
+> Disclaimer: Foi usado o auxilio de LLMs (gemini e claude) no desenvolvimento desse documento.
+
 # PROJETO: GOMA (Gamers On Meeting Area)
 
-> Disclaimer: Este documento foi produzido com o auxílio de LLMs e revisado e alterado por um humano.
-
-**Status:** Fase de Planejamento/Roadmap
-
-**Natureza:** Projeto hobby e de estudo (possível expansão futura)
-
-**Infraestrutura:** A Forja (`aforja.cloud`)
-
-**Conceito Chave:** *Slow-social-media* para o ecossistema gamer.
+- **Status:** Fase de Planejamento/Roadmap
+- **Natureza:** Projeto hobby e de estudo (possível expansão futura)
+- **Infraestrutura:** A Forja (`aforja.cloud`)
+- **Conceito Chave:** *Slow-social-media* para o ecossistema gamer.
 
 ---
 
-## 1. RESUMO EXECUTIVO
+## 1. Apresentação
 
-O **GOMA** é uma plataforma de convivência social projetada para resgatar a essência das comunidades assíncronas (inspirada no Orkut) e adaptá-la ao contexto gamer moderno. Diferente das redes sociais atuais focadas em algoritmos e consumo rápido, o GOMA prioriza conexões duradouras, organização coletiva e a construção de uma identidade sólida dentro de um ambiente saudável.
+### Antes de tudo
 
-**Importante:** Este é um projeto pessoal de estudo e desenvolvimento, sem fins lucrativos imediatos. O foco está em aprender, experimentar e criar uma comunidade genuína. Caso demonstre viabilidade e crescimento orgânico, expansões futuras poderão ser consideradas.
+Este é um projeto pessoal para estudo e desenvolvimento. O projeto não tem fins lucrativos; o foco é aprender, experimentar e criar, para quem sabe, ao final, ter uma plataforma sólida que contribua para algo maior.
+
+### O que?
+
+Goma é uma plataforma social com grande inspiração no Orkut, que visa desacelerar e criar comunidades para o público de jogadores de jogos eletrônicos (*gamers*).
+
+### Por que?
+
+Goma nasce do meu descontentamento com essa constante pressão das redes sociais: notificações sem fim, a ansiedade gerada e o famoso FOMO (fear of missing out - medo de ficar de fora).
+
+### Objetivo
+
+Goma busca ser uma plataforma social de consumo lento (slow social media), esforçando-se para não cair nas mesmas armadilhas de outras redes sociais. Inspirada no Orkut, ela visa criar comunidades e gerar conexão. O projeto deseja evitar a constante monetização das redes e a produção de conteúdo quase exclusivamente voltada para a venda de serviços ou produtos. A comunidade é feita para compartilhar e unir, não para vender e excluir.
+
+### O nome
+
+Goma é uma referência direta à substância pegajosa, como na bala de goma, que dá liga às comunidades - o grude. Também é um acrônimo para *Gamers On Meeting Area*, ou seja, **jogadores em área de encontro**.
+
+### Pontos-chave
+
+Estes são alguns dos pontos importantes - não definitivos e ainda aberto a modificações:
+
+- Ser uma plataforma aberta
+- Criar comunidades e conexão
+- Para o público gamers
+- Consumo devagar (slow social media)
+- Ambiente saudável (tentar reduzir a ansiedade forçada por algoritmos)
+- Para todos (com bom senso, respeito e que queiram contribuir)
+
+### Glossário #TODO: colocar no final!
+
+- **Orkut:** rede social brasileira popular nos anos 2000, focada em comunidades e perfis personalizados
+- **FOMO:** sigla para *Fear of Missing Out* (medo de ficar de fora)
+- **Slow social media:** movimento que propõe um consumo mais consciente e lento das redes sociais
 
 ---
+# ======= RESCRITO ATÉ AQUI =======
 
 ## 2. ANÁLISE DO CENÁRIO (O Problema)
 
