@@ -6,8 +6,6 @@
 - **Natureza:** Projeto hobby e de estudo (possível expansão futura)
 - **Conceito Chave:** *Slow social media* para o ecossistema gamer.
 
----
-
 ## 1. Apresentação
 
 ### Antes de tudo
@@ -20,30 +18,19 @@ Goma é uma plataforma social com grande inspiração no Orkut, que visa desacel
 
 ### Por que?
 
-Goma nasce do meu descontentamento com essa constante pressão das redes sociais: notificações sem fim, a ansiedade gerada e o famoso FOMO (fear of missing out — medo de ficar de fora).
+Goma nasce do meu descontentamento com essa constante pressão das redes sociais: notificações sem fim, a ansiedade gerada e o famoso FOMO (*fear of missing out* — medo de ficar de fora).
 
 ### Objetivo
 
-Goma busca ser uma plataforma social de consumo lento (slow social media), esforçando-se para não cair nas mesmas armadilhas de outras redes sociais. Inspirada no Orkut, ela visa criar comunidades e gerar conexão. O projeto deseja evitar a constante monetização das redes e a produção de conteúdo quase exclusivamente voltada para a venda de serviços ou produtos. A comunidade é feita para compartilhar e unir, não para vender e excluir.
+Goma busca ser uma plataforma social de consumo lento (*slow social media*), esforçando-se para não cair nas mesmas armadilhas de outras redes sociais. Inspirada no Orkut, ela visa criar comunidades e gerar conexão. O projeto deseja evitar a constante monetização das redes e a produção de conteúdo quase exclusivamente voltada para a venda de serviços ou produtos. A comunidade é feita para compartilhar e unir, não para vender e excluir.
 
 ### O nome
 
 Goma é uma referência direta à substância pegajosa, como na bala de goma, que dá liga às comunidades — o grude. Também é um acrônimo para *Gamers On Meeting Area*, ou seja, **jogadores em área de encontro**.
 
-### Pontos-chave
-
-Estes são alguns dos pontos importantes - não definitivos e ainda abertos a modificações:
-
-- Ser uma plataforma aberta
-- Criar comunidades e conexão
-- Para o público gamers
-- Consumo devagar (slow social media)
-- Ambiente saudável (tentar reduzir a ansiedade forçada por algoritmos)
-- Para todos (com bom senso, respeito e que queiram contribuir)
-
 ### Público alvo
 
-- Jogadores de **PC e Consoles** (PlayStation, Xbox, Nintendo)
+- Jogadores de **PC e Consoles**
 - Jogadores que valorizam comunidades duradouras sobre interações efêmeras
 - Pessoas que sentem falta de um espaço social permanente para sua vida gamer
 
@@ -56,15 +43,6 @@ A plataforma fundamenta-se em três eixos principais, denominados internamente c
 - **Comunidade (Grude):** Fóruns estruturados para acúmulo de conhecimento e discussão centralizada.
 - **Identidade (Base):** Perfis ricos que exibem a trajetória e reputação do jogador.
 - **Conectividade (Junção)** Fe:rramentas para encontrar jogadores com afinidades reais através de APIs e algoritmos sociais.
-
-### Glossário #TODO: colocar no final, tenho que revisar isso, complementar e colocar no final***
-
-- **Orkut:** rede social brasileira popular nos anos 2000, focada em comunidades e perfis personalizados
-- **FOMO:** sigla para *Fear of Missing Out* (medo de ficar de fora)
-- **Slow social media:** movimento que propõe um consumo mais consciente e lento das redes sociais
-- **Gamers:** #TODO: completar!!!
-
----
 
 ## 2. Funcionalidades
 
@@ -114,15 +92,15 @@ Além das ferramentas clássicas, o projeto propõe recursos exclusivos para o p
 
 ## 3. Stack de Tecnologias
 
-- **Backend:** FastAPI (Python) *sei um pouco*
-- **Frontend:** Nuxt.js (Vue.js) *comecei a estudar*
-- **Banco de Dados:** PostgreSQL *sei um pouco*
-- **Autenticação:** Supabase Auth *não sei*
-- **Storage:** Supabase Storage (imagens e arquivos) *não sei*
-- **ORM:** SQLAlchemy *sei um pouco*
-- **API Externas**: (Estudar possibilidades, e.g.:) *não sei*
-  - **IGDB/RAWG API**
-  - **Steam Web API**
+| Categoria | Tecnologia | Escolha | Conhecimento |
+| ---- | ---- | ---- | ---- |
+| **Backend** | Framework Python | FastAPI | Sei um pouco |
+| **Frontend** | Framework JavaScript | Nuxt.js (Vue.js) | Comecei a estudar |
+| **Dados** | Banco | PostgreSQL | Sei um pouco |
+| **Dados** | ORM | SQLAlchemy | Sei um pouco |
+| **Infraestrutura** | Auth | Supabase Auth | Não sei |
+| **Infraestrutura** | Storage | Supabase Storage | Não sei |
+| **Integração** | APIs de Jogos | • IGDB/RAWG API<br>• Steam Web API | Não sei |
 
 ### Justificativa
 
@@ -153,103 +131,75 @@ Fluxo de Autenticação
 - **VPS Simples:** FastAPI + Nuxt
 - **DB & Auth:** Supabase
 
-# ======= RESCRITO ATÉ AQUI =======
+## 4. Diretrizes e Filosofia (Sob desenvolvimento)
 
-## 6. DIRETRIZES DE DESIGN E FILOSOFIA
+### Manifesto GOMA
 
-### 6.1. Princípios de UX
+O GOMA fundamenta-se em princípios que priorizam o bem-estar do usuário e a qualidade das interações sobre métricas de engajamento:
 
-- **Ausência de DM inicial:** Para evitar a urgência, o foco inicial são os Recados (Scraps). O Discord serve como complemento para chat de voz.
-- **Customização:** Skins e temas de perfil para gerar senso de posse (estilo MySpace/Orkut).
-- **Gamificação não-viciante:** Sistema de badges e conquistas que recompensam participação genuína, não tempo de tela.
+- **Ser uma plataforma aberta** - Código e decisões transparentes, sem algoritmos ocultos manipulando experiências.
+- **Criar comunidades e conexão genuína** - Espaços duradouros onde jogadores podem construir relacionamentos reais, não apenas interações efêmeras.
+- **Para o público gamer** - Entendendo as necessidades específicas de quem joga: encontrar grupos, compartilhar conquistas, discutir estratégias.
+- **Consumo devagar (slow social media)** - Respeitar o tempo do usuário, sem pressão por presença constante ou FOMO artificial.
+- **Ambiente saudável** - Reduzir ansiedade forçada por algoritmos, notificações excessivas e mecânicas viciantes.
+- **Para todos** - Acessível a qualquer jogador que queira contribuir com bom senso e respeito, independente de poder aquisitivo.
 
-### 6.2. Anti-Padrões (O que NÃO faremos)
+### Princípios de Design
 
-- ❌ **Notificações Push excessivas** - Evitar ansiedade e FOMO
-- ❌ **Feeds algorítmicos** - Cronologia simples e transparente
-- ❌ **Métricas de vaidade** - Sem contadores públicos de seguidores
-- ❌ **Mecanismos de vício** - Sem streaks obrigatórias ou timers de urgência
-- ❌ **Segregação por pagamento** - Funcionalidades core sempre gratuitas
+- **Evitar a urgência** - Nada na plataforma deve criar senso artificial de pressa. Recados aparecem quando você loga, não com notificação push. Posts não "expiram".
+- **Customização** - Seu perfil é seu espaço. Temas, cores, organização - você decide como quer se apresentar.
+- **Não viciante** - Features são úteis, não manipuladoras. Sem streaks obrigatórias, sem timers de urgência, sem fear of missing out.
+- **Respeito** - Tanto entre usuários quanto da plataforma para com você. Seus dados são seus, seu tempo é valioso.
+- **Comunidade** - O foco está em criar espaços colaborativos, não em competir por atenção ou likes.
 
----
+### Anti-Padrões (O que NÃO faremos)
 
-## 7. MODELO DE SUSTENTABILIDADE
+- **Notificações Push excessivas** - Evitar ansiedade e FOMO. Notificações apenas para mensagens diretas importantes, nunca para "puxar" o usuário de volta.
+- **Feeds algorítmicos** - Cronologia simples e transparente. Você vê o que as comunidades que escolheu postam, não o que um algoritmo decide.
+- **Mecanismos de vício** - Sem streaks obrigatórias, timers de urgência ou qualquer mecânica que pune você por não acessar diariamente.
+- **Segregação por pagamento** - Funcionalidades core sempre gratuitas. Ninguém fica de fora por não poder pagar.
+- **Monetizações proibidas:**
+  - Venda de dados de usuários
+  - Anúncios intrusivos ou rastreamento
+  - Pay-to-win em sistemas de reputação
+  - Itens que segreguem jogadores por poder aquisitivo
 
-### 7.1. Fase Atual (Projeto Hobby)
-
-**Custos cobertos pessoalmente:**
-
-- Servidor VPS
-- Domínio
-- Eventuais custos de APIs
-
-**Sem monetização ativa no curto prazo.**
-
-### 7.2. Possibilidades Futuras (Se necessário)
-
-**Subscription Opcional de Apoio:**
-
-- **"Apoiador GOMA"** (~R$ 5-10/mês)
-- Benefícios simbólicos: badge especial, temas exclusivos, prioridade em filas
-- **Importante:** Nenhuma funcionalidade core será bloqueada para não-apoiadores
-
-**Marketplace Comunitário (Longo Prazo):**
-
-- Usuários criam e vendem temas/avatares customizados
-- Taxa de transação (ex: 20%) para manutenção da plataforma
-- 80% do valor vai para o criador
-- **Requer análise cuidadosa antes de implementação**
-
-### 7.3. Monetização Proibida
-
-- ❌ Venda de dados de usuários
-- ❌ Anúncios intrusivos ou rastreamento
-- ❌ Pay-to-win em sistemas de reputação
-- ❌ Itens que segreguem jogadores por poder aquisitivo
-
----
-
-## 8. MÉTRICAS DE SUCESSO
+### Métricas de Sucesso
 
 Em vez de focar em números absolutos, priorizamos **satisfação e engajamento qualitativo**:
 
-### 8.1. Indicadores Primários
+- **Satisfação do Usuário** - Qualidade sobre quantidade. Medimos sessões significativas, não tempo gasto.
+- **Taxa de Perfis Completos** - Percentual de usuários que preenchem 70%+ do perfil, indicando investimento real na plataforma.
+- **Comunidades Ativas** - Quantidade de comunidades com pelo menos 5 posts nos últimos 30 dias.
+- **Retenção Saudável** - Usuários que voltam por escolha, não por manipulação. Queremos qualidade, não vício.
 
-- **Taxa de Retorno Semanal:** Usuários que voltam pelo menos 1x por semana
-- **NPS (Net Promoter Score):** "Você recomendaria o GOMA para um amigo gamer?"
-- **Tempo Médio de Permanência:** Qualidade > quantidade (sessões significativas)
-- **Taxa de Perfis Completos:** % de usuários que preenchem 70%+ do perfil
+### Como garantir que o GOMA seja saudável
 
-### 8.2. Indicadores Secundários
-
-- **Comunidades Ativas:** Com pelo menos 5 posts nos últimos 30 dias
-- **Testemunhos Escritos:** Indicador de conexões genuínas
-- **Taxa de Moderação:** Baixos reports indicam comunidade saudável
-
-### 8.3. Anti-Métricas
-
-**O que NÃO usaremos como sucesso:**
-
-- Número bruto de usuários cadastrados (vanity metric)
-- Tempo total gasto na plataforma (queremos qualidade, não vício)
-- Daily Active Users inflados por notificações forçadas
+- **Notificações Conscientes** - Somente para mensagens diretas importantes (se implementado), nunca para "puxar" o usuário.
+- **Sem Gamificação Coercitiva** - Badges celebram participação, não punem ausência. Não há penalidades por ficar offline.
+- **Transparência Total** - Usuário vê claramente por que algo aparece no feed. Sem algoritmos ocultos decidindo o que você vê.
+- **Controle Total** - Usuário pode desativar qualquer tipo de notificação e customizar sua experiência completamente.
+- **Respeito ao Tempo** - Features funcionam de forma assíncrona. Não exigem presença constante para aproveitar a plataforma.
 
 ---
 
-## 9. ROADMAP E CRONOGRAMA
+## 5. Roadmap
 
 **Equipe:** 1 desenvolvedor (projeto pessoal)
 
 **Filosofia:** Cronograma maleável e iterativo, priorizando aprendizado e qualidade sobre velocidade.
 
-### 9.1. Fase 1 - MVP Core (Fundação)
+**Proposta:** Inicialmente só vou definir a fase do MVP para entregar algo.
+
+### Fase 1 - MVP Core (Fundação)
 
 **Objetivo:** Sistema básico funcional para validar conceito
 
 **Tarefas:**
 
-- [ ] Setup infraestrutura (VPS + Supabase)
-- [ ] Sistema de autenticação (OAuth com Steam/Discord)
+- [ ] Setup da base (Nuxt.js + FastAPI)
+- [ ] Integração com infraestrutura (VPS + Supabase)
+- [ ] Sistema de autenticação (OAuth)
 - [ ] CRUD de Perfis (Nome, bio, 3 jogos favoritos)
 - [ ] Sistema de Comunidades (Criar, entrar, listar)
 - [ ] Fórum simples (Posts e respostas em comunidades)
@@ -257,113 +207,9 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 
 **Entregável:** Usuários conseguem criar perfil, entrar em comunidades e postar.
 
-**Duração Estimada:** Flexível (2-4 meses em ritmo hobby)
+## 6. Compliance e Moderação
 
----
-
-### 9.2. Fase 2 - Features Sociais (Conexão)
-
-**Objetivo:** Adicionar camada social inspirada no Orkut
-
-**Tarefas:**
-
-- [ ] Mural de Recados (Scraps) sem notificações
-- [ ] Sistema de Testemunhos (Depoimentos)
-- [ ] Check-in de Perfil ("Deixar um GG")
-- [ ] Sistema básico de Badges (Mentor, Tanker, etc.)
-- [ ] Página de "Favoritos" expandida (vitrine de jogos)
-
-**Entregável:** Usuários conseguem interagir em perfis alheios de forma assíncrona.
-
-**Duração Estimada:** Flexível (1-3 meses)
-
----
-
-### 9.3. Fase 3 - Integração Gamer (Identidade)
-
-**Objetivo:** Conectar perfis com bibliotecas reais de jogos
-
-**Tarefas:**
-
-- [ ] Integração Steam API (conquistas e biblioteca)
-- [ ] "Cofre de Conquistas" (top 3 conquistas destacadas)
-- [ ] Widget de status (o que está jogando agora)
-- [ ] Daily Buff (frase motivacional diária)
-
-**Entregável:** Perfil reflete a jornada real do jogador.
-
-**Duração Estimada:** Flexível (1-2 meses)
-
----
-
-### 9.4. Fase 4 - Features Avançadas (Diferenciação)
-
-**Objetivo:** Implementar funcionalidades únicas do GOMA
-
-**Tarefas:**
-
-- [ ] Sistema LFG (Looking for Group) básico
-- [ ] Cápsula do Tempo (mensagens futuras)
-- [ ] Desafios Amigáveis entre usuários
-- [ ] Mini-games de tabuleiro (Xadrez/Damas)
-- [ ] Sistema de customização de perfil (temas)
-
-**Entregável:** GOMA se diferencia completamente de outras redes.
-
-**Duração Estimada:** Flexível (2-4 meses)
-
----
-
-### 9.5. Fase 5 - Lançamento Público (Estabilização)
-
-**Objetivo:** Abrir para público geral com estabilidade
-
-**Tarefas:**
-
-- [ ] Polimento geral de UX/UI
-- [ ] Documentação de uso (FAQ + tutoriais)
-- [ ] Sistema de moderação comunitária
-- [ ] Testes de carga e otimizações
-- [ ] Onboarding guiado para novos usuários
-
-**Entregável:** Plataforma pronta para crescimento orgânico.
-
----
-
-**Nota sobre o cronograma:** As fases podem se sobrepor, ser reordenadas ou pausadas conforme necessidade de estudo, feedbacks ou disponibilidade pessoal. O importante é manter consistência, não velocidade.
-
----
-
-## 10. RISCOS E FATORES DE INSATISFAÇÃO
-
-**Objetivo:** Identificar o que pode fazer usuários não voltarem, sem criar dependência viciante.
-
-### 10.1. Riscos de Abandono
-
-| Fator de Risco | Probabilidade | Impacto | Estratégia de Mitigação |
-| ---- | ---- | ---- | ---- |
-| **Interface confusa** | Média | Alto | Onboarding claro + tooltips contextuais |
-| **Falta de movimento inicial** | Alta | Alto | Beta fechado com comunidade seed (20-50 early adopters) |
-| **Comunidades tóxicas** | Média | Crítico | Sistema de moderação comunitária + código de conduta |
-| **Funcionalidades incompletas** | Alta | Médio | Comunicação transparente sobre fase de desenvolvimento |
-| **Lentidão/bugs** | Média | Alto | Testes constantes + deploy gradual de features |
-| **Competição com Discord/Outras** | Alta | Médio | Posicionar como **complementar**, não substituto |
-
-### 10.2. Princípios Anti-Vício
-
-**Como garantir que o GOMA seja saudável:**
-
-- **Notificações Conscientes:** Somente para mensagens diretas importantes (se implementado), nunca para "puxar" o usuário
-- **Sem Gamificação Coercitiva:** Badges celebram participação, não punhem ausência
-- **Transparência:** Usuário vê claramente por que algo aparece no feed (sem algoritmos ocultos)
-- **Controle Total:** Usuário pode desativar qualquer tipo de notificação
-- **Respeito ao Tempo:** Features que funcionam de forma assíncrona (não exigem presença constante)
-
----
-
-## 11. COMPLIANCE E MODERAÇÃO
-
-### 11.1. Proteção de Dados (LGPD)
+### Proteção de Dados (LGPD)
 
 **Compromissos:**
 
@@ -380,7 +226,7 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 - Estatísticas de jogo (se usuário optar por integração)
 - Posts e interações públicas em comunidades
 
-### 11.2. Moderação Comunitária
+### Moderação Comunitária
 
 **Estrutura:**
 
@@ -395,52 +241,17 @@ Em vez de focar em números absolutos, priorizamos **satisfação e engajamento 
 2. Incentivado: respeito, colaboração, compartilhamento de conhecimento
 3. Consequências: advertência → suspensão temporária → ban permanente
 
-### 11.3. Segurança da Conta
+### Segurança da Conta
 
 - **Autenticação Social:** Login via Steam/Discord (Supabase OAuth)
 - **Sem Senhas Armazenadas:** Delegamos auth para provedores confiáveis
 - **2FA Opcional:** Pode ser implementado via Supabase no futuro
 - **Sessões Seguras:** Tokens JWT com expiração
 
-### 11.4. Propriedade Intelectual
+### Propriedade Intelectual
 
 **Posicionamento:**
 
 - **Logos de Jogos:** Uso sob Fair Use para fins informativos (catálogo de jogos)
 - **Avatares/Skins Customizados:** Usuário mantém copyright, plataforma tem licença de exibição
 - **Posts/Conteúdo:** Usuário é dono, mas concede licença para exibição na plataforma
-
----
-
-## 12. PRÓXIMOS PASSOS IMEDIATOS
-
-1. **Validar Conceito:** Conversar com 5-10 gamers para validar interesse
-2. **Setup Inicial:** Configurar repositório Git + ambiente de dev
-3. **Prototipagem:** Criar wireframes básicos no Figma ou papel
-4. **Começar MVP:** Implementar autenticação + perfil básico
-5. **Documentar Aprendizados:** Manter diário de desenvolvimento para referência futura
-
----
-
-## 13. CONSIDERAÇÕES FINAIS
-
-O **GOMA** não nasce com a pretensão de ser a próxima grande rede social. É um experimento honesto para entender:
-
-- Como criar comunidades saudáveis na era moderna?
-- É possível fazer uma rede social slow em um mundo fast?
-- O que os gamers realmente querem além de matchmaking?
-
-**Sucesso neste projeto significa:**
-
-- Aprender profundamente sobre desenvolvimento full-stack
-- Criar uma comunidade pequena mas engajada
-- Validar que slow-social-media tem espaço no mercado gamer
-- (Bônus) Ter uma plataforma pessoal que eu mesmo quero usar
-
-**Falha aceitável seria:**
-
-- Descobrir que o conceito não ressoa após teste honesto
-- Aprender que a manutenção é insustentável sozinho
-- Perceber que Discord/outras ferramentas já resolvem o problema
-
-O importante é documentar a jornada, aprender com os erros, e se divertir no processo. Se o GOMA crescer organicamente e demonstrar valor, ótimo. Se não, foi um laboratório valioso de aprendizado.
