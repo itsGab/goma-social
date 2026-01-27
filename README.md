@@ -57,16 +57,12 @@ A plataforma fundamenta-se em três eixos principais, denominados internamente c
 - **Identidade (Base):** Perfis ricos que exibem a trajetória e reputação do jogador.
 - **Conectividade (Junção)** Fe:rramentas para encontrar jogadores com afinidades reais através de APIs e algoritmos sociais.
 
-### Glossário #TODO: colocar no final
+### Glossário #TODO: colocar no final, tenho que revisar isso, complementar e colocar no final***
 
 - **Orkut:** rede social brasileira popular nos anos 2000, focada em comunidades e perfis personalizados
 - **FOMO:** sigla para *Fear of Missing Out* (medo de ficar de fora)
 - **Slow social media:** movimento que propõe um consumo mais consciente e lento das redes sociais
 - **Gamers:** #TODO: completar!!!
-
-
-
-
 
 ---
 
@@ -87,6 +83,19 @@ O GOMA adapta ferramentas clássicas para uma dinâmica de jogo moderna:
 | **Reputação** | **Sistema de Badges** | **Cuidado com badges negativas.** Em vez de "Rude", use a ausência de positivas ou um sistema de "Karma". Badges sugeridas: *Tanker, Healer, Shotcaller, Mentor.* |
 | **Jogos** | **Mini-games de Tabuleiro** | Jogos clássicos de fórum (Xadrez, Damas, Stop) funcionam bem para criar laços enquanto se espera o download de um jogo pesado acabar. |
 | **Customização** | **Temas e Skins** | Permitir mudar cores e fontes (estilo MySpace/Orkut antigo). Isso gera um senso de "posse" sobre o perfil. |
+
+### Funcionalidades Essenciais
+
+Estas são as funcionalidades mínimas necessárias para validar o conceito e demonstrar o valor da plataforma:
+
+| Funcionalidade | Justificativa | Complexidade |
+| ---- | ---- | ---- |
+| **Autenticação** | Sem isso, não há plataforma | Baixa (Supabase) |
+| **Perfil Básico** | Identidade do usuário (foto, bio, jogos favoritos) | Baixa |
+| **Comunidades**| Core da proposta - criar/entrar/listar | Média |
+| **Posts em Comunidades**| Interação básica dentro das comunidades | Média |
+| **Mural de Recados** | Feature nostálgica que diferencia do Reddit/Discord | Baixa |
+| **Sistema de Amizades**| Conexão entre usuários | Média |
 
 ### Novidades Propostas
 
