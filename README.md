@@ -12,7 +12,7 @@ Este é um projeto pessoal para estudo e desenvolvimento. O projeto não tem fin
 
 - [1. Apresentação](#1-apresentação)
 - [2. Stack de Tecnologias](#2-stack-de-tecnologias)
-- [3. Estrutura do Projeto](#3-estrutura-do-projeto-repositório)
+- [3. Estrutura do Projeto](#3-estrutura-do-projeto)
 - [4. MVP](#4-mvp)
 - [5. Como Rodar](#5-como-rodar)
 - [6. Contribuição](#6-contribuição)
@@ -98,7 +98,7 @@ Da stack escolhida, as tecnologias que me encontro com maior familiaridade são 
 - **VPS Simples:** FastAPI + Nuxt
 - **DB & Auth:** Supabase
 
-## 3. Estrutura do Projeto (Repositório)
+## 3. Estrutura do Projeto
 
 Aqui está como esse repositório está ou ficará organizado.
 
