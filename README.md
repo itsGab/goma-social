@@ -2,7 +2,7 @@
 
 > Uma *slow social media* para *gamers* inspirado no **Orkut**.
 
-![Static Badge](https://img.shields.io/badge/planejamento-green?style=flat&label=status)
+![Static Badge](https://img.shields.io/badge/planejamento-orange?style=flat&label=status)
 
 ## Sobre
 
