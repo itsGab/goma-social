@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel
+from sqlmodel import Field, SQLModel
 
 
 class UserInput(SQLModel):
@@ -6,8 +6,8 @@ class UserInput(SQLModel):
     password: str
 
 
-class User(SQLModel):
-    id: int | None = None
+class User(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
     username: str
     password: str
 
