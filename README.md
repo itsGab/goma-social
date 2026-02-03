@@ -23,7 +23,7 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 
 | Camada | Tecnologia |
 | --- | --- |
-| **Backend** | Python 3.14+, FastAPI, SQLAlchemy 2.0 |
+| **Backend** | Python 3.14+, FastAPI, SQLModel (SQLAlchemy) |
 | **Frontend** | Vue 3, TypeScript, Pinia, Vite |
 | **Banco de Dados** | SQLite (MVP) / PostgreSQL (Escalabilidade) |
 | **Autenticação** | FastAPI Users (JWT / OAuth2) |
