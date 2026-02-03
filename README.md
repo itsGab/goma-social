@@ -46,7 +46,7 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 ### Fundação (MVP)
 
 - [ ] Infraestrutura **Backend**
-  - [ ] Setup do ambiente com `uv` e FastAPI.
+  - [x] Setup do ambiente com `uv` e FastAPI.
   - [ ] Configuração do banco de dados e Migrations (Alembic).
   - [ ] Implementação do CI/CD básico.
 - [ ] Gestão de Usuários
