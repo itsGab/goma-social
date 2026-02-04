@@ -41,28 +41,39 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 └── scripts/         # Deploy e automação
 ```
 
-## Roadmap
+## Roadmap MVP
 
-### Fundação (MVP)
-
-- [ ] Infraestrutura **Backend**
+### Backend
+- [ ] Infraestrutura Inicial do **Backend**
   - [x] Setup do ambiente com `uv` e FastAPI.
-  - [x] Configuração do banco de dados e Migrations (Alembic).
-  - [ ] Implementação do CI/CD básico.
-- [ ] Gestão de Usuários
-  - [ ] CRUD de Usuário.
-  - [ ] Testes de integração dos endpoints de usuário.
-- [ ] Interface Base - **Frontend**
-  - [ ] Setup Vue 3 + TypeScript + TailwindCSS.
-  - [ ] Sistema de rotas e gerenciamento de estado (Pinia).
-  - [ ] Desenvolvimento da Landing Page e Perfil de Usuário.
-- [ ] Gestão de Segurança
+  - [ ] Configuração de Banco de Dados Assíncrono (SQLModel + SQLAlchemy + Asyncpg).
+  - [ ] Configuração de Migrations (Alembic) com suporte a Async.
+  - [ ] Configuração do ambiente de testes (Pytest).
+  - [ ] Implementação do CI básico (Linter + Pytest automático).
+- [ ] Gestão de Segurança e Usuário
+  - [ ] Implementação de Segurança (Auth Core).
   - [ ] Fluxo de Autenticação (Registro/Login) via FastAPI Users.
   - [ ] Testes de integração dos endpoints de segurança.
-- [ ] Módulo de Comunidades
-  - [ ] Modelagem de dados para Fóruns, Posts e Respostas.
-  - [ ] Endpoints de interação social básica.
-  
+- [ ] Gestão de Dados
+  - [ ] CRUD de Usuário (Perfil/Update).
+  - [ ] CRUD de Post (Vinculado ao Usuário).
+  - [ ] Testes de integração dos endpoints de posts.
+
+### Frontend
+- [ ] Interface Base, **Frontend**
+  - [ ] Estrutura do App (Setup Vue 3 + TypeScript + TailwindCSS).
+  - [ ] Sistema de rotas e gerenciamento de estado (Pinia).
+  - [ ] Configuração de Axios/Fetch interceptors para Auth.
+
+### Integração & Fullstack
+- [ ] Telas e Integração (User Experience)
+  - [ ] Desenvolvimento da Landing Page e Login/Registro.
+  - [ ] Desenvolvimento do Feed e Perfil de Usuário.
+- [ ] Expansão Social (Módulo de Comunidades)
+  - [ ] Modelagem de dados para Fóruns e Respostas (Backend).
+  - [ ] Endpoints de interação social (Comentários).
+  - [ ] Interface de interação das comunidades (Frontend).
+  - [ ] Testes de lógica das comunidades.
 <!-- 
 ### Futuro
 TODO: à definir
