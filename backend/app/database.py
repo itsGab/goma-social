@@ -9,7 +9,9 @@ engine = create_engine(settings.DATABASE_URL)
 
 
 def get_session():
-    with Session(engine, expire_on_commit=False) as session:
+    with Session(
+        engine, expire_on_commit=False
+    ) as session:  # pragma: no cover
         yield session
 
 

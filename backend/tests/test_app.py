@@ -1,9 +1,3 @@
-from fastapi.testclient import TestClient
-
-from app.main import app
-
-
-def test_read_root():
-    client = TestClient(app)
+def test_read_root(client):
     response = client.get('/')
     assert response.json() == {'message': 'Hello from the backend!'}
