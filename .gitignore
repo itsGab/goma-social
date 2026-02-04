@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,vuejs,node,visualstudiocode,linux,database
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,vuejs,node,visualstudiocode,linux,database
 
+### Personal ###
+my-journey
+my-journal
+
 ### Database ###
 *.accdb
 *.db
