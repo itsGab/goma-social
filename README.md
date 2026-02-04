@@ -47,7 +47,7 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 
 - [ ] Infraestrutura **Backend**
   - [x] Setup do ambiente com `uv` e FastAPI.
-  - [ ] Configuração do banco de dados e Migrations (Alembic).
+  - [x] Configuração do banco de dados e Migrations (Alembic).
   - [ ] Implementação do CI/CD básico.
 - [ ] Gestão de Usuários
   - [ ] CRUD de Usuário.
