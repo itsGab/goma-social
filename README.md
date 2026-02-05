@@ -24,9 +24,9 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 | Camada | Tecnologia |
 | --- | --- |
 | **Backend** | Python 3.14+, FastAPI, SQLModel (SQLAlchemy) |
-| **Frontend** | Vue 3, TypeScript, Pinia, Vite |
+| **Frontend** | *(Jinja + HTMX) / (Vue ou React)* **!EM ABERTO** |
 | **Banco de Dados** | SQLite (MVP) / PostgreSQL (Escalabilidade) |
-| **Autenticação** | FastAPI Users (JWT / OAuth2) |
+| **Autenticação** | JWT, OAuth2, pwdlib |
 | **Infraestrutura** | Nginx, Supervisor, Docker |
 | **Integrações** | API Steam, API IGDB |
 | **Tooling** | Gerenciamento de pacotes via `uv` (Python) e `npm` (Node.js) |
@@ -46,13 +46,13 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 ### Backend
 - [ ] Infraestrutura Inicial do **Backend**
   - [x] Setup do ambiente com `uv` e FastAPI.
-  - [ ] Configuração de Banco de Dados Assíncrono (SQLModel + SQLAlchemy + Asyncpg).
+  - [ ] Configuração de Banco de Dados Assíncrono (SQLModel + SQLAlchemy).
   - [ ] Configuração de Migrations (Alembic) com suporte a Async.
   - [ ] Configuração do ambiente de testes (Pytest).
   - [ ] Implementação do CI básico (Linter + Pytest automático).
 - [ ] Gestão de Segurança e Usuário
-  - [ ] Implementação de Segurança (Auth Core).
-  - [ ] Fluxo de Autenticação (Registro/Login) via FastAPI Users.
+  - [ ] Implementação de Segurança (Auth).
+  - [ ] Fluxo de Autenticação (Registro/Login).
   - [ ] Testes de integração dos endpoints de segurança.
 - [ ] Gestão de Dados
   - [ ] CRUD de Usuário (Perfil/Update).
@@ -61,9 +61,8 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 
 ### Frontend
 - [ ] Interface Base, **Frontend**
-  - [ ] Estrutura do App (Setup Vue 3 + TypeScript + TailwindCSS).
-  - [ ] Sistema de rotas e gerenciamento de estado (Pinia).
-  - [ ] Configuração de Axios/Fetch interceptors para Auth.
+  - [ ] Estrutura do App (*Decisão de Stack*)
+  - [ ] ...
 
 ### Integração & Fullstack
 - [ ] Telas e Integração (User Experience)
