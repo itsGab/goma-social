@@ -6,14 +6,14 @@ Aqui estão as funcionalidade (features) que o projeto almeja ter, algumas essen
 
 Estas são as funcionalidades mínimas necessárias para validar o conceito e demonstrar o valor da plataforma:
 
-| Funcionalidade | Justificativa | Complexidade |
-| ---- | ---- | ---- |
-| **Autenticação** | Sem isso, não há plataforma | Baixa (Supabase) |
-| **Perfil Básico** | Identidade do usuário (foto, bio, jogos favoritos) | Baixa |
-| **Comunidades** | Core da proposta - criar/entrar/listar | Média |
-| **Posts em Comunidades** | Interação básica dentro das comunidades | Média |
-| **Mural de Recados** | Feature nostálgica que diferencia do Reddit/Discord | Baixa |
-| **Sistema de Amizades** | Conexão entre usuários | Média |
+| Funcionalidade | Justificativa |
+| ---- | ---- |
+| **Autenticação** | Sem isso, não há plataforma |
+| **Perfil Básico** | Identidade do usuário (foto, bio, jogos favoritos) |
+| **Comunidades** | Core da proposta - criar/entrar/listar |
+| **Posts em Comunidades** | Interação básica dentro das comunidades |
+| **Mural de Recados** | Feature nostálgica que diferencia do Reddit/Discord |
+| **Sistema de Amizades** | Conexão entre usuários |
 
 ## Inspiradas no Orkut
 

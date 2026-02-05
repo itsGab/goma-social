@@ -34,9 +34,7 @@
 
 ## Segurança da Conta
 
-- **Autenticação Social:** Login via Steam/Discord (Supabase OAuth)
-- **Sem Senhas Armazenadas:** Delegamos auth para provedores confiáveis
-- **2FA Opcional:** Pode ser implementado via Supabase no futuro
+- **Autenticação:** Feita pelo FastAPI-Users
 - **Sessões Seguras:** Tokens JWT com expiração
 
 ## Propriedade Intelectual

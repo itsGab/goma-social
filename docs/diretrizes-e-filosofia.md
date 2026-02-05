@@ -9,7 +9,6 @@ O GOMA fundamenta-se em princípios que priorizam o bem-estar do usuário e a qu
 - **Para o público gamer** - Entendendo as necessidades específicas de quem joga: encontrar grupos, compartilhar conquistas, discutir estratégias.
 - **Consumo devagar (slow social media)** - Respeitar o tempo do usuário, sem pressão por presença constante ou FOMO artificial.
 - **Ambiente saudável** - Reduzir ansiedade forçada por algoritmos, notificações excessivas e mecânicas viciantes.
-- **Para todos** - Acessível a qualquer jogador que queira contribuir com bom senso e respeito, independente de poder aquisitivo.
 
 ## Princípios de Design
 
