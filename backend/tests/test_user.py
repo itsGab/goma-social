@@ -1,15 +1,18 @@
-from sqlmodel import select
+import pytest
+from sqlalchemy import select
 
 from app.models import User
 
 
-def test_create_user(session):
+@pytest.mark.asyncio
+async def test_create_user(session):
     new_user = User(username='gabriel', password='12345')
     session.add(new_user)
-    session.commit()
-    session.refresh(new_user)
-    statement = select(User).where(User.username == 'gabriel')
-    user = session.exec(statement).first()
+    await session.commit()
+    await session.refresh(new_user)
+    statement = select(User).where(User.username == 'gabriel')  # type: ignore
+    result = await session.execute(statement)
+    user = result.scalar_one_or_none()
 
     assert user is not None
     assert user.username == 'gabriel'

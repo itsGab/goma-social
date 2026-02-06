@@ -1,18 +1,16 @@
 from typing import Annotated
 
 from fastapi import Depends
-from sqlmodel import Session, create_engine
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 from .settings import settings
 
-engine = create_engine(settings.DATABASE_URL)
+engine = create_async_engine(settings.DATABASE_URL)
 
 
-def get_session():
-    with Session(
-        engine, expire_on_commit=False
-    ) as session:  # pragma: no cover
+async def get_session():
+    async with AsyncSession(engine, expire_on_commit=False) as session:
         yield session
 
 
-SessionDep = Annotated[Session, Depends(get_session)]
+SessionDep = Annotated[AsyncSession, Depends(get_session)]

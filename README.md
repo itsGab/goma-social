@@ -10,7 +10,7 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 
 **O nome**: Goma representa a substância que *gruda* a comunidade. Também serve como um acrônimo para Gamers On Meeting Area (jogadores na área de encontro)
 
-**Idioma:** Português (BR) | **Deploy:** [goma.aforja.com](https://goma.aforja.cloud)
+**Idioma:** Português (BR)
 
 ### Por que?
 
