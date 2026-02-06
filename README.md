@@ -73,22 +73,61 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
   - [ ] Endpoints de interação social (Comentários).
   - [ ] Interface de interação das comunidades (Frontend).
   - [ ] Testes de lógica das comunidades.
-<!-- 
-### Futuro
-TODO: à definir
--->
 
-<!-- 
+### Futuro 
+
+À definir
+
+
 ## Quick Start 
 
-### Desenvolvimento Local
+- Clona o repositório: 
+  ``` bash
+  git clone https://github.com/itsGab/goma-social.git
+  ```
 
-``` bash
-TODO: atualizar assim que possível
-# Backend
-# Frontend
-```
--->
+## Desenvolvimento Local
+
+### Backend
+
+1. **Entre na pasta do backend:**
+    ```bash
+    cd backend
+    ```
+
+2. **Configure o `.env` (copie o exemplo):**
+- Linux/macOS: 
+    ```bash
+    cp .env.example .env
+    ```
+- Windows (PowerShell):
+    ```bash
+    copy .env.example .env
+    ```
+
+3. **Instale as ferramentas necessárias:**
+    - [pipx](https://pipx.pypa.io/stable/installation/) (opcional, para instalar o uv)
+    - [uv](https://docs.astral.sh/uv/getting-started/installation/)
+
+    ```bash
+    pipx install uv
+    ```
+
+4. **Prepare o ambiente e dependências:**
+    ```bash
+    uv python install 3.14
+    uv sync --locked --all-extras --dev
+    ```
+
+
+5. **Rode a aplicação:**
+    ```bash
+    uv run task run
+    ```
+
+### Frontend
+
+- *Ainda não foi desenvolvido!!!*
 
 ## Contribuindo
 
@@ -104,8 +143,7 @@ Este é um **projeto pessoal de estudo**. Familiaridade com as tecnologias:
 
 - Python/FastAPI: OK
 - SQL: OK
-- Vue.js: Aprendendo
-
+- Frontend: ???
 ## Licença
 <!--TODO: definir a licença-->
 [A definir]
