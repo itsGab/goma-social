@@ -44,12 +44,12 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 ## Roadmap MVP
 
 ### Backend
-- [ ] Infraestrutura Inicial do **Backend**
+- [x] Infraestrutura Inicial do **Backend**
   - [x] Setup do ambiente com `uv` e FastAPI.
   - [x] Configuração de Banco de Dados Assíncrono (SQLModel + SQLAlchemy).
-  - [ ] Configuração de Migrations (Alembic) com suporte a Async.
-  - [ ] Configuração do ambiente de testes (Pytest).
-  - [ ] Implementação do CI básico (Linter + Pytest automático).
+  - [x] Configuração de Migrations (Alembic) com suporte a Async.
+  - [x] Configuração do ambiente de testes (Pytest).
+  - [x] Implementação do CI básico (Linter + Pytest automático).
 - [ ] Gestão de Segurança e Usuário
   - [ ] Implementação de Segurança (Auth).
   - [ ] Fluxo de Autenticação (Registro/Login).
