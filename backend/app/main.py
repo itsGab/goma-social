@@ -8,4 +8,4 @@ app.include_router(users.router)
 
 @app.get('/')
 def read_root():
-    return {'message': 'Hello from the backend!!!'}
+    return {'message': 'Hello from the test'}

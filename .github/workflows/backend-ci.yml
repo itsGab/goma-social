@@ -2,12 +2,12 @@ name: Backend CI
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ "main" ]
     paths:
       - "backend/**"
       - ".github/workflows/backend-ci.yml"
   pull_request:
-    branches: [ $default-branch ]
+    branches: [ "main" ]
     paths:
       - "backend/**"
 
@@ -25,21 +25,20 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
-          cache-dependency-path: backend/uv.lock
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: astral-sh/setup-python@v5
+        uses: astral-sh/setup-python@v6
         with:
           python-version-file: "backend/.python-version"
+          
+      - name: Install uv (enable caching)
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
 
-      - name: Install dependencies
-        run: uv sync --all-groups
+      - name: Install the project
+        run: uv sync --locked --all-extras --dev
 
       - name: Run Lint (Ruff)
         run: uv run task lint
