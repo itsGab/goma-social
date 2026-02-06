@@ -1,0 +1,51 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ $default-branch ]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+  pull_request:
+    branches: [ $default-branch ]
+    paths:
+      - "backend/**"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Run Lint and Tests
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-path: backend/uv.lock
+
+      - name: Set up Python
+        uses: astral-sh/setup-python@v5
+        with:
+          python-version-file: "backend/.python-version"
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Run Lint (Ruff)
+        run: uv run task lint
+
+      - name: Run Tests (Pytest)
+        run: uv run task test
+
+      - name: Show Coverage Summary
+        run: uv run coverage report

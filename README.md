@@ -46,7 +46,7 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 ### Backend
 - [ ] Infraestrutura Inicial do **Backend**
   - [x] Setup do ambiente com `uv` e FastAPI.
-  - [ ] Configuração de Banco de Dados Assíncrono (SQLModel + SQLAlchemy).
+  - [x] Configuração de Banco de Dados Assíncrono (SQLModel + SQLAlchemy).
   - [ ] Configuração de Migrations (Alembic) com suporte a Async.
   - [ ] Configuração do ambiente de testes (Pytest).
   - [ ] Implementação do CI básico (Linter + Pytest automático).
