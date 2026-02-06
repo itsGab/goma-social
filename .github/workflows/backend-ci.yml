@@ -18,6 +18,10 @@ jobs:
   test:
     name: Run Lint and Tests
     runs-on: ubuntu-latest
+
+    env:
+      DB_FILE_NAME: ${{ secrets.DB_FILE_NAME }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     
     defaults:
       run:
