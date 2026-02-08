@@ -16,11 +16,11 @@ async def session_fixture():
         poolclass=StaticPool,
     )
     async with engine.begin() as conn:
-        await conn.run_sync(models.SQLModel.metadata.create_all)
+        await conn.run_sync(models.metadata.create_all)
     async with AsyncSession(engine, expire_on_commit=False) as session:
         yield session
     async with engine.begin() as conn:
-        await conn.run_sync(models.SQLModel.metadata.drop_all)
+        await conn.run_sync(models.metadata.drop_all)
 
 
 @pytest_asyncio.fixture(name='client')
@@ -38,6 +38,7 @@ async def client_fixture(session: AsyncSession):
 @pytest_asyncio.fixture(name='user')
 async def user_fixture(session: AsyncSession):
     user = models.User(
+        email='user01@mail.com',
         username='user01',
         password='password123',
     )

@@ -36,7 +36,7 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 ``` text
 ./
 ├── backend/         # FastAPI
-├── frontend/        # Vue 3
+├── frontend/        # Frontend (React ou Vue)
 ├── docs/            # Documentação complementar
 └── scripts/         # Deploy e automação
 ```
@@ -51,8 +51,8 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
   - [x] Configuração do ambiente de testes (Pytest).
   - [x] Implementação do CI básico (Linter + Pytest automático).
 - [ ] Gestão de Segurança e Usuário
-  - [ ] Implementação de Segurança (Auth).
-  - [ ] Fluxo de Autenticação (Registro/Login).
+  - [x] Implementação de Segurança (Auth).
+  - [x] Fluxo de Autenticação (Registro/Login).
   - [ ] Testes de integração dos endpoints de segurança.
 - [ ] Gestão de Dados
   - [ ] CRUD de Usuário (Perfil/Update).

@@ -6,24 +6,29 @@ from app.models import User
 
 @pytest.mark.asyncio
 async def test_create_user(session):
-    new_user = User(username='gabriel', password='12345')
+    new_user = User(
+        email='test@test.com',
+        username='test',
+        password='test123',
+    )
     session.add(new_user)
     await session.commit()
     await session.refresh(new_user)
-    statement = select(User).where(User.username == 'gabriel')  # type: ignore
+    statement = select(User).where(User.username == 'test')
     result = await session.execute(statement)
     user = result.scalar_one_or_none()
 
     assert user is not None
-    assert user.username == 'gabriel'
+    assert user.username == 'test'
     assert user.id is not None
     assert user.created_at is not None
 
 
 def test_create_user_client(client):
     user_input = {
-        'username': 'gabriel',
-        'password': '12345',
+        'email': 'test@test.com',
+        'username': 'test',
+        'password': 'test123',
     }
     response = client.post(
         url='/users/create',
@@ -32,22 +37,15 @@ def test_create_user_client(client):
     # ! add assert status_code
     data = response.json()
 
-    assert data['username'] == 'gabriel'
+    assert data['username'] == 'test'
     assert data['id'] == 1
 
 
-def test_list_user_client(client, user):
+def test_not_auth_user_try_listclient(client, user):
     response = client.get(
         url='/users/list',
     )
     # ! add assert status_code
     data = response.json()
 
-    assert data == {
-        'publiclist': [
-            {
-                'id': user.id,
-                'username': user.username,
-            }
-        ]
-    }
+    assert data == {'detail': 'Not authenticated'}
