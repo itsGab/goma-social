@@ -55,10 +55,14 @@ class UserPublic(UserBase):
     id: int
 
 
-class UserPublicList(SQLModel):
-    publiclist: list[UserPublic]
+class UserList(SQLModel):
+    userlist: list[UserPublic]
 
 
 class Token(SQLModel):
     access_token: str
     token_type: str
+
+
+class ErrorMessage(SQLModel):
+    detail: str

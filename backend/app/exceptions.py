@@ -6,22 +6,25 @@ from fastapi import HTTPException
 
 class ResponseMessage(str, Enum):
     # user
-    USER_ANY_CONFLICT = 'Usuário ou email já cadastrado'
-    USER_USERNAME_CONFLICT = 'Nome de usuário já cadastrado'
-    USER_EMAIL_CONFLICT = 'Email já cadastrado'
-    USER_DELETED_SUCCESS = 'Conta deletada com sucesso'
+    USER_ANY_CONFLICT = 'Username or email already in use'
+    USER_USERNAME_CONFLICT = 'Username already in use'
+    USER_EMAIL_CONFLICT = 'Email already in use'
+    USER_DELETED_SUCCESS = 'User deleted successfully'
 
     # auth
-    AUTH_INVALID_CREDENTIALS = 'Email ou senha incorretos'
-    AUTH_NOT_AUTHORIZED = 'Não autorizado'
+    AUTH_INVALID_CREDENTIALS = 'Invalid email or password'
+    AUTH_NOT_AUTHORIZED = 'Not authorized'
 
     # data validation
-    DATA_MISSING_FIELDS = 'Pelo menos um campo deve ser fornecido'
+    DATA_MISSING_FIELDS = 'At least one field must be provided'
+
+    # padrao
+    INTERNAL_SERVER_ERROR = 'Internal server error'
 
 
 class AppException(HTTPException):
-    status_code = HTTPStatus.INTERNAL_SERVER_ERROR  # Padrão
-    detail = 'Erro interno no servidor'
+    status_code = HTTPStatus.INTERNAL_SERVER_ERROR
+    detail = ResponseMessage.INTERNAL_SERVER_ERROR
     headers = None
 
     def __init__(
