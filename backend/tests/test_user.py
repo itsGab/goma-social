@@ -1,30 +1,10 @@
-import pytest
-from sqlalchemy import select
+from http import HTTPStatus
 
-from app.models import User
-
-
-@pytest.mark.asyncio
-async def test_create_user(session):
-    new_user = User(
-        email='test@test.com',
-        username='test',
-        password='test123',
-    )
-    session.add(new_user)
-    await session.commit()
-    await session.refresh(new_user)
-    statement = select(User).where(User.username == 'test')
-    result = await session.execute(statement)
-    user = result.scalar_one_or_none()
-
-    assert user is not None
-    assert user.username == 'test'
-    assert user.id is not None
-    assert user.created_at is not None
+from app.exceptions import ResponseMessage
+from app.models import UserPublic
 
 
-def test_create_user_client(client):
+def test_user_create_new_user_success(client):
     user_input = {
         'email': 'test@test.com',
         'username': 'test',
@@ -34,18 +14,67 @@ def test_create_user_client(client):
         url='/users/create',
         json=user_input,
     )
-    # ! add assert status_code
-    data = response.json()
 
+    assert response.status_code == HTTPStatus.CREATED
+
+    data = response.json()
     assert data['username'] == 'test'
     assert data['id'] == 1
 
 
-def test_not_auth_user_try_listclient(client, user):
+def test_list_users_user_not_authenticated_error(client, user):
+    response = client.get(
+        url='/users/list', headers={'Authorization': 'Bearer invalid-token'}
+    )
+
+    assert response.status_code == HTTPStatus.UNAUTHORIZED
+
+    data = response.json()
+    # aqui o erro é pego pelo oath2_scheme.
+    assert data == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
+
+
+def test_list_users_user_authenticated_success(client, user, token):
     response = client.get(
         url='/users/list',
+        headers={'Authorization': f'Bearer {token["access_token"]}'},
     )
-    # ! add assert status_code
-    data = response.json()
 
-    assert data == {'detail': 'Not authenticated'}
+    assert response.status_code == HTTPStatus.OK
+
+    data = response.json()
+    user_data = user.model_dump()
+    user_public = UserPublic(**user_data).model_dump()
+    assert data == {'userlist': [user_public]}
+
+
+def test_user_create_user_username_conflict_error(client, user):
+    response = client.post(
+        url='/users/create',
+        json={
+            'username': user.username,
+            'email': 'whatever@mail.com',
+            'password': 'pwd321',
+        },
+    )
+
+    assert response.status_code == HTTPStatus.CONFLICT
+
+    data = response.json()
+    assert data == {'detail': ResponseMessage.USER_ANY_CONFLICT}
+
+
+def test_user_create_user_email_conflict_error(client, user):
+    response = client.post(
+        url='/users/create',
+        json={
+            'username': 'whatever',
+            'email': user.email,
+            'password': 'pwd321',
+        },
+    )
+
+    assert response.status_code == HTTPStatus.CONFLICT
+
+    data = response.json()
+    assert data == {'detail': ResponseMessage.USER_ANY_CONFLICT}

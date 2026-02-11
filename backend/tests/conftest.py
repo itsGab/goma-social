@@ -6,6 +6,7 @@ from sqlalchemy.pool import StaticPool
 from app import models
 from app.database import get_session
 from app.main import app
+from app.security import get_password_hash
 
 
 @pytest_asyncio.fixture(name='session')
@@ -37,12 +38,25 @@ async def client_fixture(session: AsyncSession):
 
 @pytest_asyncio.fixture(name='user')
 async def user_fixture(session: AsyncSession):
+    plain_password = 'password123'
     user = models.User(
         email='user01@mail.com',
         username='user01',
-        password='password123',
+        password=get_password_hash(plain_password),
     )
     session.add(user)
     await session.commit()
     await session.refresh(user)
+    user.__dict__['clean_password'] = plain_password
     return user
+
+
+@pytest_asyncio.fixture(name='token')
+async def token(client, user):
+    user
+    response = client.post(
+        '/auth/token',
+        data={'username': user.email, 'password': 'password123'},
+    )
+    # returns: json(access_token, token_type)
+    return response.json()
