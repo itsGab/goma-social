@@ -1,3 +1,7 @@
+# =============================================================================
+#                         teste exceptions.py
+# =============================================================================
+
 from http import HTTPStatus
 
 from fastapi import HTTPException
@@ -5,19 +9,24 @@ from fastapi import HTTPException
 from app.exceptions import AppException, ResponseMessage, UserConflictException
 
 
+# default: http exception =====================================================
+# !. standard behavior of http exception
 def test_exception_http_exception():
     data = HTTPException(status_code=HTTPStatus.BAD_REQUEST)
     assert data.status_code == HTTPStatus.BAD_REQUEST
     assert data.detail == 'Bad Request'
 
 
+# customs:app exception ======================================================
+# !. standard behavior of app exception
 def test_exception_app_exception_base():
     data = AppException()
     assert data.status_code == HTTPStatus.INTERNAL_SERVER_ERROR
     assert data.detail == ResponseMessage.INTERNAL_SERVER_ERROR
 
 
-def test_exception_user_conflict_exception():
+# !. kinds of user conlfict exception
+def test_exception_kind_in_user_conflict_exception():
     # empty: kind default = 'any'
     data = UserConflictException()
     assert data.status_code == HTTPStatus.CONFLICT

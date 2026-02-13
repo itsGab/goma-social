@@ -1,18 +1,25 @@
+# =============================================================================
+#                         cenários de usuários
+# =============================================================================
+
 from http import HTTPStatus
 
 from app.exceptions import ResponseMessage
 from app.models import UserPublic
 
 
+# ***************** !!! REVISAR / REFAZER / COMPLEMENTAR !!! ******************
+# endpoint: /users/create =====================================================
+# !. post user create success
 def test_user_create_new_user_success(client):
-    user_input = {
+    new_user = {
         'email': 'test@test.com',
         'username': 'test',
         'password': 'test123',
     }
     response = client.post(
         url='/users/create',
-        json=user_input,
+        json=new_user,
     )
 
     assert response.status_code == HTTPStatus.CREATED

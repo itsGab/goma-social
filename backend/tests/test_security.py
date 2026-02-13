@@ -3,20 +3,38 @@
 # =============================================================================
 
 import pytest
+from jwt import decode
 
 from app.exceptions import UnauthorizedException
-from app.security import create_access_token, get_current_user
+from app.security import (
+    create_access_token,
+    get_current_user,
+    get_password_hash,
+    settings,
+    verify_password,
+)
 
 
 # create_acess_token ==========================================================
 # !. create acess token success
-def something(): ...  # TODO: terminar os testes!!!
+def test_security_create_access_token_success():
+    token = create_access_token({'sub': 'email'})
+    decoded = decode(
+        jwt=token, key=settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
+    )
+    assert decoded['sub'] == 'email'
+    assert 'exp' in decoded
 
 
-# get_password_hash ===========================================================
-
-
-# verify_password =============================================================
+# get_password_hash / verify_password =========================================
+# !. hash password and verify success
+def test_security_hash_and_verify_password():
+    plain_password = 'super-secret-password'
+    hashed_password = get_password_hash(plain_password)
+    verify = verify_password(
+        plain_password=plain_password, hashed_password=hashed_password
+    )
+    assert verify
 
 
 # get_current_user ============================================================
