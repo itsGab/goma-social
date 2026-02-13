@@ -22,7 +22,7 @@ def test_user_create_new_user_success(client):
     assert data['id'] == 1
 
 
-def test_list_users_user_not_authenticated_error(client, user):
+def test_list_users_user_not_authenticated_error(client):
     response = client.get(
         url='/users/list', headers={'Authorization': 'Bearer invalid-token'}
     )
