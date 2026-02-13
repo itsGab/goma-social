@@ -61,7 +61,7 @@ def test_auth_refresh_token_success(client, token):
 
 
 # !. post refresh token no token fail
-def test_auth_refresh_token_without_token_fail(client, token):
+def test_auth_refresh_token_without_token_fail(client):
     response = client.post(
         '/auth/refresh-token',
         headers={},
@@ -73,6 +73,7 @@ def test_auth_refresh_token_without_token_fail(client, token):
 
 # !. post refresh token invalid token fail
 def test_auth_refresh_token_with_invalid_token_fail(client, token):
+    # invalid access_token
     response = client.post(
         '/auth/refresh-token',
         headers={
@@ -81,3 +82,27 @@ def test_auth_refresh_token_with_invalid_token_fail(client, token):
     )
     assert response.status_code == HTTPStatus.UNAUTHORIZED
     assert response.json() == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
+
+    # not bearer
+    response = client.post(
+        '/auth/refresh-token',
+        headers={
+            'Authorization': f'Basic {token["access_token"]}',
+        },
+    )
+    assert response.status_code == HTTPStatus.UNAUTHORIZED
+    assert response.json() == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
+
+    # authorization empty
+    response = client.post(
+        '/auth/refresh-token',
+        headers={
+            'Authorization': '',
+        },
+    )
+    assert response.status_code == HTTPStatus.UNAUTHORIZED
+    assert response.json() == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
+
+
+# !. post refresh token expired token fail
+# TODO: implementar teste de token expirado!!!

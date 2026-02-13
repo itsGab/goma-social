@@ -52,3 +52,18 @@ def test_exception_kind_in_user_conflict_exception():
     data = UserConflictException(detail=message)
     assert data.status_code == HTTPStatus.CONFLICT
     assert data.detail == 'Testing detail message'
+
+    # invalid kind: kind = 'invalid_key' (not registered as an option)
+    data = UserConflictException(kind='invalid_key')
+    assert data.detail is not None
+
+
+def test_exception_inheritance():
+    assert isinstance(AppException(), HTTPException)
+    assert isinstance(UserConflictException(), AppException)
+
+
+def test_exception_with_headers():
+    headers = {'X-Error': 'CustomError'}
+    data = UserConflictException(headers=headers)
+    assert data.headers == headers

@@ -67,8 +67,8 @@ class UserConflictException(AppException):
         'email': ResponseMessage.USER_EMAIL_CONFLICT,
     }
 
-    def __init__(self, kind: str = 'any', detail: str | None = None):
+    def __init__(self, kind: str = 'any', detail: str | None = None, **kwargs):
         message = detail or self.MAP.get(
             kind.lower(), ResponseMessage.USER_ANY_CONFLICT
         )
-        super().__init__(detail=message)
+        super().__init__(detail=message, **kwargs)
