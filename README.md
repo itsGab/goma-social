@@ -24,7 +24,7 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 | Camada | Tecnologia |
 | --- | --- |
 | **Backend** | Python 3.14+, FastAPI, SQLModel (SQLAlchemy) |
-| **Frontend** | *(Jinja + HTMX) / (Vue ou React)* **!EM ABERTO** |
+| **Frontend** | A princípio *JavaScript*, mas **EM ABERTO!** |
 | **Banco de Dados** | SQLite (MVP) / PostgreSQL (Escalabilidade) |
 | **Autenticação** | JWT, OAuth2, pwdlib |
 | **Infraestrutura** | Nginx, Supervisor, Docker |
@@ -36,7 +36,7 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
 ``` text
 ./
 ├── backend/         # FastAPI
-├── frontend/        # Frontend (React ou Vue)
+├── frontend/        # Frontend (JavaScript)
 ├── docs/            # Documentação complementar
 └── scripts/         # Deploy e automação
 ```
@@ -50,16 +50,20 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
   - [x] Configuração de Migrations (Alembic) com suporte a Async.
   - [x] Configuração do ambiente de testes (Pytest).
   - [x] Implementação do CI básico (Linter + Pytest automático).
-- [ ] Gestão de Segurança e Usuário
+- [x] Gestão de Segurança e Usuário
   - [x] Implementação de Segurança (Auth).
   - [x] Fluxo de Autenticação (Registro/Login).
-  - [ ] Testes de integração dos endpoints de segurança.
+  - [x] Testes de integração dos endpoints de segurança.
 - [ ] Gestão de Dados
   - [ ] CRUD de Usuário (Perfil/Update).
   - [ ] CRUD de Post (Vinculado ao Usuário).
   - [ ] Testes de integração dos endpoints de posts.
+- [ ] Revisão Segurança (Auth)
+  - [ ] ...
 
 ### Frontend
+- [ ] Estudar JavaScript
+  - [ ] Curso [The Odin Project](https://www.theodinproject.com/)
 - [ ] Interface Base, **Frontend**
   - [ ] Estrutura do App (*Decisão de Stack*)
   - [ ] ...

@@ -83,6 +83,8 @@ def test_auth_refresh_token_with_invalid_token_fail(client, token):
     assert response.status_code == HTTPStatus.UNAUTHORIZED
     assert response.json() == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
 
+
+def test_auth_refresh_token_with_invalid_basic_token_fail(client, token):
     # not bearer
     response = client.post(
         '/auth/refresh-token',
@@ -91,8 +93,10 @@ def test_auth_refresh_token_with_invalid_token_fail(client, token):
         },
     )
     assert response.status_code == HTTPStatus.UNAUTHORIZED
-    assert response.json() == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
+    assert response.json() == {'detail': 'Not authenticated'}
 
+
+def test_auth_refresh_token_with_invalid_empty_token_fail(client, token):
     # authorization empty
     response = client.post(
         '/auth/refresh-token',
@@ -101,7 +105,17 @@ def test_auth_refresh_token_with_invalid_token_fail(client, token):
         },
     )
     assert response.status_code == HTTPStatus.UNAUTHORIZED
-    assert response.json() == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
+    assert response.json() == {'detail': 'Not authenticated'}
+
+
+def test_auth_refresh_token_with_empty_auth_headers_fail(client, token):
+    # authorization empty
+    response = client.post(
+        '/auth/refresh-token',
+        headers={},
+    )
+    assert response.status_code == HTTPStatus.UNAUTHORIZED
+    assert response.json() == {'detail': 'Not authenticated'}
 
 
 # !. post refresh token expired token fail
