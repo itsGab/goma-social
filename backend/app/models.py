@@ -2,7 +2,14 @@ from datetime import datetime
 
 from pydantic import EmailStr
 from sqlalchemy import MetaData
-from sqlmodel import Column, DateTime, Field, SQLModel, func
+from sqlmodel import (
+    Column,
+    DateTime,
+    Field,
+    Relationship,
+    SQLModel,
+    func,
+)
 
 # Define um padrão de nomes para as restrições
 convention = {
@@ -16,11 +23,11 @@ convention = {
 metadata = MetaData(naming_convention=convention)
 
 
-class BaseModel(SQLModel):
+class BaseSQLModel(SQLModel):
     metadata = metadata
 
 
-class TimestampModel(BaseModel):
+class TimestampModel(BaseSQLModel):
     # campos para horario da criacao e atualizacao
     # ! TODO: revisar
     created_at: datetime = Field(
@@ -37,22 +44,33 @@ class TimestampModel(BaseModel):
     )
 
 
-class UserBase(SQLModel):
-    email: EmailStr = Field(unique=True, index=True)
-    username: str = Field(unique=True, index=True)
-
-
-class UserInput(UserBase):
+class UserInput(SQLModel):
+    email: EmailStr
+    username: str
     password: str
 
 
-class User(TimestampModel, UserBase, table=True):
+class User(TimestampModel, table=True):
+    email: EmailStr = Field(unique=True, index=True)
+    username: str = Field(unique=True, index=True)
     id: int | None = Field(default=None, primary_key=True)
     password: str = Field(nullable=False)
 
+    profile: 'Profile' = Relationship(
+        back_populates='user',
+        sa_relationship_kwargs={'cascade': 'all, delete-orphan'},
+    )
 
-class UserPublic(UserBase):
+
+class UserPublic(SQLModel):
+    email: EmailStr
+    username: str
     id: int
+
+
+class UserOnDelete(SQLModel):
+    username: str
+    password: str
 
 
 class UserList(SQLModel):
@@ -66,3 +84,28 @@ class Token(SQLModel):
 
 class ErrorMessage(SQLModel):
     detail: str
+
+
+class Profile(BaseSQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    display_name: str = Field(nullable=False)
+    bio: str = Field(default='Sou novo aqui!')
+
+    user_id: int | None = Field(
+        foreign_key='user.id', ondelete='CASCADE', nullable=False
+    )
+    user: User = Relationship(back_populates='profile')
+
+
+class ProfilePublic(SQLModel):
+    display_name: str
+    bio: str
+
+
+class ProfileOnUpdate(SQLModel):
+    display_name: str | None = Field(default=None)
+    bio: str | None = Field(default=None)
+
+
+class RegularMessage(SQLModel):
+    message: str

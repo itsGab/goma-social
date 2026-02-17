@@ -15,20 +15,23 @@ class ResponseMessage(str, Enum):
     AUTH_INVALID_CREDENTIALS = 'Invalid email or password'
     AUTH_NOT_AUTHORIZED = 'Not authorized'
 
-    # data validation
-    DATA_MISSING_FIELDS = 'At least one field must be provided'
-
-    # padrao
-    INTERNAL_SERVER_ERROR = 'Internal server error'
+    # not found
+    NOT_FOUND_DEFAULT = 'Not Found'
+    NOT_FOUND_USER = 'User not found'
+    NOT_FOUND_PROFILE = 'Profile not found'
 
 
 class AppException(HTTPException):
     status_code = HTTPStatus.INTERNAL_SERVER_ERROR
-    detail = ResponseMessage.INTERNAL_SERVER_ERROR
+    detail = None
     headers = None
 
     def __init__(
-        self, detail: str = None, status_code: int = None, headers: dict = None
+        self,
+        status_code: int = None,
+        detail: str = None,
+        headers: dict = None,
+        **kwargs,
     ):
         super().__init__(
             status_code=status_code or self.status_code,
@@ -70,5 +73,34 @@ class UserConflictException(AppException):
     def __init__(self, kind: str = 'any', detail: str | None = None, **kwargs):
         message = detail or self.MAP.get(
             kind.lower(), ResponseMessage.USER_ANY_CONFLICT
+        )
+        super().__init__(detail=message, **kwargs)
+
+
+class NotFoundException(AppException):
+    """
+    Exceção pode ser usada para não encontrados genéricos usuários e perfis
+    utilizando as mensagens padronizadas do ResponseMessage.
+
+    Args:
+        what (str):
+            O tipo de não encontrado ('user', 'profile', '...'). Defaults to
+        'user'.
+        detail (str, optional):
+            Mensagem customizada que sobrescreve o padrão do MAP.
+    """
+
+    status_code = HTTPStatus.NOT_FOUND
+    MAP = {
+        'default': ResponseMessage.NOT_FOUND_DEFAULT,
+        'user': ResponseMessage.NOT_FOUND_USER,
+        'profile': ResponseMessage.NOT_FOUND_PROFILE,
+    }
+
+    def __init__(
+        self, what: str = 'default', detail: str | None = None, **kwargs
+    ):
+        message = detail or self.MAP.get(
+            what.lower(), ResponseMessage.NOT_FOUND_DEFAULT
         )
         super().__init__(detail=message, **kwargs)
