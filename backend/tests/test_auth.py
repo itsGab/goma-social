@@ -48,11 +48,11 @@ def test_auth_token_missing_field_fail(client, user):
 
 # endpoint: /auth/refresh-token ===============================================
 # !. post refresh token success
-def test_auth_refresh_token_success(client, token):
+def test_auth_refresh_token_success(client, access_token):
     response = client.post(
         '/auth/refresh-token',
         headers={
-            'Authorization': f'Bearer {token["access_token"]}',
+            'Authorization': f'Bearer {access_token}',
         },
     )
     assert response.status_code == HTTPStatus.OK
@@ -72,7 +72,7 @@ def test_auth_refresh_token_without_token_fail(client):
 
 
 # !. post refresh token invalid token fail
-def test_auth_refresh_token_with_invalid_token_fail(client, token):
+def test_auth_refresh_token_with_invalid_token_fail(client):
     # invalid access_token
     response = client.post(
         '/auth/refresh-token',
@@ -84,19 +84,21 @@ def test_auth_refresh_token_with_invalid_token_fail(client, token):
     assert response.json() == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
 
 
-def test_auth_refresh_token_with_invalid_basic_token_fail(client, token):
+def test_auth_refresh_token_with_invalid_basic_token_fail(
+    client, access_token
+):
     # not bearer
     response = client.post(
         '/auth/refresh-token',
         headers={
-            'Authorization': f'Basic {token["access_token"]}',
+            'Authorization': f'Basic {access_token}',
         },
     )
     assert response.status_code == HTTPStatus.UNAUTHORIZED
     assert response.json() == {'detail': 'Not authenticated'}
 
 
-def test_auth_refresh_token_with_invalid_empty_token_fail(client, token):
+def test_auth_refresh_token_with_invalid_empty_token_fail(client):
     # authorization empty
     response = client.post(
         '/auth/refresh-token',
@@ -108,7 +110,7 @@ def test_auth_refresh_token_with_invalid_empty_token_fail(client, token):
     assert response.json() == {'detail': 'Not authenticated'}
 
 
-def test_auth_refresh_token_with_empty_auth_headers_fail(client, token):
+def test_auth_refresh_token_with_empty_auth_headers_fail(client):
     # authorization empty
     response = client.post(
         '/auth/refresh-token',

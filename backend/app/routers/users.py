@@ -7,7 +7,6 @@ from sqlalchemy.exc import IntegrityError
 from ..database import SessionDep
 from ..exceptions import (
     HTTPException,
-    NotFoundException,
     UnauthorizedException,
     UserConflictException,
 )
@@ -86,10 +85,6 @@ async def create_user(
 async def delete_user(
     userdata: UserOnDelete, session: SessionDep, current_user: DepCurrentUser
 ):
-    # TODO: decidir: redundancia? tira ou deixa?
-    if not current_user:
-        raise NotFoundException('user')
-
     # confirma o nome do usuario para delecao
     if current_user.username != userdata.username:
         raise HTTPException(
@@ -97,7 +92,7 @@ async def delete_user(
             detail="Username provided doesn't match the current user",
         )
     if not verify_password(userdata.password, current_user.password):
-        raise HTTPException(HTTPStatus.UNAUTHORIZED, detail='Wrong password')
+        raise HTTPException(HTTPStatus.BAD_REQUEST, detail='Wrong password')
     try:
         await session.delete(current_user)
         await session.commit()
