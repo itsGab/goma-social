@@ -56,7 +56,7 @@ Goma é uma plataforma social para jogadores de consoles e PC, que buscam comuni
   - [x] Testes de integração dos endpoints de segurança.
 - [ ] Gestão de Dados
   - [x] CRUD de Usuário (Perfil/Update).
-  - [ ] CRUD de Post (Vinculado ao Usuário).
+  - [x] CRUD de Post (Vinculado ao Usuário).
   - [ ] Testes de integração dos endpoints de posts.
 - [ ] Revisão Segurança (Auth)
   - [ ] ...
