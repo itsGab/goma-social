@@ -28,7 +28,7 @@ router = APIRouter(prefix='/users', tags=['users'])
 
 
 @router.post(
-    path='/create',
+    '/create',
     response_model=UserPublic,
     status_code=HTTPStatus.CREATED,
     summary='Cria usuário',

@@ -61,6 +61,11 @@ class User(TimestampModel, table=True):
         sa_relationship_kwargs={'cascade': 'all, delete-orphan'},
     )
 
+    posts: list['Post'] = Relationship(
+        back_populates='author',
+        sa_relationship_kwargs={'cascade': 'all, delete-orphan'},
+    )
+
 
 class UserPublic(SQLModel):
     email: EmailStr
@@ -91,7 +96,7 @@ class Profile(BaseSQLModel, table=True):
     display_name: str = Field(nullable=False)
     bio: str = Field(default='Sou novo aqui!')
 
-    user_id: int | None = Field(
+    user_id: int = Field(
         foreign_key='user.id', ondelete='CASCADE', nullable=False
     )
     user: User = Relationship(back_populates='profile')
@@ -109,3 +114,34 @@ class ProfileOnUpdate(SQLModel):
 
 class RegularMessage(SQLModel):
     message: str
+
+
+class Post(BaseSQLModel, table=True):
+    created_at: datetime = Field(
+        default=None,
+        sa_column=Column(
+            DateTime(timezone=True), server_default=func.now(), index=True
+        ),
+    )
+    id: int = Field(default=None, primary_key=True)
+    content: str
+
+    user_id: int = Field(
+        foreign_key='user.id', ondelete='CASCADE', nullable=False
+    )
+    author: User = Relationship(back_populates='posts')
+
+
+class PostInput(SQLModel):
+    content: str
+
+
+class PostPublic(SQLModel):
+    id: int = Field(serialization_alias='post_id')
+    content: str
+    author: UserPublic
+    created_at: datetime
+
+
+class ListPosts(SQLModel):
+    posts: list[PostPublic]
