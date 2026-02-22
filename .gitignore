@@ -4,6 +4,7 @@
 ### Personal ###
 my-journey
 my-journal*
+*.bak
 
 ### Database ###
 *.accdb
