@@ -1,7 +1,10 @@
-from fastapi import APIRouter
+from http import HTTPStatus
+
+from fastapi import APIRouter, HTTPException
 from sqlmodel import select
 
 from ..database import SessionDep
+from ..exceptions import ResponseMessage
 from ..models import ListPosts, Post, PostInput, PostPublic
 from ..security import DepCurrentUser
 
@@ -12,6 +15,11 @@ router = APIRouter(prefix='/post', tags=['post'])
 async def new_post(
     post: PostInput, session: SessionDep, current_user: DepCurrentUser
 ):
+    if not current_user.id:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND,
+            detail=ResponseMessage.NOT_FOUND_USER,
+        )
     new_post = Post(content=post.content, user_id=current_user.id)
     session.add(new_post)
     await session.commit()

@@ -7,11 +7,12 @@ from sqlalchemy.exc import IntegrityError
 from ..database import SessionDep
 from ..exceptions import (
     HTTPException,
-    UnauthorizedException,
-    UserConflictException,
+    ResponseMessage,
 )
 from ..models import (
     ErrorMessage,
+    Friendship,
+    FriendStatus,
     Profile,
     ProfileOnUpdate,
     ProfilePublic,
@@ -34,13 +35,9 @@ router = APIRouter(prefix='/users', tags=['users'])
     summary='Cria usuário',
     description='Cria um usuário com username, email e password e salva no '
     'banco de dados.',
-    responses={
-        UserConflictException.status_code.value: {'model': ErrorMessage}
-    },
+    responses={HTTPStatus.CONFLICT: {'model': ErrorMessage}},
 )
-async def create_user(
-    user_input: UserInput, session: SessionDep
-) -> UserPublic:
+async def create_user(user_input: UserInput, session: SessionDep):
     """
     Realiza o cadastro do usuário com hash de senha e validação de duplicidade.
     Cria perfil (profile) para usuário.
@@ -55,8 +52,10 @@ async def create_user(
     )
     db_user = await session.scalar(query)
     if db_user:
-        raise UserConflictException()
-
+        raise HTTPException(
+            status_code=HTTPStatus.CONFLICT,
+            detail=ResponseMessage.USER_ANY_CONFLICT,
+        )
     # sem conflito, cadastra new user
     hashed_password = get_password_hash(user_input.password)
     new_user = User(
@@ -97,12 +96,10 @@ async def delete_user(
         await session.delete(current_user)
         await session.commit()
         return {'message': 'User deleted successfully'}
-    except Exception as e:
+    except Exception:
         await session.rollback()
-        er_msg = str(e.orig).lower()
         raise HTTPException(
             HTTPStatus.INTERNAL_SERVER_ERROR,
-            detail=f'Internal Server Error: {er_msg}',
         )
 
 
@@ -112,16 +109,10 @@ async def delete_user(
     status_code=HTTPStatus.OK,
     summary='Lista usuários',
     description='Faz a listagem de usuários com informações públicas.',
-    responses={
-        UnauthorizedException.status_code.value: {'model': ErrorMessage}
-    },
 )
 async def list_users(session: SessionDep, current_user: DepCurrentUser):
     """
     Lista os usuários (Requer autenticação)
-
-    Raises:
-        UnauthorizedException: Se não estiver autenticado.
     """
     result = await session.execute(select(User))
     users = result.scalars().all()
@@ -136,7 +127,9 @@ async def list_users(session: SessionDep, current_user: DepCurrentUser):
     description='Retorna o próprio perfil do usuário com informações públicas',
 )
 async def get_profile(session: SessionDep, current_user: DepCurrentUser):
-    query = select(Profile).where(Profile.user_id == current_user.id)
+    query = select(Profile).where(
+        Profile.user_id == current_user.id  # type: ignore
+    )
     profile = await session.scalar(query)
     return profile
 
@@ -156,6 +149,11 @@ async def update_profile(
 ):
     query = select(Profile).where(Profile.user_id == current_user.id)
     profile_db = await session.scalar(query)
+    if not profile_db:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND,
+            detail=ResponseMessage.NOT_FOUND_USER,
+        )
     try:
         update_data = profile_data.model_dump(exclude_unset=True)
         profile_db.sqlmodel_update(update_data)
@@ -171,4 +169,63 @@ async def update_profile(
         )
     except Exception:
         await session.rollback()
-        raise HTTPException()
+        raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
+@router.post(
+    '/friend_request/{friend_id}',
+)
+async def friend_request(
+    friend_id: int, session: SessionDep, current_user: DepCurrentUser
+):
+    # verifica se current user tem id
+    if current_user.id == friend_id:
+        raise HTTPException(
+            HTTPStatus.BAD_REQUEST, detail="You can't be friends with yourself"
+        )
+
+    # verifca se amigo existe
+    friend = await session.get(User, friend_id)
+    if not friend:
+        HTTPException(
+            HTTPException.NOT_FOUND, detail=ResponseMessage.NOT_FOUND_USER
+        )
+
+    # consulta amizades do current user
+    query = select(Friendship).where(
+        (
+            (Friendship.user_id_1 == current_user.id)
+            & (Friendship.user_id_2 == friend_id)
+        )
+        | (
+            (Friendship.user_id_2 == current_user.id)
+            & (Friendship.user_id_1 == friend_id)
+        )
+    )
+    friends_db = await session.scalar(query)
+
+    # verifica se ja eh amigo do friend_id (aceito, pendente ou bloqueado)
+    if friends_db:
+        if friends_db.status == FriendStatus.ACCEPTED:
+            raise HTTPException(
+                HTTPStatus.BAD_REQUEST, detail='Already friends'
+            )
+        if friends_db.status == FriendStatus.PENDING:
+            raise HTTPException(
+                HTTPStatus.BAD_REQUEST, detail='Request already pending'
+            )
+        if friends_db.status == FriendStatus.BLOCKED:
+            raise HTTPException(
+                HTTPStatus.FORBIDDEN,
+                detail='This user blocked you or vice versa',
+            )
+
+    # caso passe manda requisicao
+    new_request = Friendship(
+        user_id_1=current_user.id,
+        user_id_2=friend_id,
+    )
+    session.add(new_request)
+    await session.commit()
+
+    return {'message': 'solicitacao enviada'}

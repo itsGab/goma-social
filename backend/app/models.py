@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 
 from pydantic import EmailStr
 from sqlalchemy import MetaData
@@ -97,7 +98,7 @@ class Profile(BaseSQLModel, table=True):
     bio: str = Field(default='Sou novo aqui!')
 
     user_id: int = Field(
-        foreign_key='user.id', ondelete='CASCADE', nullable=False
+        default=None, foreign_key='user.id', ondelete='CASCADE', nullable=False
     )
     user: User = Relationship(back_populates='profile')
 
@@ -145,3 +146,19 @@ class PostPublic(SQLModel):
 
 class ListPosts(SQLModel):
     posts: list[PostPublic]
+
+
+class FriendStatus(str, Enum):
+    PENDING = 'pending'
+    ACCEPTED = 'accepted'
+    BLOCKED = 'blocked'
+
+
+class Friendship(BaseSQLModel, table=True):
+    user_id_1: int = Field(foreign_key='user.id', primary_key=True)
+    user_id_2: int = Field(foreign_key='user.id', primary_key=True)
+    status: FriendStatus = Field(default=FriendStatus.PENDING)
+    created_at: datetime = Field(
+        default=None,
+        sa_column=Column(DateTime(timezone=True), server_default=func.now()),
+    )
