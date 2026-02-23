@@ -52,14 +52,14 @@ async def get_current_user(session: SessionDep, token: DepTokenResponse):
         )
         subject_email = payload.get('sub')
         if not subject_email:
-            raise UnauthorizedException()
+            raise UnauthorizedException
     except DecodeError:
-        raise UnauthorizedException()
+        raise UnauthorizedException
     user = await session.scalar(
         select(User).where(User.email == subject_email)
     )
     if not user:
-        raise UnauthorizedException()
+        raise UnauthorizedException
     return user
 
 

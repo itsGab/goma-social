@@ -52,6 +52,7 @@ Goma é um projeto pessoal de uma rede social para gamers que buscam comunidades
 - [ ] Gestão Inicial de Dados
   - [x] CRUD de Usuário (Perfil/Update).
   - [x] CRUD de Post (Vinculado ao Usuário).
+  - [ ] CRUD de Amizades (Requesição+).
   - [ ] Testes de integração dos endpoints de posts.
 - [ ] ...
 

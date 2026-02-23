@@ -3,9 +3,9 @@
 # =============================================================================
 
 import pytest
+from fastapi import HTTPException
 from jwt import decode
 
-from app.exceptions import UnauthorizedException
 from app.security import (
     create_access_token,
     get_current_user,
@@ -53,7 +53,7 @@ async def test_security_get_current_user_success(session, user):
 async def test_security_get_current_user_missing_sub_fail(session, user):
     access_token = create_access_token(data={'missing': '???'})
 
-    with pytest.raises(UnauthorizedException):
+    with pytest.raises(HTTPException):
         await get_current_user(session, access_token)
 
 
@@ -62,7 +62,7 @@ async def test_security_get_current_user_missing_sub_fail(session, user):
 async def test_security_get_current_user_invalid_token(session, user):
     access_token = 'invalid-token'
 
-    with pytest.raises(UnauthorizedException):
+    with pytest.raises(HTTPException):
         await get_current_user(session, access_token)
 
 
@@ -71,5 +71,5 @@ async def test_security_get_current_user_invalid_token(session, user):
 async def test_security_get_current_user_user_not_found(session, user):
     access_token = create_access_token(data={'sub': 'nao@existe.com'})
 
-    with pytest.raises(UnauthorizedException):
+    with pytest.raises(HTTPException):
         await get_current_user(session, access_token)

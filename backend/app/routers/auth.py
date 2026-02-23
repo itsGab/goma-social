@@ -22,9 +22,9 @@ async def login_for_access_token(
         select(User).where(User.email == form_data.username)
     )
     if not user:
-        raise InvalidUnauthorizedException()
+        raise InvalidUnauthorizedException
     if not verify_password(form_data.password, user.password):
-        raise InvalidUnauthorizedException()
+        raise InvalidUnauthorizedException
     access_token = create_access_token(data={'sub': user.email})
     return {'access_token': access_token, 'token_type': 'bearer'}
 

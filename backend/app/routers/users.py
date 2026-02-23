@@ -1,8 +1,7 @@
 from http import HTTPStatus
 
 from fastapi import APIRouter
-from sqlalchemy import select
-from sqlalchemy.exc import IntegrityError
+from sqlmodel import select
 
 from ..database import SessionDep
 from ..exceptions import (
@@ -11,11 +10,7 @@ from ..exceptions import (
 )
 from ..models import (
     ErrorMessage,
-    Friendship,
-    FriendStatus,
     Profile,
-    ProfileOnUpdate,
-    ProfilePublic,
     RegularMessage,
     User,
     UserInput,
@@ -117,115 +112,3 @@ async def list_users(session: SessionDep, current_user: DepCurrentUser):
     result = await session.execute(select(User))
     users = result.scalars().all()
     return {'userlist': users}
-
-
-@router.get(
-    '/own_profile',
-    response_model=ProfilePublic,
-    status_code=HTTPStatus.OK,
-    summary='Retorna próprio perfil',
-    description='Retorna o próprio perfil do usuário com informações públicas',
-)
-async def get_profile(session: SessionDep, current_user: DepCurrentUser):
-    query = select(Profile).where(
-        Profile.user_id == current_user.id  # type: ignore
-    )
-    profile = await session.scalar(query)
-    return profile
-
-
-@router.patch(
-    '/own_profile/update',
-    response_model=ProfilePublic,
-    status_code=HTTPStatus.OK,
-    summary='Atualiza o próprio perfil',
-    description='Atualiza o próprio perfil do usuário com informações '
-    'públicas',
-)
-async def update_profile(
-    profile_data: ProfileOnUpdate,
-    session: SessionDep,
-    current_user: DepCurrentUser,
-):
-    query = select(Profile).where(Profile.user_id == current_user.id)
-    profile_db = await session.scalar(query)
-    if not profile_db:
-        raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND,
-            detail=ResponseMessage.NOT_FOUND_USER,
-        )
-    try:
-        update_data = profile_data.model_dump(exclude_unset=True)
-        profile_db.sqlmodel_update(update_data)
-        session.add(profile_db)
-        await session.commit()
-        await session.refresh(profile_db)
-        return profile_db
-    except IntegrityError as e:
-        await session.rollback()
-        er_msg = str(e.orig).lower()
-        raise HTTPException(
-            HTTPStatus.BAD_REQUEST, detail=f'Integrity Error: {er_msg}'
-        )
-    except Exception:
-        await session.rollback()
-        raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR)
-
-
-@router.post(
-    '/friend_request/{friend_id}',
-)
-async def friend_request(
-    friend_id: int, session: SessionDep, current_user: DepCurrentUser
-):
-    # verifica se current user tem id
-    if current_user.id == friend_id:
-        raise HTTPException(
-            HTTPStatus.BAD_REQUEST, detail="You can't be friends with yourself"
-        )
-
-    # verifca se amigo existe
-    friend = await session.get(User, friend_id)
-    if not friend:
-        HTTPException(
-            HTTPException.NOT_FOUND, detail=ResponseMessage.NOT_FOUND_USER
-        )
-
-    # consulta amizades do current user
-    query = select(Friendship).where(
-        (
-            (Friendship.user_id_1 == current_user.id)
-            & (Friendship.user_id_2 == friend_id)
-        )
-        | (
-            (Friendship.user_id_2 == current_user.id)
-            & (Friendship.user_id_1 == friend_id)
-        )
-    )
-    friends_db = await session.scalar(query)
-
-    # verifica se ja eh amigo do friend_id (aceito, pendente ou bloqueado)
-    if friends_db:
-        if friends_db.status == FriendStatus.ACCEPTED:
-            raise HTTPException(
-                HTTPStatus.BAD_REQUEST, detail='Already friends'
-            )
-        if friends_db.status == FriendStatus.PENDING:
-            raise HTTPException(
-                HTTPStatus.BAD_REQUEST, detail='Request already pending'
-            )
-        if friends_db.status == FriendStatus.BLOCKED:
-            raise HTTPException(
-                HTTPStatus.FORBIDDEN,
-                detail='This user blocked you or vice versa',
-            )
-
-    # caso passe manda requisicao
-    new_request = Friendship(
-        user_id_1=current_user.id,
-        user_id_2=friend_id,
-    )
-    session.add(new_request)
-    await session.commit()
-
-    return {'message': 'solicitacao enviada'}

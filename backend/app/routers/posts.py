@@ -8,7 +8,7 @@ from ..exceptions import ResponseMessage
 from ..models import ListPosts, Post, PostInput, PostPublic
 from ..security import DepCurrentUser
 
-router = APIRouter(prefix='/post', tags=['post'])
+router = APIRouter(prefix='/posts', tags=['posts'])
 
 
 @router.post('/create', response_model=PostPublic)

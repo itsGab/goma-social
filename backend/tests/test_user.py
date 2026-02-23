@@ -156,7 +156,7 @@ def test_profile_is_created_with_user_creation_success(client):
     access_token = token.json()['access_token']
 
     response = client.get(
-        '/users/own_profile',
+        '/profiles',
         headers={'Authorization': f'Bearer {access_token}'},
     )
     assert response.status_code == HTTPStatus.OK
@@ -184,7 +184,7 @@ def test_profile_update_success(client):
     access_token = token.json()['access_token']
 
     response = client.get(
-        '/users/own_profile',
+        '/profiles',
         headers={'Authorization': f'Bearer {access_token}'},
     )
     assert response.status_code == HTTPStatus.OK
@@ -194,7 +194,7 @@ def test_profile_update_success(client):
 
     # only display name
     response = client.patch(
-        '/users/own_profile/update',
+        '/profiles/update',
         json={'display_name': 'super user'},
         headers={'Authorization': f'Bearer {access_token}'},
     )
@@ -205,7 +205,7 @@ def test_profile_update_success(client):
     }
     # only bio
     response = client.patch(
-        '/users/own_profile/update',
+        '/profiles/update',
         json={'bio': "I'm the super user"},
         headers={'Authorization': f'Bearer {access_token}'},
     )
@@ -216,7 +216,7 @@ def test_profile_update_success(client):
     }
     # both
     response = client.patch(
-        '/users/own_profile/update',
+        '/profiles/update',
         json={
             'display_name': 'THE SUPER USER',
             'bio': "I'm THE SUPER USER",
@@ -230,7 +230,7 @@ def test_profile_update_success(client):
     }
     # none
     response = client.patch(
-        '/users/own_profile/update',
+        '/profiles/update',
         json={},
         headers={'Authorization': f'Bearer {access_token}'},
     )
