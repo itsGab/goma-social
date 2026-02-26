@@ -4,6 +4,7 @@ from enum import Enum
 from pydantic import EmailStr
 from sqlalchemy import MetaData
 from sqlmodel import (
+    CheckConstraint,
     Column,
     DateTime,
     Field,
@@ -155,8 +156,11 @@ class FriendStatus(str, Enum):
 
 
 class Friendship(BaseSQLModel, table=True):
-    user_id_1: int = Field(foreign_key='user.id', primary_key=True)
-    user_id_2: int = Field(foreign_key='user.id', primary_key=True)
+    __table_args__ = (
+        CheckConstraint('user_id1 < user_id2', name='check_ordered_ids'),
+    )
+    user_id1: int = Field(foreign_key='user.id', primary_key=True)
+    user_id2: int = Field(foreign_key='user.id', primary_key=True)
     status: FriendStatus = Field(default=FriendStatus.PENDING)
     created_at: datetime = Field(
         default=None,

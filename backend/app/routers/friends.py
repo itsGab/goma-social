@@ -22,7 +22,7 @@ async def friend_request(
             HTTPStatus.BAD_REQUEST, detail="Can't be friends with yourself"
         )
 
-    # verifca se amigo existe
+    # verifica se usuario (amigo) existe
     friend = await session.get(User, friend_id)
     if not friend:
         HTTPException(
@@ -30,15 +30,10 @@ async def friend_request(
         )
 
     # consulta amizades do current user
+    # regra de negocio (id menor sempre antes)
+    id1, id2 = sorted([current_user.id, friend_id])
     query = select(Friendship).where(
-        (
-            (Friendship.user_id_1 == current_user.id)
-            & (Friendship.user_id_2 == friend_id)
-        )
-        | (
-            (Friendship.user_id_2 == current_user.id)
-            & (Friendship.user_id_1 == friend_id)
-        )
+        (Friendship.user_id1 == id1) & (Friendship.user_id2 == id2)
     )
     friends_db = await session.scalar(query)
 
@@ -59,9 +54,10 @@ async def friend_request(
             )
 
     # caso passe manda requisicao
+    # regra de negocio (id menor sempre antes)
     new_request = Friendship(
-        user_id_1=current_user.id,
-        user_id_2=friend_id,
+        user_id1=id1,
+        user_id2=id2,
     )
     session.add(new_request)
     await session.commit()

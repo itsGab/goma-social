@@ -89,3 +89,6 @@ async def test_database_add_user_missing_password_fail(session):
     user = result.scalar_one_or_none()
 
     assert user is None
+
+
+# ! testar constraint de friendship (check_ordered_id)
