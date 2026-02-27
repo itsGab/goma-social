@@ -33,11 +33,9 @@ class TimestampModel(BaseSQLModel):
     # campos para horario da criacao e atualizacao
     # ! TODO: revisar
     created_at: datetime = Field(
-        default=None,
         sa_column=Column(DateTime(timezone=True), server_default=func.now()),
     )
     updated_at: datetime = Field(
-        default=None,
         sa_column=Column(
             DateTime(timezone=True),
             server_default=func.now(),
@@ -120,7 +118,6 @@ class RegularMessage(SQLModel):
 
 class Post(BaseSQLModel, table=True):
     created_at: datetime = Field(
-        default=None,
         sa_column=Column(
             DateTime(timezone=True), server_default=func.now(), index=True
         ),
@@ -161,6 +158,8 @@ class Friendship(BaseSQLModel, table=True):
     )
     user_id1: int = Field(foreign_key='user.id', primary_key=True)
     user_id2: int = Field(foreign_key='user.id', primary_key=True)
+    # deveria settar requested_id como index ou pk?
+    requested_by: int = Field(foreign_key='user.id', index=True)
     status: FriendStatus = Field(default=FriendStatus.PENDING)
     created_at: datetime = Field(
         default=None,

@@ -54,12 +54,9 @@ async def update_profile(
         await session.commit()
         await session.refresh(profile_db)
         return profile_db
-    except IntegrityError as e:
+    except IntegrityError:
         await session.rollback()
-        er_msg = str(e.orig).lower()
-        raise HTTPException(
-            HTTPStatus.BAD_REQUEST, detail=f'Integrity Error: {er_msg}'
-        )
+        raise HTTPException(HTTPStatus.BAD_REQUEST, detail='Integrity Error')
     except Exception:
         await session.rollback()
         raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR)
