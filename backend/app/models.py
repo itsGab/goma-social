@@ -158,10 +158,32 @@ class Friendship(BaseSQLModel, table=True):
     )
     user_id1: int = Field(foreign_key='user.id', primary_key=True)
     user_id2: int = Field(foreign_key='user.id', primary_key=True)
-    # deveria settar requested_id como index ou pk?
     requested_by: int = Field(foreign_key='user.id', index=True)
+    blocked_by: int = Field(default=None, foreign_key='user.id', nullable=True)
     status: FriendStatus = Field(default=FriendStatus.PENDING)
     created_at: datetime = Field(
         default=None,
         sa_column=Column(DateTime(timezone=True), server_default=func.now()),
     )
+
+
+class FriendRequestPublic(SQLModel):
+    user_id: int
+    username: str
+    email: EmailStr
+    status: FriendStatus
+    created_at: datetime
+
+
+class FriendRequestPending(SQLModel):
+    pending: list[FriendRequestPublic]
+
+
+class FriendAction(str, Enum):
+    ACCEPT = 'accept'
+    REJECT = 'reject'
+
+
+class FriendResponseRequest(SQLModel):
+    friend_id: int
+    action: FriendAction
