@@ -180,54 +180,55 @@ async def respond_friend_request(
 async def block_user(
     user_id: int, session: SessionDep, current_user: DepCurrentUser
 ):
-    # TODO: APLICAR ESSE FUNCAO
+    if user_id == current_user.id:
+        raise HTTPException(
+            HTTPStatus.BAD_REQUEST,
+            detail='You cannot block yourself',
+        )
 
     # regra de id
     id1, id2 = sorted([current_user.id, user_id])
 
-    # verifica se usuaria esta bloqueado ou foi bloqueado
     query = select(Friendship).where(
         Friendship.user_id1 == id1,
         Friendship.user_id2 == id2,
-        Friendship.blocked_by,
     )
 
-    blocked = await session.scalar(query)
+    friendship = await session.scalar(query)
 
-    # levanta erro se sim
-    if blocked:
-        if blocked.blocked_by == current_user.id:
+    if not friendship:
+        user = await session.get(User, user_id)
+        if not user:
+            raise HTTPException(
+                HTTPStatus.NOT_FOUND, detail=ResponseMessage.NOT_FOUND_USER
+            )
+        else:
+            user_block = Friendship(
+                user_id1=id1,
+                user_id2=id2,
+                requested_by=current_user.id,
+                blocked_by=current_user.id,
+                status=FriendStatus.BLOCKED,
+            )
+            session.add(user_block)
+            await session.commit()
+            return {'message': 'User blocked'}
+
+    if friendship.status == FriendStatus.BLOCKED:
+        if friendship.blocked_by == current_user.id:
             raise HTTPException(
                 HTTPStatus.FORBIDDEN,
-                detail="Cannot block, you've already blocked this user",
+                detail='This user is already blocked',
             )
-        elif blocked.blocked_by == user_id:
+        elif friendship.blocked_by == user_id:
             raise HTTPException(
                 HTTPStatus.FORBIDDEN,
-                detail="Cannot block, you're already blocked by this user",
+                detail='This user blocked you',
             )
 
-    # verifica se existe friendship, se nao existe crie e tambem eh o
-    query = select(Friendship).where(
-        Friendship.user_id1 == id1,
-        Friendship.user_id2 == id2,
-        Friendship.blocked_by.is_(None),
-    )
-    do_block = await session.scalar(query)
-
-    # requested_by alem do blocked_by
-    if do_block:
-        do_block.blocked_by = current_user.id
-        do_block.status = FriendStatus.BLOCKED
-    else:
-        do_block = Friendship(
-            user_id1=id1,
-            user_id2=id2,
-            requested_by=current_user.id,
-            blocked_by=current_user.id,
-            status=FriendStatus.BLOCKED,
-        )
-    session.add(do_block)
+    friendship.blocked_by = current_user.id
+    friendship.status = FriendStatus.BLOCKED
+    session.add(friendship)
     await session.commit()
 
     return {'message': 'User blocked'}
@@ -237,8 +238,42 @@ async def block_user(
 async def unblock_user(
     user_id: int, session: SessionDep, current_user: DepCurrentUser
 ):
-    # TODO: APLICAR ESSE FUNCAO
-    # verifica se existe o bloqueio
-    # verifica se eh o bloqueador (com permissao para desbloquear)
-    # atualiza
-    return
+    if user_id == current_user.id:
+        raise HTTPException(
+            HTTPStatus.BAD_REQUEST,
+            detail='You cannot unblock yourself',
+        )
+
+    # regra de id
+    id1, id2 = sorted([current_user.id, user_id])
+
+    query = select(Friendship).where(
+        Friendship.user_id1 == id1,
+        Friendship.user_id2 == id2,
+    )
+    friendship = await session.scalar(query)
+
+    if not friendship:
+        user = await session.get(User, user_id)
+        if not user:
+            raise HTTPException(
+                HTTPStatus.NOT_FOUND, detail=ResponseMessage.NOT_FOUND_USER
+            )
+        raise HTTPException(
+            HTTPStatus.BAD_REQUEST, detail='Relationship not found'
+        )
+
+    if friendship.status != FriendStatus.BLOCKED:
+        raise HTTPException(
+            HTTPStatus.BAD_REQUEST, detail='This user is not blocked'
+        )
+
+    if friendship.blocked_by == user_id:
+        raise HTTPException(
+            HTTPStatus.FORBIDDEN,
+            detail='You cannot unblock this user, this user blocked you',
+        )
+
+    await session.delete(friendship)
+    await session.commit()
+    return {'message': 'User unblocked successfully! Friendship undone!'}

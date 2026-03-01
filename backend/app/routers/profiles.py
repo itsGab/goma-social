@@ -45,7 +45,7 @@ async def update_profile(
     if not profile_db:
         raise HTTPException(
             status_code=HTTPStatus.NOT_FOUND,
-            detail=ResponseMessage.NOT_FOUND_USER,
+            detail=ResponseMessage.NOT_FOUND_PROFILE,
         )
     try:
         update_data = profile_data.model_dump(exclude_unset=True)
