@@ -51,6 +51,21 @@ async def user_fixture(session: AsyncSession):
     return user
 
 
+@pytest_asyncio.fixture(name='user2')
+async def user2_fixture(session: AsyncSession):
+    plain_password = 'password123'
+    user = models.User(
+        email='user02@mail.com',
+        username='user02',
+        password=get_password_hash(plain_password),
+    )
+    session.add(user)
+    await session.commit()
+    await session.refresh(user)
+    user.__dict__['clean_password'] = plain_password
+    return user
+
+
 @pytest_asyncio.fixture(name='access_token')
 async def access_token_fixture(client, user):
     user
