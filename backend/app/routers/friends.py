@@ -25,10 +25,17 @@ router = APIRouter(prefix='/friends', tags=['friends'])
     '/requests/{friend_id}',
     status_code=HTTPStatus.CREATED,
     response_model=RegularMessage,
+    deprecated=True,
 )
-async def send_friend_request(
+async def old_send_friend_request(
     friend_id: int, session: SessionDep, current_user: DepCurrentUser
 ):
+    friend_check = await session.get(User, friend_id)
+    if not friend_check:
+        raise HTTPException(
+            HTTPStatus.NOT_FOUND, detail=ResponseMessage.NOT_FOUND_USER
+        )
+
     if current_user.id == friend_id:
         raise HTTPException(
             HTTPStatus.BAD_REQUEST, detail="Can't be friends with yourself"
@@ -37,59 +44,54 @@ async def send_friend_request(
     # regra de negocio (id menor sempre antes)
     id1, id2 = sorted([current_user.id, friend_id])
 
+    query = select(Friendship).where(
+        Friendship.user_id1 == id1,
+        Friendship.user_id2 == id2,
+    )
+    friendship = await session.scalar(query)
+
+    if friendship:
+        if friendship.status == FriendStatus.ACCEPTED:
+            raise HTTPException(HTTPStatus.CONFLICT, detail='Already friends')
+        if friendship.status == FriendStatus.PENDING:
+            raise HTTPException(
+                HTTPStatus.CONFLICT, detail='Request already pending'
+            )
+        if friendship.status == FriendStatus.BLOCKED:
+            if friendship.blocked_by == current_user.id:
+                raise HTTPException(
+                    HTTPStatus.FORBIDDEN,
+                    detail="You've blocked this user",
+                )
+            else:
+                raise HTTPException(
+                    HTTPStatus.FORBIDDEN,
+                    detail="You're blocked by this user",
+                )
+
     new_request = Friendship(
         user_id1=id1,
         user_id2=id2,
         requested_by=current_user.id,
         status=FriendStatus.PENDING,
     )
-    session.add(new_request)
 
     try:
+        session.add(new_request)
         await session.commit()
         return {'message': 'Requested successfully!'}
 
     except IntegrityError:
         await session.rollback()
-
-        friend = await session.get(User, friend_id)
-        if not friend:
-            raise HTTPException(
-                HTTPStatus.NOT_FOUND, detail=ResponseMessage.NOT_FOUND_USER
-            )
-
-        query = select(Friendship).where(
-            Friendship.user_id1 == id1,
-            Friendship.user_id2 == id2,
-        )
-        friendship = await session.scalar(query)
-        if friendship:
-            if friendship.status == FriendStatus.ACCEPTED:
-                raise HTTPException(
-                    HTTPStatus.CONFLICT, detail='Already friends'
-                )
-            if friendship.status == FriendStatus.PENDING:
-                raise HTTPException(
-                    HTTPStatus.CONFLICT, detail='Request already pending'
-                )
-            if friendship.status == FriendStatus.BLOCKED:
-                if friendship.blocked_by == current_user.id:
-                    raise HTTPException(
-                        HTTPStatus.FORBIDDEN,
-                        detail="You've blocked this user",
-                    )
-                else:
-                    raise HTTPException(
-                        HTTPStatus.FORBIDDEN,
-                        detail="You're blocked by this user",
-                    )
-
         raise HTTPException(
             HTTPStatus.CONFLICT, detail='Friend request conflicted!'
         )
 
 
-@router.get('/requests', response_model=FriendRequestPending)
+@router.get(
+    '/requests',
+    response_model=FriendRequestPending,
+)
 async def list_pending_friend_requests(
     session: SessionDep, current_user: DepCurrentUser
 ):
@@ -101,7 +103,7 @@ async def list_pending_friend_requests(
             Friendship.status,
             Friendship.created_at,
         )
-        .join(Friendship, User)
+        .join(User, User.id == Friendship.requested_by)
         .where(
             Friendship.status == FriendStatus.PENDING,
             or_(

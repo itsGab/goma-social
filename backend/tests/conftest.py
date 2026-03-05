@@ -68,10 +68,19 @@ async def user2_fixture(session: AsyncSession):
 
 @pytest_asyncio.fixture(name='access_token')
 async def access_token_fixture(client, user):
-    user
     response = client.post(
         '/auth/token',
         data={'username': user.email, 'password': 'password123'},
+    )
+    # returns: json(access_token, token_type)
+    return response.json()['access_token']
+
+
+@pytest_asyncio.fixture(name='access_token2')
+async def access_token_fixture2(client, user2):
+    response = client.post(
+        '/auth/token',
+        data={'username': user2.email, 'password': 'password123'},
     )
     # returns: json(access_token, token_type)
     return response.json()['access_token']
