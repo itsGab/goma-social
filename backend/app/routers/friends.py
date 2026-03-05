@@ -25,9 +25,8 @@ router = APIRouter(prefix='/friends', tags=['friends'])
     '/requests/{friend_id}',
     status_code=HTTPStatus.CREATED,
     response_model=RegularMessage,
-    deprecated=True,
 )
-async def old_send_friend_request(
+async def send_friend_request(
     friend_id: int, session: SessionDep, current_user: DepCurrentUser
 ):
     friend_check = await session.get(User, friend_id)
