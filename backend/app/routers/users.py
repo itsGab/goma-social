@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 from fastapi import APIRouter
 from sqlalchemy.exc import IntegrityError
-from sqlmodel import select
+from sqlmodel import or_, select
 
 from ..database import SessionDep
 from ..exceptions import (
@@ -11,7 +11,6 @@ from ..exceptions import (
 )
 from ..models import (
     ErrorMessage,
-    Profile,
     RegularMessage,
     User,
     UserInput,
@@ -20,6 +19,7 @@ from ..models import (
     UserPublic,
 )
 from ..security import DepCurrentUser, get_password_hash, verify_password
+from .profiles import create_profile
 
 router = APIRouter(prefix='/users', tags=['users'])
 
@@ -43,8 +43,10 @@ async def create_user(user_input: UserInput, session: SessionDep):
     """
     # verifica conflito com o banco de dados
     query = select(User).where(
-        (User.username == user_input.username)
-        | (User.email == user_input.email)
+        or_(
+            User.username == user_input.username,
+            User.email == user_input.email,
+        )
     )
     db_user = await session.scalar(query)
     if db_user:
@@ -59,14 +61,18 @@ async def create_user(user_input: UserInput, session: SessionDep):
         username=user_input.username,
         password=hashed_password,
     )
+    try:
+        session.add(new_user)
+        await session.commit()
+        await session.refresh(new_user)
+        await create_profile(new_user, session)
+    except IntegrityError:
+        await session.rollback()
+        raise HTTPException(
+            status_code=HTTPStatus.BAD_REQUEST,
+            detail='Integrity Error',
+        )
 
-    # com new_user, cria new_profile
-    new_profile = Profile(display_name=user_input.username, user=new_user)
-
-    session.add(new_user)
-    session.add(new_profile)
-    await session.commit()
-    await session.refresh(new_user)
     return new_user
 
 
