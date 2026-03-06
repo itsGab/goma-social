@@ -199,7 +199,8 @@ async def test_list_pending_requests_success(
     assert data['pending'][0]['username'] == user2.username
 
 
-def test_list_pending_requests_empty(client, access_token):
+# !. list pending requests empty
+def test_friend_list_pending_requests_empty(client, access_token):
     response = client.get(
         '/friends/requests',
         headers={'Authorization': f'Bearer {access_token}'},
@@ -251,8 +252,8 @@ async def test_block_friend_success(
     assert friendship.blocked_by == user.id
 
 
-# !. post block fail cant block yourself
-def test_block_yourself_fail(client, user, access_token):
+# !. block fail yourself
+def test_block_fail_yourself(client, user, access_token):
     response = client.patch(
         f'/friends/block/{user.id}',
         headers={'Authorization': f'Bearer {access_token}'},
@@ -263,8 +264,8 @@ def test_block_yourself_fail(client, user, access_token):
     assert data == {'detail': 'You cannot block yourself'}
 
 
-# !. post block fail cant block yourself
-def test_block_not_user_fail(client, user, access_token):
+# !. block fail user not found
+def test_block_fail_user_not_found(client, user, access_token):
     response = client.patch(
         f'/friends/block/{3}',
         headers={'Authorization': f'Bearer {access_token}'},
@@ -316,8 +317,8 @@ def test_block_already_blocked_you_fail(
 
 
 # unblock ----
-# !. patch unblock fail cant block yourself
-def test_unblock_yourself_fail(client, user, access_token):
+# !. unblock fail yourself
+def test_unblock_fail_yourself(client, user, access_token):
     response = client.patch(
         f'/friends/unblock/{user.id}',
         headers={'Authorization': f'Bearer {access_token}'},
@@ -355,8 +356,8 @@ async def test_unblock_user_success(
     }
 
 
-# !. patch unblock fail not blocked
-def test_unblock_fail_not_user(client, user, access_token):
+# !. unblock fail user not found
+def test_unblock_fail_user_not_found(client, user, access_token):
     response = client.patch(
         f'/friends/unblock/{3}',
         headers={'Authorization': f'Bearer {access_token}'},

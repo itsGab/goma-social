@@ -78,8 +78,8 @@ def test_user_delete_user_success(client, user, session, access_token):
     assert response.json()['message'] == 'User deleted successfully'
 
 
-# !. post user delete username dont match fail
-def test_user_delete_username_dont_match_fail(
+# !. delete user fail username doesn't match
+def test_user_delete_fail_username_doesnt_match(
     client, user, session, access_token
 ):
     response = client.request(

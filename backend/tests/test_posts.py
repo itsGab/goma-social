@@ -1,9 +1,14 @@
+# =============================================================================
+#                         cenários de posts
+# =============================================================================
+
 from http import HTTPStatus
 from time import sleep
 
 
-# test success post
-def test_post_sucess(client, user, access_token):
+# endpoint: /posts/create =====================================================
+# !. create post success
+def test_post_create_success(client, user, access_token):
     response = client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token}'},
@@ -22,8 +27,8 @@ def test_post_sucess(client, user, access_token):
     assert 'created_at' in data
 
 
-# test fail not authenticated user
-def test_post_fail_not_authenticated(client, user):
+# !. create post fail not authenticated
+def test_post_create_fail_not_authenticated(client, user):
     response = client.post(
         '/posts/create',
         json={'content': 'conteudo do post'},
@@ -34,8 +39,11 @@ def test_post_fail_not_authenticated(client, user):
     assert data == {'detail': 'Not authenticated'}
 
 
-# test success list posts of current user
-def test_post_list_success(client, user, user2, access_token, access_token2):
+# endpoint: /posts/my_posts ===================================================
+# !. list my posts success
+def test_posts_list_my_posts_success(
+    client, user, user2, access_token, access_token2
+):
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token}'},

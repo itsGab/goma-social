@@ -1,3 +1,7 @@
+# =============================================================================
+#                         cenários de profiles
+# =============================================================================
+
 from http import HTTPStatus
 from unittest.mock import patch
 
@@ -156,7 +160,8 @@ async def test_delete_profile_is_delete_with_user_deletion_success(
 
 
 # test user without profile
-def test_update_profile_fail_user_without_profile(client, user, access_token):
+# !. update profile fail user without profile
+def test_profile_update_fail_user_without_profile(client, user, access_token):
     response = client.patch(
         '/profiles/update',
         headers={'Authorization': f'Bearer {access_token}'},
@@ -168,7 +173,8 @@ def test_update_profile_fail_user_without_profile(client, user, access_token):
     assert data == {'detail': 'Profile not found'}
 
 
-def test_int(client, session):
+# !. profile update fail integrity error
+def test_profile_update_fail_integrity_error(client, session):
     client.post(
         '/users/create',
         json={
