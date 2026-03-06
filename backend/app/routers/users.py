@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from fastapi import APIRouter
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
 from ..database import SessionDep
@@ -91,11 +92,9 @@ async def delete_user(
         await session.delete(current_user)
         await session.commit()
         return {'message': 'User deleted successfully'}
-    except Exception:
+    except IntegrityError:
         await session.rollback()
-        raise HTTPException(
-            HTTPStatus.INTERNAL_SERVER_ERROR,
-        )
+        raise HTTPException(HTTPStatus.BAD_REQUEST, detail='Integrity Error')
 
 
 @router.get(

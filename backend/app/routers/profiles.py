@@ -57,6 +57,3 @@ async def update_profile(
     except IntegrityError:
         await session.rollback()
         raise HTTPException(HTTPStatus.BAD_REQUEST, detail='Integrity Error')
-    except Exception:
-        await session.rollback()
-        raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR)
