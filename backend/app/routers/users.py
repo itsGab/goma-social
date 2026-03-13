@@ -63,9 +63,9 @@ async def create_user(user_input: UserInput, session: SessionDep):
     )
     try:
         session.add(new_user)
-        await session.commit()
-        await session.refresh(new_user)
+        await session.flush()
         await create_profile(new_user, session)
+        await session.commit()
     except IntegrityError:
         await session.rollback()
         raise HTTPException(
@@ -73,6 +73,7 @@ async def create_user(user_input: UserInput, session: SessionDep):
             detail='Integrity Error',
         )
 
+    await session.refresh(new_user)
     return new_user
 
 

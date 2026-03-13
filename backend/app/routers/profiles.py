@@ -12,18 +12,9 @@ from ..security import DepCurrentUser
 router = APIRouter(prefix='/profiles', tags=['profiles'])
 
 
-async def create_profile(user: User, session: SessionDep) -> Profile:
+def create_profile(user: User, session: SessionDep) -> Profile:
     new_profile = Profile(display_name=user.username, user=user)
     session.add(new_profile)
-    try:
-        await session.commit()
-        await session.refresh(new_profile)
-    except IntegrityError:
-        await session.rollback()
-        raise HTTPException(
-            status_code=HTTPStatus.BAD_REQUEST,
-            detail='Error to create profile',
-        )
     return new_profile
 
 
