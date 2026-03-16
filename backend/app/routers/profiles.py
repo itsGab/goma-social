@@ -12,7 +12,7 @@ from ..security import DepCurrentUser
 router = APIRouter(prefix='/profiles', tags=['profiles'])
 
 
-def create_profile(user: User, session: SessionDep) -> Profile:
+async def create_profile(user: User, session: SessionDep) -> Profile:
     new_profile = Profile(display_name=user.username, user=user)
     session.add(new_profile)
     return new_profile
