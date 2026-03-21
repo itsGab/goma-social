@@ -7,10 +7,14 @@ Anotar as próximas tarefas aqui:
 ## Atualizações
 - [ ] Atualizar o `quick-start-dev.md` (add: Docker)
 
+
 # BACKEND
 
 ## Infra
-- [ ] Migrar testes para PostgreSQL
+- [ ] Atualizar testes
+  - [x] Migrar testes para PostgreSQL
+  - [ ] Fazer testes de regras do banco de dados
+  - [ ] Fazer testes de regras de negócio
 
 ## Refatoração
 - [ ] Padronizar nomenclatura
@@ -33,10 +37,6 @@ Anotar as próximas tarefas aqui:
   - [ ] Tratar erros de integridade
   - [ ] Converter erros técnicos em mensagens amigáveis
   - [ ] Padronizar formato de erro (API/response)
-
-## Opcional, mas valioso
-- [ ] Adicionar testes para regras de negócio
-- [ ] Revisar cobertura de testes
 
 
 # FRONTEND
