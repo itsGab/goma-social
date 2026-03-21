@@ -31,3 +31,6 @@ async def list_my_posts(session: SessionDep, current_user: DepCurrentUser):
     result = await session.execute(query)
     posts = result.scalars().all()
     return {'posts': posts}
+
+
+# TODO /friends_posts

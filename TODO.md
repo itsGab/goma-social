@@ -10,7 +10,17 @@ Anotar as próximas tarefas aqui:
 
 # BACKEND
 
-## Infra
+## Endpoint
+- O QUE AINDA FALTA???
+- [ ] Delete User
+  - [ ] ??? Remover o pedido para usuário e senha ao deletar
+  - [ ] Remover acesso ao usuário deletado (deslogar e invalidar token)
+- [ ] Friend Requests
+  - [ ] Listar todos os request pending enviados ou recebidos pelo usuario
+- [ ] Posts
+  - [ ] Criar listagem de post de amigos
+
+## Testes
 - [ ] Atualizar testes
   - [x] Migrar testes para PostgreSQL
   - [ ] Fazer testes de regras do banco de dados
@@ -24,7 +34,7 @@ Anotar as próximas tarefas aqui:
   - [ ] Variáveis (evitar nomes genéricos)
 
 ## Domínio e validações
-- [ ] Revisar validações nos models
+- [ ] Criar validações nos models
   - [ ] Tamanho de campos
   - [ ] Regras de senha
 - [ ] Mapear regras de negócio existentes

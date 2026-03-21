@@ -1,4 +1,4 @@
-# Goma Social
+# Goma Social (PROJETO DE ESTUDO)
 
 > Uma *slow social media* para *gamers* inspirado no **Orkut**.
 
@@ -49,10 +49,10 @@ Goma é um projeto pessoal de uma rede social para gamers que buscam comunidades
 
 - [x] Infraestrutura Inicial do **Backend**
 - [x] Gestão Inicial de Segurança e Usuário
-- [ ] Gestão Inicial de Dados
+- [x] Gestão Inicial de Dados
   - [x] CRUD de Usuário (Perfil/Update).
   - [x] CRUD de Post (Vinculado ao Usuário).
-  - [ ] CRUD de Amizades (Requesição+).
+  - [x] CRUD de Amizades (Requesição+).
   - [ ] Testes de integração dos endpoints de posts.
 - [ ] ...
 

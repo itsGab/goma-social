@@ -9,12 +9,10 @@
   - [x] Implementação de Segurança (Auth).
   - [x] Fluxo de Autenticação (Registro/Login).
   - [x] Testes de integração dos endpoints de segurança.
-- [ ] Gestão de Dados
+- [x] Gestão de Dados
   - [x] CRUD de Usuário (Perfil/Update).
-  - [x] CRUD de Post (Vinculado ao Usuário).
+  - [ ] CRUD de Post (Vinculado ao Usuário).
   - [ ] Testes de integração dos endpoints de posts.
-- [ ] Revisão Segurança (Auth)
-  - [ ] ...
 
 ### Frontend
 - [ ] Estudar JavaScript
@@ -32,3 +30,5 @@
   - [ ] Endpoints de interação social (Comentários).
   - [ ] Interface de interação das comunidades (Frontend).
   - [ ] Testes de lógica das comunidades.
+- [ ] Revisão Segurança (Auth)
+  - [ ] ...
