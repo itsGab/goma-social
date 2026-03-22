@@ -1,10 +1,11 @@
 from http import HTTPStatus
 
 from fastapi import APIRouter
-from sqlmodel import select
+from sqlalchemy.orm import selectinload
+from sqlmodel import and_, desc, or_, select
 
 from ..database import SessionDep
-from ..models import ListPosts, Post, PostInput, PostPublic
+from ..models import Friendship, ListPosts, Post, PostInput, PostPublic
 from ..security import DepCurrentUser
 
 router = APIRouter(prefix='/posts', tags=['posts'])
@@ -33,4 +34,32 @@ async def list_my_posts(session: SessionDep, current_user: DepCurrentUser):
     return {'posts': posts}
 
 
-# TODO /friends_posts
+@router.get('/friends_posts', response_model=ListPosts)
+async def list_friends_posts(
+    session: SessionDep,
+    current_user: DepCurrentUser,
+):
+    # TODO adicionar paginacao e ativar limit
+    # limit_of_post = 100
+    query = (
+        select(Post)
+        .options(selectinload(Post.author))
+        .join(
+            Friendship,
+            or_(
+                and_(
+                    Friendship.user_id1 == current_user.id,
+                    Friendship.user_id2 == Post.user_id,
+                ),
+                and_(
+                    Friendship.user_id2 == current_user.id,
+                    Friendship.user_id1 == Post.user_id,
+                ),
+            ),
+        )
+        .order_by(desc(Post.created_at))
+        # .limit(limit_of_post)
+    )
+    result = await session.execute(query)
+    posts = result.scalars().all()
+    return {'posts': posts}
