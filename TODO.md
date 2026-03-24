@@ -10,6 +10,9 @@ Anotar as próximas tarefas aqui:
 
 # BACKEND
 
+## Prioritario
+- [ ] Adicionar: subir o banco postgresql standalone com no task de run local
+
 ## Endpoint
 - O QUE AINDA FALTA???
 - [ ] Delete User
@@ -25,6 +28,7 @@ Anotar as próximas tarefas aqui:
   - [x] Migrar testes para PostgreSQL
   - [ ] Fazer testes de regras do banco de dados
   - [ ] Fazer testes de regras de negócio
+  - [ ] Adicionar o Faker para dados de teste
 
 ## Refatoração
 - [ ] Padronizar nomenclatura

@@ -7,6 +7,7 @@ from testcontainers.postgres import PostgresContainer
 from app import models
 from app.database import get_session
 from app.main import app
+from app.models import FriendStatus
 from app.security import get_password_hash
 
 
@@ -70,6 +71,25 @@ async def user2_fixture(session: AsyncSession):
     await session.refresh(user)
     user.__dict__['clean_password'] = plain_password
     return user
+
+
+@pytest_asyncio.fixture
+async def users_with_friendship(
+    session, user, user2, access_token, access_token2
+):
+    id1, id2 = sorted([user.id, user2.id])
+
+    friendship = models.Friendship(
+        user_id1=id1,
+        user_id2=id2,
+        requested_by=user.id,
+        status=FriendStatus.ACCEPTED,
+    )
+
+    session.add(friendship)
+    await session.commit()
+
+    return user, user2, access_token, access_token2
 
 
 @pytest_asyncio.fixture(name='access_token')

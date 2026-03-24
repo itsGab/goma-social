@@ -85,3 +85,54 @@ def test_posts_list_my_posts_success(
     assert post_2['created_at'] > post_3['created_at']
     assert 'limit' in data
     assert 'offset' in data
+
+
+# endpoint: /posts/friends_posts ==============================================
+# !. list friends posts success
+# TODO: arrumar too many args.
+def test_posts_list_friends_posts_success(client, users_with_friendship):
+    user, user2, access_token, access_token2 = users_with_friendship
+    client.post(
+        '/posts/create',
+        headers={'Authorization': f'Bearer {access_token}'},
+        json={'content': 'conteudo do meu post 1'},
+    )
+    sleep(0.5)
+    client.post(
+        '/posts/create',
+        headers={'Authorization': f'Bearer {access_token}'},
+        json={'content': 'conteudo do meu post 2'},
+    )
+    sleep(0.5)
+    client.post(
+        '/posts/create',
+        headers={'Authorization': f'Bearer {access_token}'},
+        json={'content': 'conteudo do meu post 3'},
+    )
+    sleep(0.5)
+    client.post(
+        '/posts/create',
+        headers={'Authorization': f'Bearer {access_token2}'},
+        json={'content': 'conteudo do post de outro usuario'},
+    )
+    response = client.get(
+        '/posts/friends_posts',
+        headers={'Authorization': f'Bearer {access_token2}'},
+    )
+    data = response.json()
+    post_2 = data['posts'][1]
+    post_3 = data['posts'][2]
+    number_of_posts = 3
+
+    assert response.status_code == HTTPStatus.OK
+    assert len(data['posts']) == number_of_posts
+    assert post_3['content'] == 'conteudo do meu post 1'
+    assert post_3['author']['id'] == user.id
+    assert 'post_id' in post_3
+    assert 'created_at' in post_3
+    assert post_2['created_at'] > post_3['created_at']
+    assert 'limit' in data
+    assert 'offset' in data
+
+
+# TODO: teste de paginacao de posts (my e friends)
