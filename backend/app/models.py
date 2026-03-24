@@ -144,6 +144,8 @@ class PostPublic(SQLModel):
 
 class ListPosts(SQLModel):
     posts: list[PostPublic]
+    limit: int
+    offset: int
 
 
 class FriendStatus(str, Enum):
@@ -187,3 +189,19 @@ class FriendAction(str, Enum):
 class FriendResponseRequest(SQLModel):
     friend_id: int
     action: FriendAction
+
+
+PAGE_DEFAULT_SIZE = 20
+PAGE_MAX_LEN = 100
+
+
+class PageInput(SQLModel):
+    page: int = Field(default=1, ge=1, lt=PAGE_MAX_LEN)
+
+    @property
+    def limit(self) -> int:
+        return PAGE_DEFAULT_SIZE
+
+    @property
+    def offset(self) -> int:
+        return (self.page - 1) * PAGE_DEFAULT_SIZE

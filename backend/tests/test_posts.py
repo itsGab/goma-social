@@ -49,17 +49,19 @@ def test_posts_list_my_posts_success(
         headers={'Authorization': f'Bearer {access_token}'},
         json={'content': 'conteudo do meu post 1'},
     )
+    sleep(0.5)
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token}'},
         json={'content': 'conteudo do meu post 2'},
     )
-    sleep(1)
+    sleep(0.5)
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token}'},
         json={'content': 'conteudo do meu post 3'},
     )
+    sleep(0.5)
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token2}'},
@@ -76,8 +78,10 @@ def test_posts_list_my_posts_success(
 
     assert response.status_code == HTTPStatus.OK
     assert len(data['posts']) == number_of_posts
-    assert post_3['content'] == 'conteudo do meu post 3'
+    assert post_3['content'] == 'conteudo do meu post 1'
     assert post_3['author']['id'] == user.id
     assert 'post_id' in post_3
     assert 'created_at' in post_3
-    assert post_2['created_at'] < post_3['created_at']
+    assert post_2['created_at'] > post_3['created_at']
+    assert 'limit' in data
+    assert 'offset' in data

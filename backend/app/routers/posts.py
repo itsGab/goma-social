@@ -1,11 +1,18 @@
 from http import HTTPStatus
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from sqlalchemy.orm import selectinload
-from sqlmodel import and_, desc, or_, select
+from sqlmodel import desc, select
 
 from ..database import SessionDep
-from ..models import Friendship, ListPosts, Post, PostInput, PostPublic
+from ..models import (
+    Friendship,
+    ListPosts,
+    PageInput,
+    Post,
+    PostInput,
+    PostPublic,
+)
 from ..security import DepCurrentUser
 
 router = APIRouter(prefix='/posts', tags=['posts'])
@@ -26,40 +33,57 @@ async def new_post(
     return new_post
 
 
-@router.get('/my_posts', response_model=ListPosts)
-async def list_my_posts(session: SessionDep, current_user: DepCurrentUser):
-    query = select(Post).where(Post.user_id == current_user.id)
-    result = await session.execute(query)
-    posts = result.scalars().all()
-    return {'posts': posts}
-
-
-@router.get('/friends_posts', response_model=ListPosts)
-async def list_friends_posts(
+@router.get('/my_posts/', response_model=ListPosts)
+async def list_my_posts(
     session: SessionDep,
     current_user: DepCurrentUser,
+    page: PageInput = Query(),
 ):
-    # TODO adicionar paginacao e ativar limit
-    # limit_of_post = 100
     query = (
         select(Post)
+        .where(Post.user_id == current_user.id)
         .options(selectinload(Post.author))
-        .join(
-            Friendship,
-            or_(
-                and_(
-                    Friendship.user_id1 == current_user.id,
-                    Friendship.user_id2 == Post.user_id,
-                ),
-                and_(
-                    Friendship.user_id2 == current_user.id,
-                    Friendship.user_id1 == Post.user_id,
-                ),
-            ),
-        )
         .order_by(desc(Post.created_at))
-        # .limit(limit_of_post)
+        .limit(page.limit)
+        .offset(page.offset)
     )
     result = await session.execute(query)
     posts = result.scalars().all()
-    return {'posts': posts}
+    return {
+        'posts': posts,
+        'limit': page.limit,
+        'offset': page.offset,
+    }
+
+
+@router.get('/friends_posts/', response_model=ListPosts)
+async def list_friends_posts(
+    session: SessionDep,
+    current_user: DepCurrentUser,
+    page: PageInput = Query(),
+):
+    friends_ids_subquery = (
+        select(Friendship.user_id2)
+        .where(Friendship.user_id1 == current_user.id)
+        .union(
+            select(Friendship.user_id1).where(
+                Friendship.user_id2 == current_user.id
+            )
+        )
+    )
+    query = (
+        select(Post)
+        .where(Post.user_id.in_(friends_ids_subquery))
+        .options(selectinload(Post.author))
+        .order_by(desc(Post.created_at))
+        .limit(page.limit)
+        .offset(page.offset)
+    )
+    result = await session.execute(query)
+    posts = result.scalars().all()
+
+    return {
+        'posts': posts,
+        'limit': page.limit,
+        'offset': page.offset,
+    }
