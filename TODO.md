@@ -10,9 +10,6 @@ Anotar as próximas tarefas aqui:
 
 # BACKEND
 
-## Prioritario
-- [ ] Adicionar: subir o banco postgresql standalone com no task de run local
-
 ## Endpoint
 - O QUE AINDA FALTA???
 - [ ] Delete User
