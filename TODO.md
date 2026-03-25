@@ -2,44 +2,56 @@ Anotar as próximas tarefas aqui:
 
 > **Nota**: Estou pensando em simplificar o projeto, não sei se estou satisfeito com o escopo. Por ser um projeto de estudo acho que ele está com muitas ideias: "*vuu ser u orkuti di gamis, nhe-nhe-nhe*".
 
-# DOCUMENTS
+
+# GERAL
+
+## Tarefa Atual
+- [ ] Resolver e não adicionar novas tarefas no BACKEND
+- [ ] Começar a desenvolver o FRONTEND
+
+
+# DOCUMENTAÇÃO
 
 ## Atualizações
 - [ ] Atualizar o `quick-start-dev.md` (add: Docker)
 
 
+
 # BACKEND
 
 ## Endpoint
-- O QUE AINDA FALTA???
 - [ ] Delete User
-  - [ ] ??? Remover o pedido para usuário e senha ao deletar
-  - [ ] Remover acesso ao usuário deletado (deslogar e invalidar token)
+  - [ ] Remover acesso ao usuário ser deletado (deslogar e revogar/inválidar token)
+  - [ ] QUESTÃO: Devo remover o campo de entrada para enviar o nome de usuário e senha para concluir a deleção de usuário
+  - [ ] QUESTÃO: Lógica de deleção! Criar campo `status` da conta e mudar para `inativo` ao invés de deletar a conta?
+  - [ ] QUESTÃO: Lógica de delação (complemento): Adicionar um prazo de inatividade para a deleção 'REAL' da conta? ex.: 30 dias
 - [ ] Friend Requests
-  - [ ] Listar todos os request pending enviados ou recebidos pelo usuario
-- [ ] Posts
-  - [ ] Criar listagem de post de amigos
-
+  - [ ] Mudar a listagem de pedidos de amizade, listar todos os request pending enviados ou recebidos pelo usuario ao invés de apenas os recebidos.
+- [x] Posts
+  - [x] Criar listagem de post de amigos
+- [ ] REVISÃO:
+  - [ ] Verificar se as chamadas de banco de dados nos endpoints estão usando poderiam usar o union para pegar relação de amigos, assim comom esta sendo feito no `/friends_posts`.
+f
 ## Testes
 - [ ] Atualizar testes
-  - [x] Migrar testes para PostgreSQL
   - [ ] Fazer testes de regras do banco de dados
   - [ ] Fazer testes de regras de negócio
   - [ ] Adicionar o Faker para dados de teste
 
 ## Refatoração
+- [ ] DECIDIR SE: Vale a pena pesquisar CleanCode?
 - [ ] Padronizar nomenclatura
-  - [ ] Vale a pena pesquisar CleanCode?
-  - [ ] Models (singular/plural consistente)
-  - [ ] Funções (verbos claros)
-  - [ ] Variáveis (evitar nomes genéricos)
+  - [ ] 1. Models (singular/plural consistente)
+  - [ ] 2. Funções (verbos claros)
+  - [ ] 3. Variáveis (evitar nomes genéricos)
 
 ## Domínio e validações
 - [ ] Criar validações nos models
-  - [ ] Tamanho de campos
-  - [ ] Regras de senha
+  - [ ] 1. Tamanho de campos
+  - [ ] 2. Regras de senha
+  - [ ] 3. Regex para validação de chars
 - [ ] Mapear regras de negócio existentes
-- [ ] Decidir organização:
+- [ ] Decidir organização ENTRE:
   - [ ] Manter simples → dentro dos models
   - [ ] Complexas → extrair para módulo (services/domain)
 
