@@ -12,9 +12,7 @@ Anotar as próximas tarefas aqui:
 
 # DOCUMENTAÇÃO
 
-## Atualizações
-- [ ] Atualizar o `quick-start-dev.md` (add: Docker)
-
+## OK
 
 
 # BACKEND
@@ -31,7 +29,7 @@ Anotar as próximas tarefas aqui:
   - [x] Criar listagem de post de amigos
 - [ ] REVISÃO:
   - [ ] Verificar se as chamadas de banco de dados nos endpoints estão usando poderiam usar o union para pegar relação de amigos, assim comom esta sendo feito no `/friends_posts`.
-f
+
 ## Testes
 - [ ] Atualizar testes
   - [ ] Fazer testes de regras do banco de dados
