@@ -1,65 +1,82 @@
-# Quick Start 
+# Quick Start
 
-No momento, apenas o ambiente de **backend** está disponível para configuração. As instruções de **frontend** serão disponibilizadas conforme o progresso do desenvolvimento.
+No momento, apenas o ambiente de **Backend** está disponível. As instruções de **Frontend** serão atualizadas em breve conforme o progresso do desenvolvimento.
+
 
 ---
+## Pré-requisitos
 
-# Desenvolvimento Local
+- [Docker & Docker Compose](https://docs.docker.com/engine/install/)
+- [Git](https://git-scm.com/install/)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/)
+- [pipx](https://pipx.pypa.io/stable/installation/) (opcional, recomendado para instalar o uv)
 
-## Clone
 
-- **Clona o repositório**: 
-``` bash
-git clone https://github.com/itsGab/goma-social.git cd goma-social
+---
+## Desenvolvimento Local
+
+
+### 1. Clonar o Repositório
+
+```bash
+git clone https://github.com/itsGab/goma-social.git
+cd goma-social
 ```
 
-## Backend
+### 2. **Configuração do Backend**
 
-1. **Entre na pasta do backend:**
+Entre no diretório e configure as variáveis de ambiente:
+
 
 ```bash
 cd backend
-```
-
-2. **Configure o `.env` (copie o exemplo):**
-
-_Importante mudar as variáveis de ambiente para produção_
-- Linux/macOS: 
-```bash
+# Copia o arquivo de exemplo para o oficial
 cp .env.example .env
 ```
-- Windows (PowerShell):
-```bash
-copy .env.example .env
-```
+> _Avisa: Lembre-se de revisar o arquivo `.env` e alterar as credenciais caso pretenda subir para um ambiente de produção._
 
-3. **Instale as ferramentas necessárias:**
 
-- [pipx](https://pipx.pypa.io/stable/installation/) (opcional, para instalar o uv)
-- [uv](https://docs.astral.sh/uv/getting-started/installation/)
+### 3. Instalar Dependências
 
-```bash
-pipx install uv
-```
-
-4. **Prepare o ambiente e dependências:**
+Utilizando o `uv`, instale o ambiente virtual e todas as dependências (incluindo as de desenvolvimento):
 
 ```bash
 uv sync --locked --all-extras --dev
 ```
 
-5. **Rode a migração do banco de dados:**
+### 4. Banco de Dados (Docker)
 
-```bash
-uv run alembic upgrade head
+Para facilitar o desenvolvimento, suba um container PostgreSQL.
+
+Comando rápido:
+
+```docker
+docker run -d \
+    --name dev_db \
+    -e POSTGRES_USER=app_user \
+    -e POSTGRES_DB=app_db \
+    -e POSTGRES_PASSWORD=app_password \
+    -v pgdata_dev_db:/var/lib/postgresql/ \
+    -p 5432:5432 \
+    postgres:18
 ```
 
-6. **Rode a aplicação:**
+### 5. Executar a Aplicação
+
+O comando abaixo aplica as migrações e inicia o servidor de desenvolimento:
 
 ```bash
-uv run task run
+uv run task dev
 ```
 
-## Frontend
+Para encerrar o banco de dados e liberar recursos:
 
-- O ambiente de **frontend** ainda não foi iniciado. Novas instruções serão publicadas **em breve**.
+```bash
+uv run task db_down
+# ou manualmente via docker
+docker stop dev_db
+```
+
+### 6. **Configuração do Frotend**
+
+- O ambiente de **Frontend** ainda não foi iniciado. Novas instruções serão publicadas **em breve**.
