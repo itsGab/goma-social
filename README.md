@@ -16,6 +16,19 @@ Goma é um projeto pessoal de uma rede social para gamers que buscam comunidades
 - Comunidades Reais: Espaços estruturados para discussões profundas e duradouras
 - Identidade Gamer: Perfis que refletem sua verdadeira trajetória como jogador
 - Sem Monetização Agressiva: Foco em compartilhar, não em vender
+
+
+### Status de Desenvolvimento por Camada
+
+**Backend**
+- _Status_: Congelado para novas implementações
+
+**Frontend**
+- _Status_: Pré desenvolvimento (Fase de estudo)
+
+**Docs**
+- _Status_: Em desenvolvimento sob demanda
+
 ---
 
 ## Stack
