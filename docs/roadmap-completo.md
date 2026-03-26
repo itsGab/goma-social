@@ -11,8 +11,8 @@
   - [x] Testes de integração dos endpoints de segurança.
 - [x] Gestão de Dados
   - [x] CRUD de Usuário (Perfil/Update).
-  - [ ] CRUD de Post (Vinculado ao Usuário).
-  - [ ] Testes de integração dos endpoints de posts.
+  - [x] CRUD de Post (Vinculado ao Usuário).
+  - [x] Testes de integração dos endpoints de posts.
 
 ### Frontend
 - [ ] Estudar JavaScript

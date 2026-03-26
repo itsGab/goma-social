@@ -18,11 +18,6 @@ Anotar as próximas tarefas aqui:
 # BACKEND
 
 ## Endpoint
-- [ ] Delete User
-  - [ ] Remover acesso ao usuário ser deletado (deslogar e revogar/inválidar token)
-  - [ ] QUESTÃO: Devo remover o campo de entrada para enviar o nome de usuário e senha para concluir a deleção de usuário
-  - [ ] QUESTÃO: Lógica de deleção! Criar campo `status` da conta e mudar para `inativo` ao invés de deletar a conta?
-  - [ ] QUESTÃO: Lógica de delação (complemento): Adicionar um prazo de inatividade para a deleção 'REAL' da conta? ex.: 30 dias
 - [ ] Friend Requests
   - [ ] Mudar a listagem de pedidos de amizade, listar todos os request pending enviados ou recebidos pelo usuario ao invés de apenas os recebidos.
 - [x] Posts
@@ -63,3 +58,12 @@ Anotar as próximas tarefas aqui:
 # FRONTEND
 
 ## Sem tarefas no momento.
+
+
+# BACKLOG
+
+## Endpoint
+- [ ] **Delete User**
+  - [ ] Remover acesso ao usuário ser deletado (deslogar e revogar/inválidar token)
+  - [ ] QUESTÃO: Lógica de deleção! Criar campo `status` da conta e mudar para `inativo` ao invés de deletar a conta?
+  - [ ] QUESTÃO: Lógica de delação (complemento): Adicionar um prazo de inatividade para a deleção 'REAL' da conta? ex.: 30 dias
