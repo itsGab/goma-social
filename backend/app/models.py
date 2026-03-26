@@ -1,6 +1,8 @@
 from datetime import datetime
 from enum import Enum
+from typing import Annotated
 
+from fastapi import Query
 from pydantic import EmailStr
 from sqlalchemy import MetaData
 from sqlmodel import (
@@ -196,7 +198,9 @@ PAGE_MAX_LEN = 100
 
 
 class PageInput(SQLModel):
-    page: int = Field(default=1, ge=1, lt=PAGE_MAX_LEN)
+    page: int = Field(
+        default=1, ge=1, lt=PAGE_MAX_LEN, description='numeração da página'
+    )
 
     @property
     def limit(self) -> int:
@@ -205,3 +209,6 @@ class PageInput(SQLModel):
     @property
     def offset(self) -> int:
         return (self.page - 1) * PAGE_DEFAULT_SIZE
+
+
+QueryPage = Annotated[PageInput, Query()]

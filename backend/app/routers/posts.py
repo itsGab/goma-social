@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter
 from sqlalchemy.orm import selectinload
 from sqlmodel import desc, select
 
@@ -8,10 +8,10 @@ from ..database import DepDBSession
 from ..models import (
     Friendship,
     ListPosts,
-    PageInput,
     Post,
     PostInput,
     PostPublic,
+    QueryPage,
 )
 from ..security import DepCurrentUser
 
@@ -37,7 +37,7 @@ async def new_post(
 async def list_my_posts(
     session: DepDBSession,
     current_user: DepCurrentUser,
-    page: PageInput = Query(),
+    page: QueryPage,
 ):
     query = (
         select(Post)
@@ -60,7 +60,7 @@ async def list_my_posts(
 async def list_friends_posts(
     session: DepDBSession,
     current_user: DepCurrentUser,
-    page: PageInput = Query(),
+    page: QueryPage,
 ):
     friends_ids_subquery = (
         select(Friendship.user_id2)
