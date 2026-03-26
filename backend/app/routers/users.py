@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import or_, select
 
@@ -15,10 +15,9 @@ from ..models import (
     User,
     UserInput,
     UserList,
-    UserOnDelete,
     UserPublic,
 )
-from ..security import DepCurrentUser, get_password_hash, verify_password
+from ..security import DepCurrentUser, get_password_hash
 from .profiles import create_profile
 
 router = APIRouter(prefix='/users', tags=['users'])
@@ -82,19 +81,21 @@ async def create_user(user_input: UserInput, session: DepDBSession):
     response_model=RegularMessage,
     status_code=HTTPStatus.OK,
     summary='Delete usuário',
-    description='Delete usuário no banco de dados.',
+    description='Delete usuário no banco de dados com verificação de username',
 )
 async def delete_user(
-    userdata: UserOnDelete, session: SessionDep, current_user: DepCurrentUser
+    session: DepDBSession,
+    current_user: DepCurrentUser,
+    username_check: str = Query(
+        ..., description='é necessário digitar o username para confirmar'
+    ),
 ):
     # confirma o nome do usuario para delecao
-    if current_user.username != userdata.username:
+    if current_user.username != username_check:
         raise HTTPException(
             HTTPStatus.BAD_REQUEST,
             detail="Username provided doesn't match the current user",
         )
-    if not verify_password(userdata.password, current_user.password):
-        raise HTTPException(HTTPStatus.BAD_REQUEST, detail='Wrong password')
     try:
         await session.delete(current_user)
         await session.commit()

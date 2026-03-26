@@ -75,11 +75,6 @@ class UserPublic(SQLModel):
     id: int
 
 
-class UserOnDelete(SQLModel):
-    username: str
-    password: str
-
-
 class UserList(SQLModel):
     userlist: list[UserPublic]
 

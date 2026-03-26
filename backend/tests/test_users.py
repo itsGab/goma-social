@@ -68,11 +68,9 @@ def test_user_create_user_email_conflict_fail(client, user):
 # endpoint: /users/delete =====================================================
 # !. post user delete success
 def test_user_delete_user_success(client, user, session, access_token):
-    response = client.request(
-        method='DELETE',
-        url='/users/delete',
+    response = client.delete(
+        url=f'/users/delete?username_check={user.username}',
         headers={'Authorization': f'Bearer {access_token}'},
-        json={'username': user.username, 'password': user.clean_password},
     )
     assert response.status_code == HTTPStatus.OK
     assert response.json()['message'] == 'User deleted successfully'
@@ -82,29 +80,15 @@ def test_user_delete_user_success(client, user, session, access_token):
 def test_user_delete_fail_username_doesnt_match(
     client, user, session, access_token
 ):
-    response = client.request(
-        method='DELETE',
-        url='/users/delete',
+    response = client.delete(
+        url='/users/delete?username_check=wrong_name',
         headers={'Authorization': f'Bearer {access_token}'},
-        json={'username': 'wrong-user', 'password': user.clean_password},
     )
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert (
         response.json()['detail']
         == "Username provided doesn't match the current user"
     )
-
-
-# !. post user delete wrong password fail
-def test_user_delete_wrong_password_fail(client, user, session, access_token):
-    response = client.request(
-        method='DELETE',
-        url='/users/delete',
-        headers={'Authorization': f'Bearer {access_token}'},
-        json={'username': user.username, 'password': 'wrong-password'},
-    )
-    assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert response.json()['detail'] == 'Wrong password'
 
 
 # endpoint: /users/list =======================================================
@@ -143,12 +127,11 @@ def test_user_delete_fail_integrity_error(client, session, user, access_token):
         'commit',
         side_effect=IntegrityError(None, None, Exception()),
     ):
-        response = client.request(
-            method='DELETE',
-            url='/users/delete',
+        response = client.delete(
+            url=f'/users/delete?username_check={user.username}',
             headers={'Authorization': f'Bearer {access_token}'},
-            json={'username': user.username, 'password': user.clean_password},
         )
+
         data = response.json()
 
         assert response.status_code == HTTPStatus.BAD_REQUEST

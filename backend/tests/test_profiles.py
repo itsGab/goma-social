@@ -143,11 +143,9 @@ async def test_delete_profile_is_delete_with_user_deletion_success(
     assert token.status_code == HTTPStatus.OK
     access_token = token.json()['access_token']
 
-    response = client.request(
-        method='DELETE',
-        url='/users/delete',
+    response = client.delete(
+        url='/users/delete?username_check=user-test',
         headers={'Authorization': f'Bearer {access_token}'},
-        json={'username': 'user-test', 'password': 'test'},
     )
 
     assert response.status_code == HTTPStatus.OK
