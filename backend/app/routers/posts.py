@@ -4,7 +4,7 @@ from fastapi import APIRouter, Query
 from sqlalchemy.orm import selectinload
 from sqlmodel import desc, select
 
-from ..database import SessionDep
+from ..database import DepDBSession
 from ..models import (
     Friendship,
     ListPosts,
@@ -24,7 +24,7 @@ router = APIRouter(prefix='/posts', tags=['posts'])
     status_code=HTTPStatus.CREATED,
 )
 async def new_post(
-    post: PostInput, session: SessionDep, current_user: DepCurrentUser
+    post: PostInput, session: DepDBSession, current_user: DepCurrentUser
 ):
     new_post = Post(content=post.content, user_id=current_user.id)
     session.add(new_post)
@@ -35,7 +35,7 @@ async def new_post(
 
 @router.get('/my_posts/', response_model=ListPosts)
 async def list_my_posts(
-    session: SessionDep,
+    session: DepDBSession,
     current_user: DepCurrentUser,
     page: PageInput = Query(),
 ):
@@ -58,7 +58,7 @@ async def list_my_posts(
 
 @router.get('/friends_posts/', response_model=ListPosts)
 async def list_friends_posts(
-    session: SessionDep,
+    session: DepDBSession,
     current_user: DepCurrentUser,
     page: PageInput = Query(),
 ):

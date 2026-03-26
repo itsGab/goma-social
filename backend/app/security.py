@@ -8,7 +8,7 @@ from jwt import DecodeError, decode, encode
 from pwdlib import PasswordHash
 from sqlalchemy import select
 
-from .database import SessionDep
+from .database import DepDBSession
 from .exceptions import UnauthorizedException
 from .models import User
 from .settings import settings
@@ -45,7 +45,7 @@ def verify_password(plain_password: str, hashed_password: str):
     return pwd_context.verify(password=plain_password, hash=hashed_password)
 
 
-async def get_current_user(session: SessionDep, token: DepTokenResponse):
+async def get_current_user(session: DepDBSession, token: DepTokenResponse):
     try:
         payload = decode(
             jwt=token, key=settings.SECRET_KEY, algorithms=[settings.ALGORITHM]

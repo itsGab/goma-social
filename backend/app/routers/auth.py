@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from sqlalchemy import select
 
-from ..database import SessionDep
+from ..database import DepDBSession
 from ..exceptions import InvalidUnauthorizedException
 from ..models import Token, User
 from ..security import (
@@ -16,7 +16,7 @@ router = APIRouter(prefix='/auth', tags=['auth'])
 
 @router.post('/token', response_model=Token)
 async def login_for_access_token(
-    form_data: DepTokenRequest, session: SessionDep
+    form_data: DepTokenRequest, session: DepDBSession
 ):
     user = await session.scalar(
         select(User).where(User.email == form_data.username)

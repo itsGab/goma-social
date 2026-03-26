@@ -4,7 +4,7 @@ from fastapi import APIRouter
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import or_, select
 
-from ..database import SessionDep
+from ..database import DepDBSession
 from ..exceptions import (
     HTTPException,
     ResponseMessage,
@@ -33,7 +33,7 @@ router = APIRouter(prefix='/users', tags=['users'])
     'banco de dados.',
     responses={HTTPStatus.CONFLICT: {'model': ErrorMessage}},
 )
-async def create_user(user_input: UserInput, session: SessionDep):
+async def create_user(user_input: UserInput, session: DepDBSession):
     """
     Realiza o cadastro do usuário com hash de senha e validação de duplicidade.
     Cria perfil (profile) para usuário.
@@ -111,7 +111,7 @@ async def delete_user(
     summary='Lista usuários',
     description='Faz a listagem de usuários com informações públicas.',
 )
-async def list_users(session: SessionDep, current_user: DepCurrentUser):
+async def list_users(session: DepDBSession, current_user: DepCurrentUser):
     """
     Lista os usuários (Requer autenticação)
     """

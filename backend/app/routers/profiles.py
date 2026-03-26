@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
-from ..database import SessionDep
+from ..database import DepDBSession
 from ..exceptions import ResponseMessage
 from ..models import Profile, ProfileOnUpdate, ProfilePublic, User
 from ..security import DepCurrentUser
@@ -12,7 +12,7 @@ from ..security import DepCurrentUser
 router = APIRouter(prefix='/profiles', tags=['profiles'])
 
 
-async def create_profile(user: User, session: SessionDep) -> Profile:
+async def create_profile(user: User, session: DepDBSession) -> Profile:
     new_profile = Profile(display_name=user.username, user=user)
     session.add(new_profile)
     return new_profile
@@ -25,7 +25,7 @@ async def create_profile(user: User, session: SessionDep) -> Profile:
     summary='Retorna próprio perfil',
     description='Retorna o próprio perfil do usuário com informações públicas',
 )
-async def get_profile(session: SessionDep, current_user: DepCurrentUser):
+async def get_profile(session: DepDBSession, current_user: DepCurrentUser):
     query = select(Profile).where(
         Profile.user_id == current_user.id  # type: ignore
     )
@@ -43,7 +43,7 @@ async def get_profile(session: SessionDep, current_user: DepCurrentUser):
 )
 async def update_profile(
     profile_data: ProfileOnUpdate,
-    session: SessionDep,
+    session: DepDBSession,
     current_user: DepCurrentUser,
 ):
     query = select(Profile).where(Profile.user_id == current_user.id)

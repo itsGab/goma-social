@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import or_, select
 
-from ..database import SessionDep
+from ..database import DepDBSession
 from ..exceptions import ResponseMessage
 from ..models import (
     FriendAction,
@@ -27,7 +27,7 @@ router = APIRouter(prefix='/friends', tags=['friends'])
     response_model=RegularMessage,
 )
 async def send_friend_request(
-    friend_id: int, session: SessionDep, current_user: DepCurrentUser
+    friend_id: int, session: DepDBSession, current_user: DepCurrentUser
 ):
     friend_check = await session.get(User, friend_id)
     if not friend_check:
@@ -92,7 +92,7 @@ async def send_friend_request(
     response_model=FriendRequestPending,
 )
 async def list_pending_friend_requests(
-    session: SessionDep, current_user: DepCurrentUser
+    session: DepDBSession, current_user: DepCurrentUser
 ):
     query = (
         select(
@@ -132,7 +132,7 @@ async def list_pending_friend_requests(
 @router.patch('/requests', response_model=RegularMessage)
 async def respond_friend_request(
     response: FriendResponseRequest,
-    session: SessionDep,
+    session: DepDBSession,
     current_user: DepCurrentUser,
 ):
     # regra de negocio (id: A < B)
@@ -179,7 +179,7 @@ async def respond_friend_request(
 
 @router.patch('/block/{user_id}')
 async def block_user(
-    user_id: int, session: SessionDep, current_user: DepCurrentUser
+    user_id: int, session: DepDBSession, current_user: DepCurrentUser
 ):
     if user_id == current_user.id:
         raise HTTPException(
@@ -237,7 +237,7 @@ async def block_user(
 
 @router.patch('/unblock/{user_id}')
 async def unblock_user(
-    user_id: int, session: SessionDep, current_user: DepCurrentUser
+    user_id: int, session: DepDBSession, current_user: DepCurrentUser
 ):
     if user_id == current_user.id:
         raise HTTPException(
