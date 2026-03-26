@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
-from sqlmodel import or_, select
+from sqlmodel import case, or_, select
 
 from ..database import DepDBSession
 from ..exceptions import ResponseMessage
@@ -14,6 +14,7 @@ from ..models import (
     Friendship,
     FriendStatus,
     RegularMessage,
+    RequestType,
     User,
 )
 from ..security import DepCurrentUser
@@ -91,37 +92,61 @@ async def send_friend_request(
     '/requests',
     response_model=FriendRequestPending,
 )
-async def list_pending_friend_requests(
+async def list_pending_friends(
     session: DepDBSession, current_user: DepCurrentUser
 ):
-    query = (
+    friend_ids_query = (
         select(
-            User.id,
-            User.username,
-            User.email,
+            case(
+                (Friendship.user_id1 == current_user.id, Friendship.user_id2),
+                else_=Friendship.user_id1,
+            ).label('friend_id'),
+            case(
+                (
+                    Friendship.requested_by == current_user.id,
+                    RequestType.REQUESTED,
+                ),
+                else_=RequestType.RECEIVED,
+            ).label('request_label'),
             Friendship.status,
             Friendship.created_at,
-        )
-        .join(User, User.id == Friendship.requested_by)
-        .where(
+        ).where(
             Friendship.status == FriendStatus.PENDING,
             or_(
                 Friendship.user_id1 == current_user.id,
                 Friendship.user_id2 == current_user.id,
             ),
-            Friendship.requested_by != current_user.id,
         )
-        .order_by(Friendship.created_at.asc())
+    ).cte('friend_requests')  # Common Table Expression
+
+    query = (
+        select(
+            User.id,
+            User.username,
+            User.email,
+            friend_ids_query.c.status,
+            friend_ids_query.c.created_at,
+            friend_ids_query.c.request_label,
+        )
+        .join(User, User.id == friend_ids_query.c.friend_id)
+        .order_by(
+            friend_ids_query.c.request_label.desc(),
+            friend_ids_query.c.created_at.desc(),
+        )
     )
-    rows = (await session.execute(query)).mappings().all()
+
+    result = await session.execute(query)
+
+    rows = result.mappings().all()
 
     requests = [
         FriendRequestPublic(
-            user_id=row['id'],
-            username=row['username'],
-            email=row['email'],
+            friend_user_id=row['id'],
+            friend_username=row['username'],
+            friend_email=row['email'],
             status=row['status'],
             created_at=row['created_at'],
+            request_type=row['request_label'],
         )
         for row in rows
     ]

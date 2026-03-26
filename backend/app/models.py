@@ -166,12 +166,18 @@ class Friendship(BaseSQLModel, table=True):
     )
 
 
+class RequestType(str, Enum):
+    RECEIVED = 'received'
+    REQUESTED = 'requested'
+
+
 class FriendRequestPublic(SQLModel):
-    user_id: int
-    username: str
-    email: EmailStr
+    friend_user_id: int
+    friend_username: str
+    friend_email: EmailStr
     status: FriendStatus
     created_at: datetime
+    request_type: RequestType
 
 
 class FriendRequestPending(SQLModel):

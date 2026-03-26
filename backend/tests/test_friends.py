@@ -195,8 +195,8 @@ async def test_list_pending_requests_success(
 
     assert response.status_code == HTTPStatus.OK
     assert len(data['pending']) == 1
-    assert data['pending'][0]['user_id'] == user2.id
-    assert data['pending'][0]['username'] == user2.username
+    assert data['pending'][0]['friend_user_id'] == user2.id
+    assert data['pending'][0]['friend_username'] == user2.username
 
 
 # !. list pending requests empty
