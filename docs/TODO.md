@@ -9,13 +9,6 @@ Tarefas para depois
 
 ## BACKEND
 
-### Endpoint ()
-- [ ] **Delete User**
-  - [ ] Remover acesso ao usuário ser deletado (deslogar e revogar/inválidar token)
-  - [ ] QUESTÃO: Lógica de deleção! Criar campo `status` da conta e mudar para `inativo` ao invés de deletar a conta?
-  - [ ] QUESTÃO: Lógica de delação (complemento): Adicionar um prazo de inatividade para a deleção 'REAL' da conta? ex.: 30 dias
-
-
 ### Arquitetura
 - [ ] Criar **validações em models**
   - [ ] 1. Tamanho de campos

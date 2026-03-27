@@ -91,6 +91,10 @@ def test_user_delete_fail_username_doesnt_match(
     )
 
 
+# TODO: teste delete user com dados referenciados
+# !. delete user fail como dados referenciados!
+
+
 # endpoint: /users/list =======================================================
 # !. get user list success
 def test_list_users_user_authenticated_success(client, user, access_token):

@@ -155,10 +155,18 @@ class Friendship(BaseSQLModel, table=True):
     __table_args__ = (
         CheckConstraint('user_id1 < user_id2', name='check_ordered_ids'),
     )
-    user_id1: int = Field(foreign_key='user.id', primary_key=True)
-    user_id2: int = Field(foreign_key='user.id', primary_key=True)
-    requested_by: int = Field(foreign_key='user.id', index=True)
-    blocked_by: int = Field(default=None, foreign_key='user.id', nullable=True)
+    user_id1: int = Field(
+        foreign_key='user.id', ondelete='CASCADE', primary_key=True
+    )
+    user_id2: int = Field(
+        foreign_key='user.id', ondelete='CASCADE', primary_key=True
+    )
+    requested_by: int = Field(
+        foreign_key='user.id', ondelete='CASCADE', index=True
+    )
+    blocked_by: int = Field(
+        default=None, foreign_key='user.id', ondelete='CASCADE', nullable=True
+    )
     status: FriendStatus = Field(default=FriendStatus.PENDING)
     created_at: datetime = Field(
         default=None,
