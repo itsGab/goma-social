@@ -32,16 +32,21 @@ class BaseSQLModel(SQLModel):
 
 
 class TimestampModel(BaseSQLModel):
-    # campos para horario da criacao e atualizacao
-    # ! TODO: revisar
-    created_at: datetime = Field(
-        sa_column=Column(DateTime(timezone=True), server_default=func.now()),
+    created_at: datetime | None = Field(
+        default=None,
+        sa_column=Column(
+            DateTime(timezone=True),
+            server_default=func.now(),
+            nullable=False,
+        ),
     )
-    updated_at: datetime = Field(
+    updated_at: datetime | None = Field(
+        default=None,
         sa_column=Column(
             DateTime(timezone=True),
             server_default=func.now(),
             onupdate=func.now(),
+            nullable=False,
         ),
     )
 
