@@ -54,7 +54,7 @@ async def create_user(user_input: UserInput, session: DepDBSession):
             detail=ResponseMessage.USER_ANY_CONFLICT,
         )
     # sem conflito, cadastra new user
-    hashed_password = get_password_hash(user_input.password)
+    hashed_password = get_password_hash(user_input.password.get_secret_value())
     new_user = User(
         email=user_input.email,
         username=user_input.username,

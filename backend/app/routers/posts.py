@@ -42,7 +42,6 @@ async def list_my_posts(
     query = (
         select(Post)
         .where(Post.user_id == current_user.id)
-        .options(selectinload(Post.author))
         .order_by(desc(Post.created_at))
         .limit(page.limit)
         .offset(page.offset)

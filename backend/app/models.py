@@ -3,7 +3,7 @@ from enum import Enum
 from typing import Annotated
 
 from fastapi import Query
-from pydantic import EmailStr
+from pydantic import EmailStr, SecretStr
 from sqlalchemy import MetaData
 from sqlmodel import (
     CheckConstraint,
@@ -54,7 +54,7 @@ class TimestampModel(BaseSQLModel):
 class UserInput(SQLModel):
     email: EmailStr
     username: str
-    password: str
+    password: SecretStr
 
 
 class User(TimestampModel, table=True):
@@ -126,11 +126,12 @@ class Post(BaseSQLModel, table=True):
     )
     id: int = Field(default=None, primary_key=True)
     content: str
-
     user_id: int = Field(
         foreign_key='user.id', ondelete='CASCADE', nullable=False
     )
-    author: User = Relationship(back_populates='posts')
+    author: User = Relationship(
+        back_populates='posts', sa_relationship_kwargs={'lazy': 'selectin'}
+    )
 
 
 class PostInput(SQLModel):
@@ -213,16 +214,26 @@ PAGE_MAX_LEN = 100
 
 class PageInput(SQLModel):
     page: int = Field(
-        default=1, ge=1, lt=PAGE_MAX_LEN, description='numeração da página'
+        default=1,
+        ge=1,
+        lt=PAGE_MAX_LEN,
+        description='numeração da página (começa em 1)',
+    )
+
+    size: int = Field(
+        default=20,
+        ge=1,
+        le=PAGE_MAX_LEN,
+        description='quantidade de itens por página',
     )
 
     @property
     def limit(self) -> int:
-        return PAGE_DEFAULT_SIZE
+        return self.size
 
     @property
     def offset(self) -> int:
-        return (self.page - 1) * PAGE_DEFAULT_SIZE
+        return (self.page - 1) * self.size
 
 
 QueryPage = Annotated[PageInput, Query()]
