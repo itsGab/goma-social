@@ -16,7 +16,7 @@ async def test_database_add_user_success(session):
     new_user = User(
         username='test_db',
         email='test@db.com',
-        password='test_db_123',
+        password='Test_db_#123',
     )
     session.add(new_user)
     await session.commit()
@@ -40,7 +40,7 @@ async def test_database_add_user_missing_username_fail(session):
     new_user = User(
         # username='test_db',
         email='test@db.com',
-        password='test_db_123',
+        password='Test_db_#123',
     )
     session.add(new_user)
     with pytest.raises(IntegrityError):
@@ -59,7 +59,7 @@ async def test_database_add_user_missing_email_fail(session):
     new_user = User(
         username='test_db',
         # email='test@db.com',
-        password='test_db_123',
+        password='Test_db_#123',
     )
     session.add(new_user)
     with pytest.raises(IntegrityError):
@@ -78,7 +78,7 @@ async def test_database_add_user_missing_password_fail(session):
     new_user = User(
         username='test_db',
         email='test@db.com',
-        # password='test_db_123',
+        # password='Test_db_#123',
     )
     session.add(new_user)
     with pytest.raises(IntegrityError):

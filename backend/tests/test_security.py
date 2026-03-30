@@ -29,7 +29,7 @@ def test_security_create_access_token_success():
 # get_password_hash / verify_password =========================================
 # !. hash password and verify success
 def test_security_hash_and_verify_password():
-    plain_password = 'super-secret-password'
+    plain_password = '#1Super-secret-password'
     hashed_password = get_password_hash(plain_password)
     verify = verify_password(
         plain_password=plain_password, hashed_password=hashed_password

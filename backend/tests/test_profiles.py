@@ -20,13 +20,14 @@ def test_profile_is_created_with_user_creation_success(client):
         json={
             'username': 'user-test',
             'email': 'test@mail.com',
-            'password': 'test',
+            'password': 'Test#123',
         },
     )
     assert user.status_code == HTTPStatus.CREATED
 
     token = client.post(
-        '/auth/token', data={'username': 'test@mail.com', 'password': 'test'}
+        '/auth/token',
+        data={'username': 'test@mail.com', 'password': 'Test#123'},
     )
     assert token.status_code == HTTPStatus.OK
     access_token = token.json()['access_token']
@@ -48,13 +49,14 @@ def test_profile_update_success(client):
         json={
             'username': 'user-test',
             'email': 'test@mail.com',
-            'password': 'test',
+            'password': 'Test#123',
         },
     )
     assert user.status_code == HTTPStatus.CREATED
 
     token = client.post(
-        '/auth/token', data={'username': 'test@mail.com', 'password': 'test'}
+        '/auth/token',
+        data={'username': 'test@mail.com', 'password': 'Test#123'},
     )
     assert token.status_code == HTTPStatus.OK
     access_token = token.json()['access_token']
@@ -127,7 +129,7 @@ async def test_delete_profile_is_delete_with_user_deletion_success(
         json={
             'username': 'user-test',
             'email': 'test@mail.com',
-            'password': 'test',
+            'password': 'Test#123',
         },
     )
     assert response.status_code == HTTPStatus.CREATED
@@ -138,7 +140,8 @@ async def test_delete_profile_is_delete_with_user_deletion_success(
     assert profile_db.display_name == 'user-test'
 
     token = client.post(
-        '/auth/token', data={'username': 'test@mail.com', 'password': 'test'}
+        '/auth/token',
+        data={'username': 'test@mail.com', 'password': 'Test#123'},
     )
     assert token.status_code == HTTPStatus.OK
     access_token = token.json()['access_token']
@@ -178,11 +181,12 @@ def test_profile_update_fail_integrity_error(client, session):
         json={
             'username': 'user-test',
             'email': 'test@mail.com',
-            'password': 'test',
+            'password': 'Test#123',
         },
     )
     token = client.post(
-        '/auth/token', data={'username': 'test@mail.com', 'password': 'test'}
+        '/auth/token',
+        data={'username': 'test@mail.com', 'password': 'Test#123'},
     )
     assert token.status_code == HTTPStatus.OK
     access_token = token.json()['access_token']

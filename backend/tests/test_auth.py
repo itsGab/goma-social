@@ -20,7 +20,7 @@ def test_auth_token_success(client, user):
 
 # !. post token not registered user fail
 def test_auth_token_user_not_found_fail(client):
-    login_data = {'username': 'not@registered.com', 'password': 'hello-world'}
+    login_data = {'username': 'not@registered.com', 'password': 'Password#123'}
     response = client.post('/auth/token', data=login_data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     data = response.json()
@@ -29,7 +29,7 @@ def test_auth_token_user_not_found_fail(client):
 
 # !. post token wrong password fail
 def test_auth_token_wrong_password_fail(client, user):
-    login_data = {'username': user.email, 'password': 'wrong-pass'}
+    login_data = {'username': user.email, 'password': 'Wrong-pass#123'}
     response = client.post('/auth/token', data=login_data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     data = response.json()

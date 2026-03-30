@@ -45,7 +45,7 @@ async def client_fixture(session: AsyncSession):
 
 @pytest_asyncio.fixture(name='user')
 async def user_fixture(session: AsyncSession):
-    plain_password = 'password123'
+    plain_password = 'Password#123?'
     user = models.User(
         email='user01@mail.com',
         username='user01',
@@ -60,7 +60,7 @@ async def user_fixture(session: AsyncSession):
 
 @pytest_asyncio.fixture(name='user2')
 async def user2_fixture(session: AsyncSession):
-    plain_password = 'password123'
+    plain_password = 'Password#123?'
     user = models.User(
         email='user02@mail.com',
         username='user02',
@@ -96,7 +96,7 @@ async def users_with_friendship(
 async def access_token_fixture(client, user):
     response = client.post(
         '/auth/token',
-        data={'username': user.email, 'password': 'password123'},
+        data={'username': user.email, 'password': 'Password#123?'},
     )
     # returns: json(access_token, token_type)
     return response.json()['access_token']
@@ -106,7 +106,7 @@ async def access_token_fixture(client, user):
 async def access_token_fixture2(client, user2):
     response = client.post(
         '/auth/token',
-        data={'username': user2.email, 'password': 'password123'},
+        data={'username': user2.email, 'password': 'Password#123?'},
     )
     # returns: json(access_token, token_type)
     return response.json()['access_token']

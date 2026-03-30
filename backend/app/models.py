@@ -3,7 +3,7 @@ from enum import Enum
 from typing import Annotated
 
 from fastapi import Query
-from pydantic import EmailStr, SecretStr
+from pydantic import AfterValidator, BeforeValidator, EmailStr, SecretStr
 from sqlalchemy import MetaData
 from sqlmodel import (
     CheckConstraint,
@@ -25,6 +25,56 @@ convention = {
 }
 
 metadata = MetaData(naming_convention=convention)
+
+# IDEA: constante para mover?
+USERNAME_PATTERN = r'^[a-z0-9_]+$'
+PASSWORD_MIN_SIZE = 8
+
+
+def trim_string(name: str | any) -> str:
+    if isinstance(name, str):
+        return name.strip().lower()
+    return name
+
+
+def validate_password_complexity(value: SecretStr) -> SecretStr:
+    password = value.get_secret_value()
+
+    if not any(char.isdigit() for char in password):
+        raise ValueError('A senha deve conter pelo menos um número')
+    if not any(char.isupper() for char in password):
+        raise ValueError('A senha deve conter pelo menos uma letra maiúscula')
+    if not any(char.islower() for char in password):
+        raise ValueError('A senha deve conter pelo menos uma letra minúscula')
+    if not any(not char.isalnum() for char in password):
+        raise ValueError(
+            'A senha deve conter pelo menos um símbolo (ex: @, #, $, %)'
+        )
+
+    return value
+
+
+ValidPassword = Annotated[
+    SecretStr,
+    Field(
+        min_length=8,
+        max_length=40,
+        description='Senha forte com maiúscula, minúscula, números e símbolos',
+    ),
+    AfterValidator(validate_password_complexity),
+]
+
+
+ValidUsername = Annotated[
+    str,
+    BeforeValidator(trim_string),
+    Field(
+        min_length=3,
+        max_length=20,
+        regex=USERNAME_PATTERN,
+        description='Apenas letras, números e underscores',
+    ),
+]
 
 
 class BaseSQLModel(SQLModel):
@@ -53,8 +103,8 @@ class TimestampModel(BaseSQLModel):
 
 class UserInput(SQLModel):
     email: EmailStr
-    username: str
-    password: SecretStr
+    username: ValidUsername
+    password: ValidPassword
 
 
 class User(TimestampModel, table=True):
@@ -185,7 +235,7 @@ class RequestType(str, Enum):
     REQUESTED = 'requested'
 
 
-class FriendRequestPublic(SQLModel):
+class FriendRequest(SQLModel):
     friend_user_id: int
     friend_username: str
     friend_email: EmailStr
@@ -194,8 +244,8 @@ class FriendRequestPublic(SQLModel):
     request_type: RequestType
 
 
-class FriendRequestPending(SQLModel):
-    pending: list[FriendRequestPublic]
+class ListFriendRequest(SQLModel):
+    pending: list[FriendRequest]
 
 
 class FriendAction(str, Enum):
@@ -208,22 +258,24 @@ class FriendResponseRequest(SQLModel):
     action: FriendAction
 
 
+# IDEA: mover constantes para outro local.
 PAGE_DEFAULT_SIZE = 20
-PAGE_MAX_LEN = 100
+PAGE_MAX_SIZE = 100
+PAGE_MAX_PAGES = 100
 
 
-class PageInput(SQLModel):
+class PageParams(SQLModel):
     page: int = Field(
         default=1,
         ge=1,
-        lt=PAGE_MAX_LEN,
+        lt=PAGE_MAX_PAGES,
         description='numeração da página (começa em 1)',
     )
 
     size: int = Field(
-        default=20,
+        default=PAGE_DEFAULT_SIZE,
         ge=1,
-        le=PAGE_MAX_LEN,
+        le=PAGE_MAX_SIZE,
         description='quantidade de itens por página',
     )
 
@@ -236,4 +288,4 @@ class PageInput(SQLModel):
         return (self.page - 1) * self.size
 
 
-QueryPage = Annotated[PageInput, Query()]
+QueryPage = Annotated[PageParams, Query()]

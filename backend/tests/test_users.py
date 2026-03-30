@@ -17,7 +17,7 @@ def test_user_create_new_user_success(client):
     new_user = {
         'email': 'test@test.com',
         'username': 'test',
-        'password': 'test123',
+        'password': 'Test#123',
     }
     response = client.post(
         url='/users/create',
@@ -38,7 +38,7 @@ def test_user_create_user_username_conflict_fail(client, user):
         json={
             'username': user.username,
             'email': 'whatever@mail.com',
-            'password': 'pwd321',
+            'password': 'Pass#321',
         },
     )
 
@@ -55,7 +55,7 @@ def test_user_create_user_email_conflict_fail(client, user):
         json={
             'username': 'whatever',
             'email': user.email,
-            'password': 'pwd321',
+            'password': 'Pass#321',
         },
     )
 

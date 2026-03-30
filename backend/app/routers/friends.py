@@ -8,11 +8,11 @@ from ..database import DepDBSession
 from ..exceptions import ResponseMessage
 from ..models import (
     FriendAction,
-    FriendRequestPending,
-    FriendRequestPublic,
+    FriendRequest,
     FriendResponseRequest,
     Friendship,
     FriendStatus,
+    ListFriendRequest,
     RegularMessage,
     RequestType,
     User,
@@ -90,7 +90,7 @@ async def send_friend_request(
 
 @router.get(
     '/requests',
-    response_model=FriendRequestPending,
+    response_model=ListFriendRequest,
 )
 async def list_pending_friends(
     session: DepDBSession, current_user: DepCurrentUser
@@ -140,7 +140,7 @@ async def list_pending_friends(
     rows = result.mappings().all()
 
     requests = [
-        FriendRequestPublic(
+        FriendRequest(
             friend_user_id=row['id'],
             friend_username=row['username'],
             friend_email=row['email'],

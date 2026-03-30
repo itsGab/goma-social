@@ -12,8 +12,9 @@ Tarefas para depois
 ### Arquitetura
 - [ ] Criar **validações em models**
   - [ ] 1. Tamanho de campos
-  - [ ] 2. Regras de senha
-  - [ ] 3. Regex para validação de chars
+  - [x] 2. Regras de senha
+  - [x] 3. Regex para validação de chars
+- [ ] Migrar de SQLModel para SqlAlchemy
 - [ ] Analisar **possíveis melhorias**
   - [ ] ! Revisar se há melhorias a fazer nas chamadas de **Bancos de Dados**
   - [ ] ! Decidir criar ou não **Módulo de Chamada de Banco de Dados**
