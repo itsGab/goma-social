@@ -26,7 +26,15 @@ convention = {
 
 metadata = MetaData(naming_convention=convention)
 
-# IDEA: constante para mover?
+# IDEA: mover constantes para outro local.
+BIO_MAX_LEN = 1000
+PAGE_DEFAULT_SIZE = 20
+PAGE_MAX_SIZE = 100
+PAGE_MAX_PAGES = 100
+POST_MAX_LEN = 1000
+NAME_MIN_LEN = 3
+NAME_MAX_LEN = 20
+
 USERNAME_PATTERN = r'^[a-z0-9_]+$'
 PASSWORD_MIN_SIZE = 8
 
@@ -69,9 +77,9 @@ ValidUsername = Annotated[
     str,
     BeforeValidator(trim_string),
     Field(
-        min_length=3,
-        max_length=20,
-        regex=USERNAME_PATTERN,
+        min_length=NAME_MIN_LEN,
+        max_length=NAME_MAX_LEN,
+        regex=USERNAME_PATTERN,  # se mudar para sqlalchemy deve ser pattern
         description='Apenas letras, números e underscores',
     ),
 ]
@@ -125,7 +133,7 @@ class User(TimestampModel, table=True):
 
 
 class UserPublic(SQLModel):
-    email: EmailStr
+    email: str
     username: str
     id: int
 
@@ -160,8 +168,10 @@ class ProfilePublic(SQLModel):
 
 
 class ProfileOnUpdate(SQLModel):
-    display_name: str | None = Field(default=None)
-    bio: str | None = Field(default=None)
+    display_name: str | None = Field(
+        default=None, min_length=NAME_MIN_LEN, max_length=NAME_MAX_LEN
+    )
+    bio: str | None = Field(default=None, max_length=BIO_MAX_LEN)
 
 
 class RegularMessage(SQLModel):
@@ -185,7 +195,7 @@ class Post(BaseSQLModel, table=True):
 
 
 class PostInput(SQLModel):
-    content: str
+    content: str = Field(default=None, max_length=POST_MAX_LEN)
 
 
 class PostPublic(SQLModel):
@@ -256,12 +266,6 @@ class FriendAction(str, Enum):
 class FriendResponseRequest(SQLModel):
     friend_id: int
     action: FriendAction
-
-
-# IDEA: mover constantes para outro local.
-PAGE_DEFAULT_SIZE = 20
-PAGE_MAX_SIZE = 100
-PAGE_MAX_PAGES = 100
 
 
 class PageParams(SQLModel):
