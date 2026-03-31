@@ -3,7 +3,8 @@ from sqlalchemy import select
 
 from ..database import DepDBSession
 from ..exceptions import InvalidUnauthorizedException
-from ..models import Token, User
+from ..models import User
+from ..schemas import Token
 from ..security import (
     DepCurrentUser,
     DepTokenRequest,

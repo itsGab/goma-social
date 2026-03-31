@@ -4,7 +4,7 @@
 
 from http import HTTPStatus
 
-from app.exceptions import ResponseMessage
+from app.exceptions import ExceptionMessage
 
 
 # endpoint: /auth/token =======================================================
@@ -24,7 +24,7 @@ def test_auth_token_user_not_found_fail(client):
     response = client.post('/auth/token', data=login_data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     data = response.json()
-    assert data == {'detail': ResponseMessage.AUTH_INVALID_CREDENTIALS}
+    assert data == {'detail': ExceptionMessage.AUTH_INVALID_CREDENTIALS}
 
 
 # !. post token wrong password fail
@@ -33,7 +33,7 @@ def test_auth_token_wrong_password_fail(client, user):
     response = client.post('/auth/token', data=login_data)
     assert response.status_code == HTTPStatus.BAD_REQUEST
     data = response.json()
-    assert data == {'detail': ResponseMessage.AUTH_INVALID_CREDENTIALS}
+    assert data == {'detail': ExceptionMessage.AUTH_INVALID_CREDENTIALS}
 
 
 # !. post token missing field fail
@@ -81,7 +81,7 @@ def test_auth_refresh_token_with_invalid_token_fail(client):
         },
     )
     assert response.status_code == HTTPStatus.UNAUTHORIZED
-    assert response.json() == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
+    assert response.json() == {'detail': ExceptionMessage.AUTH_NOT_AUTHORIZED}
 
 
 def test_auth_refresh_token_with_invalid_basic_token_fail(

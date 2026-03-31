@@ -4,7 +4,7 @@ from http import HTTPStatus
 from fastapi import HTTPException
 
 
-class ResponseMessage(str, Enum):
+class ExceptionMessage(str, Enum):
     # user
     USER_ANY_CONFLICT = 'Username or email already in use'
     USER_USERNAME_CONFLICT = 'Username already in use'
@@ -23,11 +23,11 @@ class ResponseMessage(str, Enum):
 
 UnauthorizedException = HTTPException(
     status_code=HTTPStatus.UNAUTHORIZED,
-    detail=ResponseMessage.AUTH_NOT_AUTHORIZED,
+    detail=ExceptionMessage.AUTH_NOT_AUTHORIZED,
     headers={'WWW-Authenticate': 'Bearer'},
 )
 
 InvalidUnauthorizedException = HTTPException(
     status_code=HTTPStatus.BAD_REQUEST,
-    detail=ResponseMessage.AUTH_INVALID_CREDENTIALS,
+    detail=ExceptionMessage.AUTH_INVALID_CREDENTIALS,
 )

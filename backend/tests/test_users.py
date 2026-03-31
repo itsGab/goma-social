@@ -7,8 +7,8 @@ from unittest.mock import patch
 
 from sqlalchemy.exc import IntegrityError
 
-from app.exceptions import ResponseMessage
-from app.models import UserPublic
+from app.exceptions import ExceptionMessage
+from app.schemas import UserPublic
 
 
 # endpoint: /users/create =====================================================
@@ -45,7 +45,7 @@ def test_user_create_user_username_conflict_fail(client, user):
     assert response.status_code == HTTPStatus.CONFLICT
 
     data = response.json()
-    assert data == {'detail': ResponseMessage.USER_ANY_CONFLICT}
+    assert data == {'detail': ExceptionMessage.USER_ANY_CONFLICT}
 
 
 # !. post user create email in use email conflict
@@ -62,7 +62,7 @@ def test_user_create_user_email_conflict_fail(client, user):
     assert response.status_code == HTTPStatus.CONFLICT
 
     data = response.json()
-    assert data == {'detail': ResponseMessage.USER_ANY_CONFLICT}
+    assert data == {'detail': ExceptionMessage.USER_ANY_CONFLICT}
 
 
 # endpoint: /users/delete =====================================================
@@ -121,7 +121,7 @@ def test_list_users_user_not_authenticated_error_fail(client):
 
     data = response.json()
     # aqui o erro é pego pelo oath2_scheme.
-    assert data == {'detail': ResponseMessage.AUTH_NOT_AUTHORIZED}
+    assert data == {'detail': ExceptionMessage.AUTH_NOT_AUTHORIZED}
 
 
 # integrity error

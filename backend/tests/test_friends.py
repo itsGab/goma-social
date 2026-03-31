@@ -9,7 +9,8 @@ import pytest
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
-from app.models import FriendAction, Friendship, FriendStatus
+from app.models import Friendship
+from app.schemas import FriendAction, FriendStatus
 
 
 # endpoint: /friends/request ==================================================

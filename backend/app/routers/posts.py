@@ -1,18 +1,13 @@
 from http import HTTPStatus
 
 from fastapi import APIRouter
-from sqlalchemy.orm import selectinload
+
+# from sqlalchemy.orm import selectinload
 from sqlmodel import desc, select
 
 from ..database import DepDBSession
-from ..models import (
-    Friendship,
-    ListPosts,
-    Post,
-    PostInput,
-    PostPublic,
-    QueryPage,
-)
+from ..models import Friendship, Post
+from ..schemas import ListPosts, PostInput, PostPublic, QueryPage
 from ..security import DepCurrentUser
 
 router = APIRouter(prefix='/posts', tags=['posts'])
@@ -42,6 +37,7 @@ async def list_my_posts(
     query = (
         select(Post)
         .where(Post.user_id == current_user.id)
+        # .options(selectinload(Post.author))
         .order_by(desc(Post.created_at))
         .limit(page.limit)
         .offset(page.offset)
@@ -73,7 +69,7 @@ async def list_friends_posts(
     query = (
         select(Post)
         .where(Post.user_id.in_(friends_ids_subquery))
-        .options(selectinload(Post.author))
+        # .options(selectinload(Post.author))
         .order_by(desc(Post.created_at))
         .limit(page.limit)
         .offset(page.offset)

@@ -5,8 +5,9 @@ from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
 from ..database import DepDBSession
-from ..exceptions import ResponseMessage
-from ..models import Profile, ProfileOnUpdate, ProfilePublic, User
+from ..exceptions import ExceptionMessage
+from ..models import Profile, User
+from ..schemas import ProfileOnUpdate, ProfilePublic
 from ..security import DepCurrentUser
 
 router = APIRouter(prefix='/profiles', tags=['profiles'])
@@ -51,7 +52,7 @@ async def update_profile(
     if not profile_db:
         raise HTTPException(
             status_code=HTTPStatus.NOT_FOUND,
-            detail=ResponseMessage.NOT_FOUND_PROFILE,
+            detail=ExceptionMessage.NOT_FOUND_PROFILE,
         )
     try:
         update_data = profile_data.model_dump(exclude_unset=True)

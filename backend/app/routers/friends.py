@@ -5,17 +5,16 @@ from sqlalchemy.exc import IntegrityError
 from sqlmodel import case, or_, select
 
 from ..database import DepDBSession
-from ..exceptions import ResponseMessage
-from ..models import (
+from ..exceptions import ExceptionMessage
+from ..models import Friendship, User
+from ..schemas import (
     FriendAction,
     FriendRequest,
-    FriendResponseRequest,
-    Friendship,
+    FriendResponseInput,
     FriendStatus,
     ListFriendRequest,
-    RegularMessage,
+    MessageResponse,
     RequestType,
-    User,
 )
 from ..security import DepCurrentUser
 
@@ -25,7 +24,7 @@ router = APIRouter(prefix='/friends', tags=['friends'])
 @router.post(
     '/requests/{friend_id}',
     status_code=HTTPStatus.CREATED,
-    response_model=RegularMessage,
+    response_model=MessageResponse,
 )
 async def send_friend_request(
     friend_id: int, session: DepDBSession, current_user: DepCurrentUser
@@ -33,7 +32,7 @@ async def send_friend_request(
     friend_check = await session.get(User, friend_id)
     if not friend_check:
         raise HTTPException(
-            HTTPStatus.NOT_FOUND, detail=ResponseMessage.NOT_FOUND_USER
+            HTTPStatus.NOT_FOUND, detail=ExceptionMessage.NOT_FOUND_USER
         )
 
     if current_user.id == friend_id:
@@ -154,9 +153,9 @@ async def list_pending_friends(
     return {'pending': requests}
 
 
-@router.patch('/requests', response_model=RegularMessage)
+@router.patch('/requests', response_model=MessageResponse)
 async def respond_friend_request(
-    response: FriendResponseRequest,
+    response: FriendResponseInput,
     session: DepDBSession,
     current_user: DepCurrentUser,
 ):
@@ -202,7 +201,7 @@ async def respond_friend_request(
         return {'message': 'Friend request rejected!'}
 
 
-@router.patch('/block/{user_id}')
+@router.patch('/block/{user_id}', response_model=MessageResponse)
 async def block_user(
     user_id: int, session: DepDBSession, current_user: DepCurrentUser
 ):
@@ -226,7 +225,7 @@ async def block_user(
         user = await session.get(User, user_id)
         if not user:
             raise HTTPException(
-                HTTPStatus.NOT_FOUND, detail=ResponseMessage.NOT_FOUND_USER
+                HTTPStatus.NOT_FOUND, detail=ExceptionMessage.NOT_FOUND_USER
             )
         else:
             user_block = Friendship(
@@ -260,7 +259,7 @@ async def block_user(
     return {'message': 'User blocked'}
 
 
-@router.patch('/unblock/{user_id}')
+@router.patch('/unblock/{user_id}', response_model=MessageResponse)
 async def unblock_user(
     user_id: int, session: DepDBSession, current_user: DepCurrentUser
 ):
@@ -283,7 +282,7 @@ async def unblock_user(
         user = await session.get(User, user_id)
         if not user:
             raise HTTPException(
-                HTTPStatus.NOT_FOUND, detail=ResponseMessage.NOT_FOUND_USER
+                HTTPStatus.NOT_FOUND, detail=ExceptionMessage.NOT_FOUND_USER
             )
         raise HTTPException(
             HTTPStatus.BAD_REQUEST, detail='Relationship not found'

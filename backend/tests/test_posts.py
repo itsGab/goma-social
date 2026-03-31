@@ -49,19 +49,19 @@ def test_posts_list_my_posts_success(
         headers={'Authorization': f'Bearer {access_token}'},
         json={'content': 'conteudo do meu post 1'},
     )
-    sleep(0.5)
+    sleep(0.1)
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token}'},
         json={'content': 'conteudo do meu post 2'},
     )
-    sleep(0.5)
+    sleep(0.1)
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token}'},
         json={'content': 'conteudo do meu post 3'},
     )
-    sleep(0.5)
+    sleep(0.1)
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token2}'},
@@ -97,19 +97,19 @@ def test_posts_list_friends_posts_success(client, users_with_friendship):
         headers={'Authorization': f'Bearer {access_token}'},
         json={'content': 'conteudo do meu post 1'},
     )
-    sleep(0.5)
+    sleep(0.1)
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token}'},
         json={'content': 'conteudo do meu post 2'},
     )
-    sleep(0.5)
+    sleep(0.1)
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token}'},
         json={'content': 'conteudo do meu post 3'},
     )
-    sleep(0.5)
+    sleep(0.1)
     client.post(
         '/posts/create',
         headers={'Authorization': f'Bearer {access_token2}'},

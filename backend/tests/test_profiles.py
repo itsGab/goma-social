@@ -18,7 +18,7 @@ def test_profile_is_created_with_user_creation_success(client):
     user = client.post(
         '/users/create',
         json={
-            'username': 'user-test',
+            'username': 'user_test',
             'email': 'test@mail.com',
             'password': 'Test#123',
         },
@@ -38,7 +38,7 @@ def test_profile_is_created_with_user_creation_success(client):
     )
     assert response.status_code == HTTPStatus.OK
     profile = response.json()
-    assert profile['display_name'] == 'user-test'
+    assert profile['display_name'] == 'user_test'
     assert profile['bio'] == 'Sou novo aqui!'
 
 
@@ -47,7 +47,7 @@ def test_profile_update_success(client):
     user = client.post(
         '/users/create',
         json={
-            'username': 'user-test',
+            'username': 'user_test',
             'email': 'test@mail.com',
             'password': 'Test#123',
         },
@@ -67,7 +67,7 @@ def test_profile_update_success(client):
     )
     assert response.status_code == HTTPStatus.OK
     profile = response.json()
-    assert profile['display_name'] == 'user-test'
+    assert profile['display_name'] == 'user_test'
     assert profile['bio'] == 'Sou novo aqui!'
 
     # only display name
@@ -127,7 +127,7 @@ async def test_delete_profile_is_delete_with_user_deletion_success(
     response = client.post(
         '/users/create',
         json={
-            'username': 'user-test',
+            'username': 'user_test',
             'email': 'test@mail.com',
             'password': 'Test#123',
         },
@@ -137,7 +137,7 @@ async def test_delete_profile_is_delete_with_user_deletion_success(
     query = select(Profile).where(Profile.user_id == 1)
     profile_db = await session.scalar(query)
     assert profile_db
-    assert profile_db.display_name == 'user-test'
+    assert profile_db.display_name == 'user_test'
 
     token = client.post(
         '/auth/token',
@@ -147,7 +147,7 @@ async def test_delete_profile_is_delete_with_user_deletion_success(
     access_token = token.json()['access_token']
 
     response = client.delete(
-        url='/users/delete?username_check=user-test',
+        url='/users/delete?username_check=user_test',
         headers={'Authorization': f'Bearer {access_token}'},
     )
 
@@ -179,7 +179,7 @@ def test_profile_update_fail_integrity_error(client, session):
     client.post(
         '/users/create',
         json={
-            'username': 'user-test',
+            'username': 'user_test',
             'email': 'test@mail.com',
             'password': 'Test#123',
         },

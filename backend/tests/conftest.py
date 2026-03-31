@@ -7,7 +7,7 @@ from testcontainers.postgres import PostgresContainer
 from app import models
 from app.database import get_session
 from app.main import app
-from app.models import FriendStatus
+from app.schemas import FriendStatus
 from app.security import get_password_hash
 
 

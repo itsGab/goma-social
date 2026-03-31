@@ -6,13 +6,13 @@ from sqlmodel import or_, select
 
 from ..database import DepDBSession
 from ..exceptions import (
+    ExceptionMessage,
     HTTPException,
-    ResponseMessage,
 )
-from ..models import (
-    ErrorMessage,
-    RegularMessage,
-    User,
+from ..models import User
+from ..schemas import (
+    ErrorResponse,
+    MessageResponse,
     UserInput,
     UserList,
     UserPublic,
@@ -30,7 +30,7 @@ router = APIRouter(prefix='/users', tags=['users'])
     summary='Cria usuário',
     description='Cria um usuário com username, email e password e salva no '
     'banco de dados.',
-    responses={HTTPStatus.CONFLICT: {'model': ErrorMessage}},
+    responses={HTTPStatus.CONFLICT: {'model': ErrorResponse}},
 )
 async def create_user(user_input: UserInput, session: DepDBSession):
     """
@@ -51,7 +51,7 @@ async def create_user(user_input: UserInput, session: DepDBSession):
     if db_user:
         raise HTTPException(
             status_code=HTTPStatus.CONFLICT,
-            detail=ResponseMessage.USER_ANY_CONFLICT,
+            detail=ExceptionMessage.USER_ANY_CONFLICT,
         )
     # sem conflito, cadastra new user
     hashed_password = get_password_hash(user_input.password.get_secret_value())
@@ -78,7 +78,7 @@ async def create_user(user_input: UserInput, session: DepDBSession):
 
 @router.delete(
     '/delete',
-    response_model=RegularMessage,
+    response_model=MessageResponse,
     status_code=HTTPStatus.OK,
     summary='Delete usuário',
     description='Delete usuário no banco de dados com verificação de username',
