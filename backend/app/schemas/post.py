@@ -2,8 +2,9 @@ from datetime import datetime
 
 from sqlmodel import Field, SQLModel
 
-from ..constants import POST_MAX_LEN
 from .user import UserPublic
+
+POST_MAX_LEN = 1000
 
 
 class PostInput(SQLModel):

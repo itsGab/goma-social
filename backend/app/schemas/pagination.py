@@ -3,15 +3,9 @@ from typing import Annotated
 from fastapi import Query
 from sqlmodel import Field, SQLModel
 
-from ..constants import PAGE_DEFAULT_SIZE, PAGE_MAX_PAGES, PAGE_MAX_SIZE
-
-
-class MessageResponse(SQLModel):
-    message: str
-
-
-class ErrorResponse(SQLModel):
-    detail: str
+PAGE_DEFAULT_SIZE = 20
+PAGE_MAX_SIZE = 100
+PAGE_MAX_PAGES = 100
 
 
 class PageParams(SQLModel):

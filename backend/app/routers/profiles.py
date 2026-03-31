@@ -7,7 +7,7 @@ from sqlmodel import select
 from ..database import DepDBSession
 from ..exceptions import ExceptionMessage
 from ..models import Profile, User
-from ..schemas import ProfileOnUpdate, ProfilePublic
+from ..schemas import ProfilePublic, ProfileUpdateInput
 from ..security import DepCurrentUser
 
 router = APIRouter(prefix='/profiles', tags=['profiles'])
@@ -43,7 +43,7 @@ async def get_profile(session: DepDBSession, current_user: DepCurrentUser):
     'públicas',
 )
 async def update_profile(
-    profile_data: ProfileOnUpdate,
+    profile_data: ProfileUpdateInput,
     session: DepDBSession,
     current_user: DepCurrentUser,
 ):

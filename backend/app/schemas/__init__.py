@@ -1,5 +1,4 @@
 from .auth import Token
-from .common import ErrorResponse, MessageResponse, QueryPage
 from .friendship import (
     FriendAction,
     FriendRequest,
@@ -8,8 +7,10 @@ from .friendship import (
     ListFriendRequest,
     RequestType,
 )
+from .messages import ErrorResponse, MessageResponse
+from .pagination import QueryPage
 from .post import ListPosts, PostInput, PostPublic
-from .profile import ProfileOnUpdate, ProfilePublic
+from .profile import ProfilePublic, ProfileUpdateInput
 from .user import UserInput, UserList, UserPublic
 
 __all__ = [
@@ -26,7 +27,7 @@ __all__ = [
     'ListPosts',
     'PostInput',
     'PostPublic',
-    'ProfileOnUpdate',
+    'ProfileUpdateInput',
     'ProfilePublic',
     'UserInput',
     'UserList',

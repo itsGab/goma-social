@@ -1,7 +1,7 @@
 from pydantic import EmailStr
 from sqlmodel import SQLModel
 
-from ..validators import ValidPassword, ValidUsername
+from .validators import ValidPassword, ValidUsername
 
 
 class UserInput(SQLModel):

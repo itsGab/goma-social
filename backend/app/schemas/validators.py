@@ -2,19 +2,24 @@ from typing import Annotated
 
 from pydantic import AfterValidator, BeforeValidator, Field, SecretStr
 
-from .constants import (
-    NAME_MAX_LEN,
-    NAME_MIN_LEN,
-    PASSWORD_MAX_LEN,
-    PASSWORD_MIN_LEN,
-    USERNAME_PATTERN,
-)
+NAME_MIN_LEN = 3
+NAME_MAX_LEN = 20
+
+USERNAME_PATTERN = r'^[a-z0-9_]+$'
+DISPLAY_NAME_PATTERN = r'^[a-zA-Z0-9_ ]+$'
+
+PASSWORD_MIN_LEN = 8
+PASSWORD_MAX_LEN = 20
+
+BIO_MAX_LEN = 1000
 
 
-def trim_string(name: str | any) -> str:
-    if isinstance(name, str):
-        return name.strip().lower()
-    return name
+def trim_string(name: str) -> str:
+    return name.strip()
+
+
+def trim_string_lower(name: str) -> str:
+    return trim_string(name).lower()
 
 
 def validate_password_complexity(value: SecretStr) -> SecretStr:
@@ -47,11 +52,25 @@ ValidPassword = Annotated[
 
 ValidUsername = Annotated[
     str,
+    BeforeValidator(trim_string_lower),
+    Field(
+        min_length=NAME_MIN_LEN,
+        max_length=NAME_MAX_LEN,
+        pattern=USERNAME_PATTERN,
+        description='Apenas letras minúsculas, números e underscores',
+    ),
+]
+
+
+# TODO: fazer teste com espaco no nome
+ValidName = Annotated[
+    str,
     BeforeValidator(trim_string),
     Field(
         min_length=NAME_MIN_LEN,
         max_length=NAME_MAX_LEN,
-        pattern=USERNAME_PATTERN,  # se mudar para sqlalchemy deve ser pattern
-        description='Apenas letras, números e underscores',
+        pattern=DISPLAY_NAME_PATTERN,
+        description='Apenas letras, números, underscores e espaços entre '
+        + 'palavras',
     ),
 ]

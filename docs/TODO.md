@@ -26,12 +26,6 @@ app/
     security.py
     exceptions.py
 
-  services/
-    __init__.py
-    user.py
-    post.py
-    profile.py
-    friendship.py
 ```
 
 
