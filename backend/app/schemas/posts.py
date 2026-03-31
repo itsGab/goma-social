@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlmodel import Field, SQLModel
 
-from .user import UserPublic
+from .users import UserPublic
 
 POST_MAX_LEN = 1000
 

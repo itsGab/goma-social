@@ -1,5 +1,5 @@
 from .auth import Token
-from .friendship import (
+from .friendships import (
     FriendAction,
     FriendRequest,
     FriendResponseInput,
@@ -9,9 +9,9 @@ from .friendship import (
 )
 from .messages import ErrorResponse, MessageResponse
 from .pagination import QueryPage
-from .post import ListPosts, PostInput, PostPublic
-from .profile import ProfilePublic, ProfileUpdateInput
-from .user import UserInput, UserList, UserPublic
+from .posts import ListPosts, PostInput, PostPublic
+from .profiles import ProfilePublic, ProfileUpdateInput
+from .users import UserInput, UserList, UserPublic
 
 __all__ = [
     'Token',
